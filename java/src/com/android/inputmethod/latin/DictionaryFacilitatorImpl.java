@@ -235,6 +235,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
     @Override
     public Locale getLocale() {
         return mDictionaryGroup.mLocale;
+        //return new Locale("bn");
     }
 
     @Override
@@ -626,9 +627,14 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
         for (final String dictType : ALL_DICTIONARY_TYPES) {
             final Dictionary dictionary = mDictionaryGroup.getDict(dictType);
             if (null == dictionary) continue;
+
+
             final float weightForLocale = composedData.mIsBatchMode
                     ? mDictionaryGroup.mWeightForGesturingInLocale
                     : mDictionaryGroup.mWeightForTypingInLocale;
+
+            Log.d(TAG, "getSuggestionResults: "+composedData.mTypedWord);
+
             final ArrayList<SuggestedWordInfo> dictionarySuggestions =
                     dictionary.getSuggestions(composedData, ngramContext,
                             proximityInfoHandle, settingsValuesForSuggestion, sessionId,

@@ -26,7 +26,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.Settings;

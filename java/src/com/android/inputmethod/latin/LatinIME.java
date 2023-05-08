@@ -54,6 +54,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 
@@ -106,6 +108,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
@@ -155,11 +158,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     final SparseArray<HardwareEventDecoder> mHardwareEventDecoders = new SparseArray<>(1);
 
     // TODO: Move these {@link View}s to {@link KeyboardSwitcher}.
-    private View mInputView;
+    public View mInputView;
     private InsetsUpdater mInsetsUpdater;
     private SuggestionStripView mSuggestionStripView;
 
-    private RichInputMethodManager mRichImm;
+    public RichInputMethodManager mRichImm;
     @UsedForTesting final KeyboardSwitcher mKeyboardSwitcher;
     private final SubtypeState mSubtypeState = new SubtypeState();
     private EmojiAltPhysicalKeyDetector mEmojiAltPhysicalKeyDetector;
@@ -177,6 +180,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     private final BroadcastReceiver mDictionaryDumpBroadcastReceiver =
             new DictionaryDumpBroadcastReceiver(this);
+
+
 
     final static class HideSoftInputReceiver extends BroadcastReceiver {
         private final InputMethodService mIms;
@@ -248,6 +253,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         @Override
         public void handleMessage(final Message msg) {
+            Log.d(TAG, "handleMessage: "+msg.arg1);
             final LatinIME latinIme = getOwnerInstance();
             if (latinIme == null) {
                 return;
@@ -314,7 +320,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 latinIme.deallocateMemory();
                 break;
             case MSG_SWITCH_LANGUAGE_AUTOMATICALLY:
-                latinIme.switchLanguage((InputMethodSubtype)msg.obj);
+                latinIme.switchLanguage((InputMethodSubtype) msg.obj);
                 break;
             }
         }
@@ -561,6 +567,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         public void switchSubtype(final IBinder token, final RichInputMethodManager richImm) {
             final InputMethodSubtype currentSubtype = richImm.getInputMethodManager()
                     .getCurrentInputMethodSubtype();
+
+
             final InputMethodSubtype lastActiveSubtype = mLastActiveSubtype;
             final boolean currentSubtypeHasBeenUsed = mCurrentSubtypeHasBeenUsed;
             if (currentSubtypeHasBeenUsed) {
@@ -583,6 +591,84 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         JniUtils.loadNativeLibrary();
     }
 
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Make your selection");
+
+        final View customLayout = getLayoutInflater().inflate(R.layout.dialog_radio_group, null);
+
+        RadioGroup grp = customLayout.findViewById(R.id.dialog_radio_group);
+
+        int subTypes = mRichImm.getInputMethodInfoOfThisIme().getSubtypeCount();
+        List<InputMethodSubtype> listOfInputMethods = new ArrayList<>();
+
+        for (int i=0; i<subTypes; i++){
+            InputMethodSubtype subType = mRichImm.getInputMethodInfoOfThisIme().getSubtypeAt(i);
+            listOfInputMethods.add(subType);
+            RadioButton btn = new RadioButton(this);
+            String name = "";
+
+
+
+
+            switch (subType.getLocale().toLowerCase()){
+                case "bn":
+                    name = "Bangla Phonetic";
+                    break;
+                case "bn_bd":
+                    name = "Bangla Akkhor";
+                    break;
+                default:
+                    name = "English";
+            }
+
+            btn.setText(name);
+
+
+            grp.addView(btn);
+
+            if(Objects.equals(subType.getLocale(), mRichImm.getCurrentSubtype().getRawSubtype().getLocale())){
+                grp.check(btn.getId());
+            }else {
+                Log.d(TAG, "subType: not matched");
+            }
+        }
+
+        builder.setView(customLayout);
+
+
+        AlertDialog alert = builder.create();
+        alert.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        grp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int index = group.indexOfChild(group.findViewById(checkedId));
+                //switchLanguage(listOfInputMethods.get(index));
+                mHandler.postSwitchLanguage(listOfInputMethods.get(index));
+
+                alert.dismiss();
+            }
+        });
+
+
+
+        Window window = alert.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.token = mInputView.getWindowToken();
+        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        window.setAttributes(lp);
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        alert.show();
+    }
+
+
+
     public LatinIME() {
         super();
         mSettings = Settings.getInstance();
@@ -602,10 +688,12 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         AudioAndHapticFeedbackManager.init(this);
         AccessibilityUtils.init(this);
         mStatsUtilsManager.onCreate(this /* context */, mDictionaryFacilitator);
-        final WindowManager wm = getSystemService(WindowManager.class);
+        //final WindowManager wm = getSystemService(WindowManager.class);
         mDisplayContext = getDisplayContext();
         KeyboardSwitcher.init(this);
         super.onCreate();
+
+
 
         mHandler.onCreate();
 
@@ -702,6 +790,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 && mDictionaryFacilitator.isForAccount(mSettings.getCurrent().mAccount)) {
             return;
         }
+        //Constant.PHONETIC_ENABLE
+        //subtype local
         resetDictionaryFacilitator(subtypeLocale);
     }
 
@@ -855,6 +945,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
+        Log.d(TAG, "onStartInput: ");
         mHandler.onStartInput(editorInfo, restarting);
     }
 
@@ -881,15 +972,29 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onCurrentInputMethodSubtypeChanged(final InputMethodSubtype subtype) {
         // Note that the calling sequence of onCreate() and onCurrentInputMethodSubtypeChanged()
         // is not guaranteed. It may even be called at the same time on a different thread.
+        Log.d(TAG, "onCurrentInputMethodSubtypeChanged: "+subtype.getExtraValue());
         InputMethodSubtype oldSubtype = mRichImm.getCurrentSubtype().getRawSubtype();
         StatsUtils.onSubtypeChanged(oldSubtype, subtype);
         mRichImm.onSubtypeChanged(subtype);
         mInputLogic.onSubtypeChanged(SubtypeLocaleUtils.getCombiningRulesExtraValue(subtype),
                 mSettings.getCurrent());
+
+        if (subtype.getExtraValue().contains("bengali_phonetic")){
+            WordComposer.isPhonetic = true;
+
+            Log.d(TAG, "onCurrentInputMethodSubtypeChanged: isPhonetic true");
+        }else{
+            WordComposer.isPhonetic = false;
+
+            Log.d(TAG, "onCurrentInputMethodSubtypeChanged: isPhonetic false");
+        }
+
+
         loadKeyboard();
     }
 
     void onStartInputInternal(final EditorInfo editorInfo, final boolean restarting) {
+        Log.d(TAG, "onStartInputInternal: ");
         super.onStartInput(editorInfo, restarting);
 
         // If the primary hint language does not match the current subtype language, then try
@@ -897,8 +1002,12 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         // TODO: Support all the locales in EditorInfo#hintLocales.
         final Locale primaryHintLocale = EditorInfoCompatUtils.getPrimaryHintLocale(editorInfo);
         if (primaryHintLocale == null) {
+            Log.d(TAG, "onStartInputInternal: primaryHintLocale null");
+
             return;
         }
+        Log.d(TAG, "onStartInputInternal: primaryHintLocale"+primaryHintLocale.toString());
+
         final InputMethodSubtype newSubtype = mRichImm.findSubtypeByLocale(primaryHintLocale);
         if (newSubtype == null || newSubtype.equals(mRichImm.getCurrentSubtype().getRawSubtype())) {
             return;
@@ -1395,11 +1504,13 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         if (isShowingOptionDialog()) return false;
         switch (requestCode) {
         case Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER:
-            if (mRichImm.hasMultipleEnabledIMEsOrSubtypes(true /* include aux subtypes */)) {
-                mRichImm.getInputMethodManager().showInputMethodPicker();
-                return true;
-            }
-            return false;
+            showDialog();
+//            if (mRichImm.hasMultipleEnabledIMEsOrSubtypes(true /* include aux subtypes */)) {
+//                mRichImm.getInputMethodManager().showInputMethodPicker();
+//
+//                return true;
+//            }
+            return true;
         }
         return false;
     }
@@ -1454,6 +1565,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         onEvent(event);
     }
 
+
+
     // This method is public for testability of LatinIME, but also in the future it should
     // completely replace #onCodeInput.
     public void onEvent(@Nonnull final Event event) {
@@ -1489,6 +1602,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     // Called from PointerTracker through the KeyboardActionListener interface
     @Override
     public void onTextInput(final String rawText) {
+        Log.d(TAG, "onTextInput: "+rawText);
         // TODO: have the keyboard pass the correct key code when we need it.
         final Event event = Event.createSoftwareTextEvent(rawText, Constants.CODE_OUTPUT_TEXT);
         final InputTransaction completeInputTransaction =
@@ -1549,6 +1663,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public void onFinishSlidingInput() {
         // User finished sliding input.
+        Log.d(TAG, "onFinishSlidingInput: ");
         mKeyboardSwitcher.onFinishSlidingInput(getCurrentAutoCapsState(),
                 getCurrentRecapitalizeState());
     }
@@ -1671,6 +1786,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         // the screen. Anything we do right now will delay this, so wait until the next frame
         // before we do the rest, like reopening dictionaries and updating suggestions. So we
         // post a message.
+        Log.d(TAG, "loadKeyboard: called");
         mHandler.postReopenDictionaries();
         loadSettings();
         if (mKeyboardSwitcher.getMainKeyboardView() != null) {
@@ -1748,7 +1864,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mKeyboardSwitcher.onPressKey(primaryCode, isSinglePointer, getCurrentAutoCapsState(),
                 getCurrentRecapitalizeState());
         hapticAndAudioFeedback(primaryCode, repeatCount);
+        Log.d(TAG, "onPressKey: "+primaryCode);
     }
+
+
 
     // Callback of the {@link KeyboardActionListener}. This is called when a key is released;
     // press matching call is {@link #onPressKey(int,int,boolean)} above.
@@ -1799,15 +1918,17 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             mEmojiAltPhysicalKeyDetector = new EmojiAltPhysicalKeyDetector(
                     getApplicationContext().getResources());
         }
+
         mEmojiAltPhysicalKeyDetector.onKeyUp(keyEvent);
         if (!ProductionFlags.IS_HARDWARE_KEYBOARD_SUPPORTED) {
             return super.onKeyUp(keyCode, keyEvent);
         }
-        final long keyIdentifier = keyEvent.getDeviceId() << 32 + keyEvent.getKeyCode();
+
+        final long keyIdentifier = (long) keyEvent.getDeviceId() << 32 + keyEvent.getKeyCode();
         if (mInputLogic.mCurrentlyPressedHardwareKeys.remove(keyIdentifier)) {
             return true;
         }
-        return super.onKeyUp(keyCode, keyEvent);
+            return super.onKeyUp(keyCode, keyEvent);
     }
 
     // onKeyDown and onKeyUp are the main events we are interested in. There are two more events

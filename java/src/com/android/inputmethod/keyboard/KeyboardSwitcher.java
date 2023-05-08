@@ -83,6 +83,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     private void initInternal(final LatinIME latinIme) {
+        Log.d(TAG, "initInternal: ");
         mLatinIME = latinIme;
         mRichImm = RichInputMethodManager.getInstance();
         mState = new KeyboardState(this);
@@ -113,12 +114,14 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
     public void loadKeyboard(final EditorInfo editorInfo, final SettingsValues settingsValues,
             final int currentAutoCapsState, final int currentRecapitalizeState) {
+        Log.d(TAG, "loadKeyboard: ");
         final KeyboardLayoutSet.Builder builder = new KeyboardLayoutSet.Builder(
                 mThemeContext, editorInfo);
         final Resources res = mThemeContext.getResources();
         final int keyboardWidth = ResourceUtils.getDefaultKeyboardWidth(res);
         final int keyboardHeight = ResourceUtils.getKeyboardHeight(res, settingsValues);
         builder.setKeyboardGeometry(keyboardWidth, keyboardHeight);
+        Log.d(TAG, "loadKeyboard: CurrentSubtupe "+mRichImm.getCurrentSubtype().toString());
         builder.setSubtype(mRichImm.getCurrentSubtype());
         builder.setVoiceInputKeyEnabled(settingsValues.mShowsVoiceInputKey);
         builder.setLanguageSwitchKeyEnabled(mLatinIME.shouldShowLanguageSwitchKey());
@@ -148,13 +151,17 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     private void setKeyboard(
             @Nonnull final int keyboardId,
             @Nonnull final KeyboardSwitchState toggleState) {
-        // Make {@link MainKeyboardView} visible and hide {@link EmojiPalettesView}.
+        // Make {@link MainKeyboardView} visible and hide {@link EmojiPalettesView}
+        Log.d(TAG, "setKeyboard: "+keyboardId);
         final SettingsValues currentSettingsValues = Settings.getInstance().getCurrent();
         setMainKeyboardFrame(currentSettingsValues, toggleState);
         // TODO: pass this object to setKeyboard instead of getting the current values.
         final MainKeyboardView keyboardView = mKeyboardView;
         final Keyboard oldKeyboard = keyboardView.getKeyboard();
         final Keyboard newKeyboard = mKeyboardLayoutSet.getKeyboard(keyboardId);
+
+
+
         keyboardView.setKeyboard(newKeyboard);
         mCurrentInputView.setKeyboardTopPadding(newKeyboard.mTopPadding);
         keyboardView.setKeyPreviewPopupEnabled(
@@ -410,6 +417,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
      */
     public void onEvent(final Event event, final int currentAutoCapsState,
             final int currentRecapitalizeState) {
+
         mState.onEvent(event, currentAutoCapsState, currentRecapitalizeState);
     }
 
@@ -427,6 +435,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     public boolean isShowingEmojiPalettes() {
+        //return false;
         return mEmojiPalettesView != null && mEmojiPalettesView.isShown();
     }
 

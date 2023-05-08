@@ -182,8 +182,8 @@ public class SettingsValues {
                 null /* default */);
         mGestureFloatingPreviewTextEnabled = !mInputAttributes.mDisableGestureFloatingPreviewText
                 && prefs.getBoolean(Settings.PREF_GESTURE_FLOATING_PREVIEW_TEXT, true);
-        mAutoCorrectionEnabledPerUserSettings = mAutoCorrectEnabled
-                && !mInputAttributes.mInputTypeNoAutoCorrect;
+        mAutoCorrectionEnabledPerUserSettings =  false/*mAutoCorrectEnabled
+                && !mInputAttributes.mInputTypeNoAutoCorrect*/;
         mSuggestionsEnabledPerUserSettings = readSuggestionsEnabled(prefs);
         mIsInternal = Settings.isInternal(prefs);
         mHasCustomKeyPreviewAnimationParams = prefs.getBoolean(

@@ -39,6 +39,7 @@ import com.android.inputmethod.latin.DictionaryFacilitator;
 import com.android.inputmethod.latin.LastComposedWord;
 import com.android.inputmethod.latin.LatinIME;
 import com.android.inputmethod.latin.NgramContext;
+import com.android.inputmethod.latin.PhoneticBangla;
 import com.android.inputmethod.latin.RichInputConnection;
 import com.android.inputmethod.latin.Suggest;
 import com.android.inputmethod.latin.Suggest.OnGetSuggestedWordsCallback;
@@ -108,6 +109,7 @@ public final class InputLogic {
     // The word being corrected while the cursor is in the middle of the word.
     // Note: This does not have a composing span, so it must be handled separately.
     private String mWordBeingCorrectedByCursor = null;
+    private PhoneticBangla phoneticBangla;
 
     /**
      * Create a new instance of the input logic.
@@ -122,10 +124,15 @@ public final class InputLogic {
         mLatinIME = latinIME;
         mSuggestionStripViewAccessor = suggestionStripViewAccessor;
         mWordComposer = new WordComposer();
+
+
+
+
         mConnection = new RichInputConnection(latinIME);
         mInputLogicHandler = InputLogicHandler.NULL_HANDLER;
         mSuggest = new Suggest(dictionaryFacilitator);
         mDictionaryFacilitator = dictionaryFacilitator;
+        phoneticBangla = new PhoneticBangla();
     }
 
     /**
@@ -176,6 +183,7 @@ public final class InputLogic {
      * @param settingsValues the current settings values
      */
     public void onSubtypeChanged(final String combiningSpec, final SettingsValues settingsValues) {
+        Log.d(TAG, "onSubtypeChanged: ");
         finishInput();
         startInput(combiningSpec, settingsValues);
     }
@@ -202,12 +210,17 @@ public final class InputLogic {
      */
     public void finishInput() {
         if (mWordComposer.isComposingWord()) {
+            Log.d(TAG, "finishInput: isComposingWord");
             mConnection.finishComposingText();
             StatsUtils.onWordCommitUserTyped(
                     mWordComposer.getTypedWord(), mWordComposer.isBatchMode());
+        }else {
+            Log.d(TAG, "finishInput: Not ComposingWord");
+
         }
         resetComposingState(true /* alsoResetLastComposedWord */);
         mInputLogicHandler.reset();
+        
     }
 
     // Normally this class just gets out of scope after the process ends, but in unit tests, we
@@ -233,7 +246,9 @@ public final class InputLogic {
      */
     public InputTransaction onTextInput(final SettingsValues settingsValues, final Event event,
             final int keyboardShiftMode, final LatinIME.UIHandler handler) {
+
         final String rawText = event.getTextToCommit().toString();
+        Log.d(TAG, "onTextInput: "+rawText);
         final InputTransaction inputTransaction = new InputTransaction(settingsValues, event,
                 SystemClock.uptimeMillis(), mSpaceState,
                 getActualCapsMode(settingsValues, keyboardShiftMode));
@@ -437,7 +452,10 @@ public final class InputLogic {
     public InputTransaction onCodeInput(final SettingsValues settingsValues,
             @Nonnull final Event event, final int keyboardShiftMode,
             final int currentKeyboardScriptId, final LatinIME.UIHandler handler) {
+
         mWordBeingCorrectedByCursor = null;
+
+
         final Event processedEvent = mWordComposer.processEvent(event);
         final InputTransaction inputTransaction = new InputTransaction(settingsValues,
                 processedEvent, SystemClock.uptimeMillis(), mSpaceState,
@@ -448,10 +466,14 @@ public final class InputLogic {
         }
         mLastKeyTime = inputTransaction.mTimestamp;
         mConnection.beginBatchEdit();
+
         if (!mWordComposer.isComposingWord()) {
             // TODO: is this useful? It doesn't look like it should be done here, but rather after
             // a word is committed.
+
             mIsAutoCorrectionIndicatorOn = false;
+        }else{
+            Log.d(TAG, "isComposingWord: "+ true);
         }
 
         // TODO: Consolidate the double-space period timer, mLastKeyTime, and the space state.
@@ -617,6 +639,7 @@ public final class InputLogic {
         // A consumed event may have text to commit and an update to the composing state, so
         // we evaluate both. With some combiners, it's possible than an event contains both
         // and we enter both of the following if clauses.
+        Log.d("OnKeyEvent", "handleConsumedEvent: "+event.mKeyCode+" "+event.getTextToCommit());
         final CharSequence textToCommit = event.getTextToCommit();
         if (!TextUtils.isEmpty(textToCommit)) {
             mConnection.commitText(textToCommit, 1);
@@ -643,6 +666,8 @@ public final class InputLogic {
      */
     private void handleFunctionalEvent(final Event event, final InputTransaction inputTransaction,
             final int currentKeyboardScriptId, final LatinIME.UIHandler handler) {
+        Log.d("OnKeyEvent", "handleFunctionalEvent: "+event.mKeyCode+" "+event.getTextToCommit());
+
         switch (event.mKeyCode) {
             case Constants.CODE_DELETE:
                 handleBackspaceEvent(event, inputTransaction, currentKeyboardScriptId);
@@ -717,6 +742,8 @@ public final class InputLogic {
     private void handleNonFunctionalEvent(final Event event,
             final InputTransaction inputTransaction,
             final LatinIME.UIHandler handler) {
+        Log.d("OnKeyEvent", "handleNonFunctionalEvent: "+event.mCodePoint+" "+event.getTextToCommit());
+
         inputTransaction.setDidAffectContents();
         switch (event.mCodePoint) {
             case Constants.CODE_ENTER:
@@ -764,6 +791,8 @@ public final class InputLogic {
             final LatinIME.UIHandler handler) {
         final int codePoint = event.mCodePoint;
         mSpaceState = SpaceState.NONE;
+
+
         if (inputTransaction.mSettingsValues.isWordSeparator(codePoint)
                 || Character.getType(codePoint) == Character.OTHER_SYMBOL) {
             handleSeparatorEvent(event, inputTransaction, handler);
@@ -778,6 +807,7 @@ public final class InputLogic {
                     resetEntireInputState(mConnection.getExpectedSelectionStart(),
                             mConnection.getExpectedSelectionEnd(), true /* clearSuggestionStrip */);
                 } else {
+
                     commitTyped(inputTransaction.mSettingsValues, LastComposedWord.NOT_A_SEPARATOR);
                 }
             }
@@ -799,6 +829,8 @@ public final class InputLogic {
         // handleNonSpecialCharacterEvent which has the same name as other handle* methods but is
         // not the same.
         boolean isComposingWord = mWordComposer.isComposingWord();
+
+        Log.d(TAG, "isComposingWord: "+isComposingWord);
 
         // TODO: remove isWordConnector() and use isUsuallyFollowedBySpace() instead.
         // See onStartBatchInput() to see how to do it.
@@ -841,6 +873,8 @@ public final class InputLogic {
                 (!settingsValues.mSpacingAndPunctuations.mCurrentLanguageHasSpaces
                         || !mConnection.isCursorTouchingWord(settingsValues.mSpacingAndPunctuations,
                                 !mConnection.hasSlowInputConnection() /* checkTextAfter */))) {
+
+
             // Reset entirely the composing state anyway, then start composing a new word unless
             // the character is a word connector. The idea here is, word connectors are not
             // separators and they should be treated as normal characters, except in the first
@@ -867,9 +901,32 @@ public final class InputLogic {
                 mSpaceState = SpaceState.WEAK;
             } else {
                 sendKeyCodePoint(settingsValues, codePoint);
+                //sendPhoneticKeyCodePoint(settingsValues, codePoint, mWordComposer.getTypedWord());
             }
         }
         inputTransaction.setRequiresUpdateSuggestions();
+    }
+
+    private void sendPhoneticKeyCodePoint(final SettingsValues settingsValues, final int codePoint, String typedWord) {
+        // TODO: Remove this special handling of digit letters.
+        // For backward compatibility. See {@link InputMethodService#sendKeyChar(char)}.
+        if (codePoint >= '0' && codePoint <= '9') {
+            sendDownUpKeyEvent(codePoint - '0' + KeyEvent.KEYCODE_0);
+            return;
+        }
+
+        // TODO: we should do this also when the editor has TYPE_NULL
+        if (Constants.CODE_ENTER == codePoint && settingsValues.isBeforeJellyBean()) {
+            // Backward compatibility mode. Before Jelly bean, the keyboard would simulate
+            // a hardware keyboard event on pressing enter or delete. This is bad for many
+            // reasons (there are race conditions with commits) but some applications are
+            // relying on this behavior so we continue to support it for older apps.
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER);
+        } else {
+            Log.d(TAG, "sendPhoneticKeyCodePoint: "+typedWord);
+            StringBuilder phoneticKey = phoneticBangla.phonetic(new StringBuilder(typedWord));
+            mConnection.commitText(phoneticKey, 1);
+        }
     }
 
     /**
@@ -1471,7 +1528,11 @@ public final class InputLogic {
                 new OnGetSuggestedWordsCallback() {
                     @Override
                     public void onGetSuggestedWords(final SuggestedWords suggestedWords) {
+
                         final String typedWordString = mWordComposer.getTypedWord();
+                        for (int i=0; i<=suggestedWords.size()-1; i++ ){
+                            Log.d(TAG, "onGetSuggestedWords: "+suggestedWords.getWord(i));
+                        }
                         final SuggestedWordInfo typedWordInfo = new SuggestedWordInfo(
                                 typedWordString, "" /* prevWordsContext */,
                                 SuggestedWordInfo.MAX_SCORE,
@@ -2005,6 +2066,7 @@ public final class InputLogic {
             // relying on this behavior so we continue to support it for older apps.
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER);
         } else {
+
             mConnection.commitText(StringUtils.newSingleCodePointString(codePoint), 1);
         }
     }
@@ -2067,6 +2129,9 @@ public final class InputLogic {
     public void commitTyped(final SettingsValues settingsValues, final String separatorString) {
         if (!mWordComposer.isComposingWord()) return;
         final String typedWord = mWordComposer.getTypedWord();
+        //final String typedWord = phoneticBangla.phonetic(new StringBuilder(mWordComposer.getTypedWord())).toString();
+        //phonetic enable
+
         if (typedWord.length() > 0) {
             final boolean isBatchMode = mWordComposer.isBatchMode();
             commitChosenWord(settingsValues, typedWord,
@@ -2271,8 +2336,11 @@ public final class InputLogic {
      * @param newComposingText the composing text to be set
      * @param newCursorPosition the new cursor position
      */
-    private void setComposingTextInternal(final CharSequence newComposingText,
+    private void setComposingTextInternal( CharSequence newComposingText,
             final int newCursorPosition) {
+
+
+        //phonetic enable
         setComposingTextInternalWithBackgroundColor(newComposingText, newCursorPosition,
                 Color.TRANSPARENT, newComposingText.length());
     }
@@ -2307,6 +2375,7 @@ public final class InputLogic {
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE | Spanned.SPAN_COMPOSING);
             composingTextToBeSet = spannable;
         }
+
         mConnection.setComposingText(composingTextToBeSet, newCursorPosition);
     }
 

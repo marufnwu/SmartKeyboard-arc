@@ -136,6 +136,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         }
 
         final String applicationName = getResources().getString(getApplicationInfo().labelRes);
+
         mWelcomeScreen = findViewById(R.id.setup_welcome_screen);
         final TextView welcomeTitle = (TextView)findViewById(R.id.setup_welcome_title);
         welcomeTitle.setText(getString(R.string.setup_welcome_title, applicationName));

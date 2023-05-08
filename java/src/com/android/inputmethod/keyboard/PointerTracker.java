@@ -49,9 +49,9 @@ import javax.annotation.Nullable;
 public final class PointerTracker implements PointerTrackerQueue.Element,
         BatchInputArbiterListener {
     private static final String TAG = PointerTracker.class.getSimpleName();
-    private static final boolean DEBUG_EVENT = false;
-    private static final boolean DEBUG_MOVE_EVENT = false;
-    private static final boolean DEBUG_LISTENER = false;
+    private static final boolean DEBUG_EVENT = true;
+    private static final boolean DEBUG_MOVE_EVENT = true;
+    private static final boolean DEBUG_LISTENER = true;
     private static boolean DEBUG_MODE = DebugFlags.DEBUG_ENABLED || DEBUG_EVENT;
 
     static final class PointerTrackerParams {
@@ -1014,6 +1014,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     public void onLongPressed() {
+        Log.d(TAG, "onLongPressed: ");
         sTimerProxy.cancelLongPressTimersOf(this);
         if (isShowingMoreKeysPanel()) {
             return;

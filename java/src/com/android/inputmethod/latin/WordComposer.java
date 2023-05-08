@@ -16,6 +16,8 @@
 
 package com.android.inputmethod.latin;
 
+import android.util.Log;
+
 import com.android.inputmethod.annotations.UsedForTesting;
 import com.android.inputmethod.event.CombinerChain;
 import com.android.inputmethod.event.Event;
@@ -47,6 +49,7 @@ public final class WordComposer {
     public static final int CAPS_MODE_MANUAL_SHIFT_LOCKED = 0x3;
     public static final int CAPS_MODE_AUTO_SHIFTED = 0x5;
     public static final int CAPS_MODE_AUTO_SHIFT_LOCKED = 0x7;
+    private static final String TAG = WordComposer.class.getSimpleName();
 
     private CombinerChain mCombinerChain;
     private String mCombiningSpec; // Memory so that we don't uselessly recreate the combiner chain
@@ -76,6 +79,7 @@ public final class WordComposer {
     // code points.
     private int mCodePointSize;
     private int mCursorPositionWithinWord;
+    public static boolean isPhonetic = false;
 
     /**
      * Whether the composing word has the only first char capitalized.
@@ -93,7 +97,13 @@ public final class WordComposer {
         refreshTypedWordCache();
     }
 
+    public void setPhonetic(boolean phonetic) {
+        isPhonetic = phonetic;
+    }
+
     public ComposedData getComposedDataSnapshot() {
+        //phonetic enable
+
         return new ComposedData(getInputPointers(), isBatchMode(), mTypedWordCache.toString());
     }
 
@@ -108,12 +118,15 @@ public final class WordComposer {
                     mCombinerChain.getComposingWordWithCombiningFeedback().toString());
             mCombiningSpec = nonNullCombiningSpec;
         }
+
+
     }
 
     /**
      * Clear out the keys registered so far.
      */
     public void reset() {
+        Log.d(TAG, "reset: called");
         mCombinerChain.reset();
         mEvents.clear();
         mAutoCorrection = null;
@@ -121,15 +134,26 @@ public final class WordComposer {
         mDigitsCount = 0;
         mIsOnlyFirstCharCapitalized = false;
         mIsResumed = false;
+        Log.d(TAG, "reset: mIsResumed "+mIsResumed);
         mIsBatchMode = false;
         mCursorPositionWithinWord = 0;
         mRejectedBatchModeSuggestion = null;
+
         refreshTypedWordCache();
     }
 
     private final void refreshTypedWordCache() {
-        mTypedWordCache = mCombinerChain.getComposingWordWithCombiningFeedback();
+        if(isPhonetic){
+            mTypedWordCache = new PhoneticBangla().phonetic(new StringBuilder(mCombinerChain.getComposingWordWithCombiningFeedback()));
+        }else {
+            mTypedWordCache = mCombinerChain.getComposingWordWithCombiningFeedback();
+        }
+
+
+
         mCodePointSize = Character.codePointCount(mTypedWordCache, 0, mTypedWordCache.length());
+        Log.d(TAG, "refreshTypedWordCache: mIsResumed "+mCodePointSize);
+
     }
 
     /**

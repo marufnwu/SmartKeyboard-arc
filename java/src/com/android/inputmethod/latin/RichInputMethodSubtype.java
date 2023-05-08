@@ -46,6 +46,7 @@ public class RichInputMethodSubtype {
     private static final HashMap<Locale, Locale> sLocaleMap = initializeLocaleMap();
     private static final HashMap<Locale, Locale> initializeLocaleMap() {
         final HashMap<Locale, Locale> map = new HashMap<>();
+
         if (BuildCompatUtils.EFFECTIVE_SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Locale#forLanguageTag is available on API Level 21+.
             // TODO: Remove this workaround once when we become able to deal with "sr-Latn".
@@ -165,11 +166,13 @@ public class RichInputMethodSubtype {
         return SubtypeLocaleUtils.getKeyboardLayoutSetName(mSubtype);
     }
 
-    public static RichInputMethodSubtype getRichInputMethodSubtype(
-            @Nullable final InputMethodSubtype subtype) {
+    public static RichInputMethodSubtype getRichInputMethodSubtype(@Nullable final InputMethodSubtype subtype) {
         if (subtype == null) {
+            Log.d(TAG, "getRichInputMethodSubtype: null");
             return getNoLanguageSubtype();
         } else {
+            Log.d(TAG, "getRichInputMethodSubtype: "+subtype.getLocale());
+
             return new RichInputMethodSubtype(subtype);
         }
     }

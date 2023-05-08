@@ -18,6 +18,7 @@ package com.android.inputmethod.event;
 
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.inputmethod.latin.common.Constants;
 
@@ -43,6 +44,7 @@ public class CombinerChain {
     // The feedback on the composing state, as described above
     private SpannableStringBuilder mStateFeedback;
     private final ArrayList<Combiner> mCombiners;
+    private final String TAG = CombinerChain.class.getSimpleName();
 
     /**
      * Create an combiner chain.
@@ -118,6 +120,7 @@ public class CombinerChain {
                 }
             } else {
                 final CharSequence textToCommit = event.getTextToCommit();
+                Log.d(TAG, "applyProcessedEvent: "+textToCommit);
                 if (!TextUtils.isEmpty(textToCommit)) {
                     mCombinedText.append(textToCommit);
                 }
@@ -131,6 +134,7 @@ public class CombinerChain {
      * styling spans.
      */
     public CharSequence getComposingWordWithCombiningFeedback() {
+        Log.d(TAG, "getComposingWordWithCombiningFeedback: "+mCombinedText);
         final SpannableStringBuilder s = new SpannableStringBuilder(mCombinedText);
         return s.append(mStateFeedback);
     }

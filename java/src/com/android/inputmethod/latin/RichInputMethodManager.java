@@ -55,7 +55,7 @@ import javax.annotation.Nullable;
 // non final for easy mocking.
 public class RichInputMethodManager {
     private static final String TAG = RichInputMethodManager.class.getSimpleName();
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private RichInputMethodManager() {
         // This utility class is not publicly instantiable.
@@ -92,17 +92,21 @@ public class RichInputMethodManager {
     }
 
     private void initInternal(final Context context) {
+
         if (isInitialized()) {
+            Log.d(TAG, "initInternal: isInitialized");
             return;
         }
+        Log.d(TAG, "initInternal: not Initialized");
+
         mImmWrapper = new InputMethodManagerCompatWrapper(context);
         mContext = context;
-        mInputMethodInfoCache = new InputMethodInfoCache(
-                mImmWrapper.mImm, context.getPackageName());
+        mInputMethodInfoCache = new InputMethodInfoCache(mImmWrapper.mImm, context.getPackageName());
 
         // Initialize additional subtypes.
         SubtypeLocaleUtils.init(context);
-        final InputMethodSubtype[] additionalSubtypes = getAdditionalSubtypes();
+        InputMethodSubtype[] additionalSubtypes = getAdditionalSubtypes();
+
         mImmWrapper.mImm.setAdditionalInputMethodSubtypes(
                 getInputMethodIdOfThisIme(), additionalSubtypes);
 
@@ -357,6 +361,11 @@ public class RichInputMethodManager {
 
     public boolean hasMultipleEnabledIMEsOrSubtypes(final boolean shouldIncludeAuxiliarySubtypes) {
         final List<InputMethodInfo> enabledImis = mImmWrapper.mImm.getEnabledInputMethodList();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            enabledImis.forEach(inputMethodInfo -> {
+                Log.d(TAG, "hasMultipleEnabledIMEsOrSubtypes: "+inputMethodInfo.getPackageName());
+            });
+        }
         return hasMultipleEnabledSubtypes(shouldIncludeAuxiliarySubtypes, enabledImis);
     }
 
@@ -432,6 +441,7 @@ public class RichInputMethodManager {
     public InputMethodSubtype findSubtypeByLocale(final Locale locale) {
         // Find the best subtype based on a straightforward matching algorithm.
         // TODO: Use LocaleList#getFirstMatch() instead.
+
         final List<InputMethodSubtype> subtypes =
                 getMyEnabledInputMethodSubtypeList(true /* allowsImplicitlySelectedSubtypes */);
         final int count = subtypes.size();
@@ -489,6 +499,7 @@ public class RichInputMethodManager {
     }
 
     public void refreshSubtypeCaches() {
+        Log.d(TAG, "refreshSubtypeCaches: "+mImmWrapper.mImm.getCurrentInputMethodSubtype().getLocale());
         mInputMethodInfoCache.clear();
         updateCurrentSubtype(mImmWrapper.mImm.getCurrentInputMethodSubtype());
         updateShortcutIme();

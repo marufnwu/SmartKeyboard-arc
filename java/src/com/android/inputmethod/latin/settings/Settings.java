@@ -281,6 +281,7 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
 
     public static void writePrefAdditionalSubtypes(final SharedPreferences prefs,
             final String prefSubtypes) {
+        Log.d(TAG, "writePrefAdditionalSubtypes: "+prefSubtypes);
         prefs.edit().putString(PREF_CUSTOM_INPUT_STYLES, prefSubtypes).apply();
     }
 

@@ -39,6 +39,8 @@ public final class InputView extends FrameLayout {
         super(context, attrs, 0);
     }
 
+
+
     @Override
     protected void onFinishInflate() {
         final SuggestionStripView suggestionStripView =

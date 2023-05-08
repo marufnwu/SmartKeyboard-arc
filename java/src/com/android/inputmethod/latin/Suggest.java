@@ -16,7 +16,9 @@
 
 package com.android.inputmethod.latin;
 
+import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 
 import static com.android.inputmethod.latin.define.DecoderSpecificConstants.SHOULD_AUTO_CORRECT_USING_NON_WHITE_LISTED_SUGGESTION;
 import static com.android.inputmethod.latin.define.DecoderSpecificConstants.SHOULD_REMOVE_PREVIOUSLY_REJECTED_SUGGESTION;
@@ -113,12 +115,17 @@ public final class Suggest {
     private static ArrayList<SuggestedWordInfo> getTransformedSuggestedWordInfoList(
             final WordComposer wordComposer, final SuggestionResults results,
             final int trailingSingleQuotesCount, final Locale defaultLocale) {
+
         final boolean shouldMakeSuggestionsAllUpperCase = wordComposer.isAllUpperCase()
                 && !wordComposer.isResumed();
         final boolean isOnlyFirstCharCapitalized =
                 wordComposer.isOrWillBeOnlyFirstCharCapitalized();
 
         final ArrayList<SuggestedWordInfo> suggestionsContainer = new ArrayList<>(results);
+
+
+        Log.d(TAG, "getTransformedSuggestedWordInfoList: "+suggestionsContainer.size());
+
         final int suggestionsCount = suggestionsContainer.size();
         if (isOnlyFirstCharCapitalized || shouldMakeSuggestionsAllUpperCase
                 || 0 != trailingSingleQuotesCount) {
@@ -155,6 +162,10 @@ public final class Suggest {
             final int inputStyleIfNotPrediction, final boolean isCorrectionEnabled,
             final int sequenceNumber, final OnGetSuggestedWordsCallback callback) {
         final String typedWordString = wordComposer.getTypedWord();
+
+        Log.d(TAG, "getSuggestedWordsForNonBatchInput: "+typedWordString);
+
+
         final int trailingSingleQuotesCount =
                 StringUtils.getTrailingSingleQuotesCount(typedWordString);
         final String consideredWord = trailingSingleQuotesCount > 0
@@ -164,7 +175,13 @@ public final class Suggest {
         final SuggestionResults suggestionResults = mDictionaryFacilitator.getSuggestionResults(
                 wordComposer.getComposedDataSnapshot(), ngramContext, keyboard,
                 settingsValuesForSuggestion, SESSION_ID_TYPING, inputStyleIfNotPrediction);
+
+
         final Locale locale = mDictionaryFacilitator.getLocale();
+        //final Locale locale = new Locale("bn");
+
+
+
         final ArrayList<SuggestedWordInfo> suggestionsContainer =
                 getTransformedSuggestedWordInfoList(wordComposer, suggestionResults,
                         trailingSingleQuotesCount, locale);
@@ -174,6 +191,8 @@ public final class Suggest {
         for (final SuggestedWordInfo info : suggestionsContainer) {
             // Search for the best dictionary, defined as the first one with the highest match
             // quality we can find.
+            Log.d(TAG, "getSuggestedWordsForNonBatchInput: "+info.mWord);
+
             if (!foundInDictionary && typedWordString.equals(info.mWord)) {
                 // Use this source if the old match had lower quality than this match
                 sourceDictionaryOfRemovedWord = info.mSourceDict;
@@ -291,9 +310,14 @@ public final class Suggest {
             final SettingsValuesForSuggestion settingsValuesForSuggestion,
             final int inputStyle, final int sequenceNumber,
             final OnGetSuggestedWordsCallback callback) {
+
+        Log.d(TAG, "getSuggestedWordsForBatchInput: "+wordComposer.getComposedDataSnapshot());
+
         final SuggestionResults suggestionResults = mDictionaryFacilitator.getSuggestionResults(
                 wordComposer.getComposedDataSnapshot(), ngramContext, keyboard,
                 settingsValuesForSuggestion, SESSION_ID_GESTURE, inputStyle);
+
+
         // For transforming words that don't come from a dictionary, because it's our best bet
         final Locale locale = mDictionaryFacilitator.getLocale();
         final ArrayList<SuggestedWordInfo> suggestionsContainer =
@@ -335,6 +359,14 @@ public final class Suggest {
         // modify inputType such in getSuggestedWordsForNonBatchInput.
         final SuggestedWordInfo pseudoTypedWordInfo = suggestionsContainer.isEmpty() ? null
                 : suggestionsContainer.get(0);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Log.d(TAG, "getSuggestedWordsForBatchInput: "+ suggestionResults.size());
+
+            suggestionResults.mRawSuggestions.forEach(s->{
+                Log.d(TAG, "getSuggestedWordsForBatchInput: "+s.getWord());
+            });
+        }
 
         callback.onGetSuggestedWords(new SuggestedWords(suggestionsContainer,
                 suggestionResults.mRawSuggestions,

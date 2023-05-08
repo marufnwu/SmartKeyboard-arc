@@ -39,7 +39,6 @@ import com.android.inputmethod.keyboard.internal.UniqueKeysCache;
 import com.android.inputmethod.latin.InputAttributes;
 import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
-import com.android.inputmethod.latin.define.DebugFlags;
 import com.android.inputmethod.latin.utils.InputTypeUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
 import com.android.inputmethod.latin.utils.SubtypeLocaleUtils;
@@ -185,12 +184,17 @@ public final class KeyboardLayoutSet {
             keyboardLayoutSetElementId = baseKeyboardLayoutSetElementId;
             break;
         }
+        Log.d(TAG, "getKeyboard: "+keyboardLayoutSetElementId);
 
         ElementParams elementParams = mParams.mKeyboardLayoutSetElementIdToParamsMap.get(
                 keyboardLayoutSetElementId);
+
         if (elementParams == null) {
+            Log.d(TAG, "getKeyboard: elementParams null");
             elementParams = mParams.mKeyboardLayoutSetElementIdToParamsMap.get(
                     KeyboardId.ELEMENT_ALPHABET);
+        }else{
+            Log.d(TAG, "getKeyboard: elementParams not null");
         }
         // Note: The keyboard for each shift state, and mode are represented as an elementName
         // attribute in a keyboard_layout_set XML file.  Also each keyboard layout XML resource is
@@ -199,7 +203,10 @@ public final class KeyboardLayoutSet {
 
         mParams.mIsSplitLayoutEnabled = mParams.mIsSplitLayoutEnabledByUser
                 && elementParams.mSupportsSplitLayout;
+
         final KeyboardId id = new KeyboardId(keyboardLayoutSetElementId, mParams);
+
+        Log.d(TAG, "getKeyboard: KeyboardId "+id);
         try {
             return getKeyboard(elementParams, id);
         } catch (final RuntimeException e) {
@@ -219,11 +226,12 @@ public final class KeyboardLayoutSet {
             return cachedKeyboard;
         }
 
-        final KeyboardBuilder<KeyboardParams> builder =
-                new KeyboardBuilder<>(mContext, new KeyboardParams(sUniqueKeysCache));
+        final KeyboardBuilder<KeyboardParams> builder = new KeyboardBuilder<>(mContext, new KeyboardParams(sUniqueKeysCache));
+
         sUniqueKeysCache.setEnabled(id.isAlphabetKeyboard());
         builder.setAllowRedundantMoreKes(elementParams.mAllowRedundantMoreKeys);
         final int keyboardXmlId = elementParams.mKeyboardXmlId;
+
         builder.load(keyboardXmlId, id);
         if (mParams.mDisableTouchPositionCorrectionDataForTest) {
             builder.disableTouchPositionCorrectionDataForTest();
@@ -391,8 +399,8 @@ public final class KeyboardLayoutSet {
         }
 
         private static int getXmlId(final Resources resources, final String keyboardLayoutSetName) {
-            final String packageName = resources.getResourcePackageName(
-                    R.xml.keyboard_layout_set_qwerty);
+            final String packageName = resources.getResourcePackageName(R.xml.keyboard_layout_set_qwerty);
+
             return resources.getIdentifier(keyboardLayoutSetName, "xml", packageName);
         }
 

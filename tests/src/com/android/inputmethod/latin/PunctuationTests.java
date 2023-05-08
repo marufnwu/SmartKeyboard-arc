@@ -19,8 +19,6 @@ package com.android.inputmethod.latin;
 import android.provider.Settings.Secure;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.android.inputmethod.latin.R;
-
 @LargeTest
 public class PunctuationTests extends InputTestsBase {
 

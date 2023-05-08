@@ -28,7 +28,6 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,7 +59,6 @@ import com.android.inputmethod.latin.settings.DebugSettings;
 import com.android.inputmethod.latin.utils.LanguageOnSpacebarUtils;
 import com.android.inputmethod.latin.utils.TypefaceUtils;
 
-import java.util.Locale;
 import java.util.WeakHashMap;
 
 import javax.annotation.Nonnull;
@@ -170,6 +168,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     private final int mLanguageOnSpacebarHorizontalMargin;
 
     private MainKeyboardAccessibilityDelegate mAccessibilityDelegate;
+
+
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
@@ -391,6 +391,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         // Remove any pending messages, except dismissing preview and key repeat.
         mTimerHandler.cancelLongPressTimers();
         super.setKeyboard(keyboard);
+
         mKeyDetector.setKeyboard(
                 keyboard, -getPaddingLeft(), -getPaddingTop() + getVerticalCorrection());
         PointerTracker.setKeyDetector(mKeyDetector);
@@ -469,6 +470,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         if (withPreview && !key.noKeyPreview()) {
             showKeyPreview(key);
         }
+
+
     }
 
     private void showKeyPreview(@Nonnull final Key key) {
