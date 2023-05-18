@@ -122,7 +122,10 @@ public class CombinerChain {
                 final CharSequence textToCommit = event.getTextToCommit();
                 Log.d(TAG, "applyProcessedEvent: "+textToCommit);
                 if (!TextUtils.isEmpty(textToCommit)) {
+                    Log.d(TAG, "applyProcessedEvent: before "+mCombinedText);
                     mCombinedText.append(textToCommit);
+                    Log.d(TAG, "applyProcessedEvent: before "+mCombinedText);
+
                 }
             }
         }

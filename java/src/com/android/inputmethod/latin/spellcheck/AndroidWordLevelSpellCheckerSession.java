@@ -284,6 +284,7 @@ public abstract class AndroidWordLevelSpellCheckerSession extends Session {
             final int[] codePoints = StringUtils.toCodePointArray(text);
             final int[] coordinates;
             coordinates = keyboard.getCoordinates(codePoints);
+            Log.d(TAG, "onGetSuggestionsInternal: ");
             composer.setComposingWord(codePoints, coordinates);
             // TODO: Don't gather suggestions if the limit is <= 0 unless necessary
             final SuggestionResults suggestionResults = mService.getSuggestionResults(

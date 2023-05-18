@@ -120,6 +120,8 @@ public final class WordComposer {
         }
 
 
+
+
     }
 
     /**
@@ -143,6 +145,7 @@ public final class WordComposer {
     }
 
     private final void refreshTypedWordCache() {
+        Log.d(TAG, "refreshTypedWordCache: "+mCombinerChain.getComposingWordWithCombiningFeedback());
         if(isPhonetic){
             mTypedWordCache = new PhoneticBangla().phonetic(new StringBuilder(mCombinerChain.getComposingWordWithCombiningFeedback()));
         }else {
@@ -152,7 +155,6 @@ public final class WordComposer {
 
 
         mCodePointSize = Character.codePointCount(mTypedWordCache, 0, mTypedWordCache.length());
-        Log.d(TAG, "refreshTypedWordCache: mIsResumed "+mCodePointSize);
 
     }
 
@@ -200,6 +202,7 @@ public final class WordComposer {
      * @param event the event to apply. Must not be null.
      */
     public void applyProcessedEvent(final Event event) {
+        Log.d(TAG, "applyProcessedEvent: "+event.mText);
         mCombinerChain.applyProcessedEvent(event);
         final int primaryCode = event.mCodePoint;
         final int keyX = event.mX;
@@ -256,6 +259,7 @@ public final class WordComposer {
      * @return true if the cursor is still inside the composing word, false otherwise.
      */
     public boolean moveCursorByAndReturnIfInsideComposingWord(final int expectedMoveAmount) {
+        Log.d(TAG, "moveCursorByAndReturnIfInsideComposingWord: "+expectedMoveAmount);
         int actualMoveAmount = 0;
         int cursorPos = mCursorPositionWithinWord;
         // TODO: Don't make that copy. We can do this directly from mTypedWordCache.
@@ -312,6 +316,8 @@ public final class WordComposer {
      * @param coordinates the x, y coordinates of the key in the CoordinateUtils format
      */
     public void setComposingWord(final int[] codePoints, final int[] coordinates) {
+        Log.d(TAG, "setComposingWord: "+codePoints.length);
+
         reset();
         final int length = codePoints.length;
         for (int i = 0; i < length; ++i) {
@@ -319,6 +325,7 @@ public final class WordComposer {
                     processEvent(Event.createEventForCodePointFromAlreadyTypedText(codePoints[i],
                     CoordinateUtils.xFromArray(coordinates, i),
                     CoordinateUtils.yFromArray(coordinates, i)));
+
             applyProcessedEvent(processedEvent);
         }
         mIsResumed = true;
@@ -329,6 +336,7 @@ public final class WordComposer {
      * @return the word that was typed so far. Never returns null.
      */
     public String getTypedWord() {
+        Log.d(TAG, "getTypedWord: mTypedWordCache "+mTypedWordCache);
         return mTypedWordCache.toString();
     }
 

@@ -71,6 +71,7 @@ import javax.annotation.Nonnull;
  * This class manages the input logic.
  */
 public final class InputLogic {
+    private StringBuilder phoneticComposer = new StringBuilder();
     private static final String TAG = InputLogic.class.getSimpleName();
 
     // TODO : Remove this member when we can.
@@ -186,6 +187,7 @@ public final class InputLogic {
         Log.d(TAG, "onSubtypeChanged: ");
         finishInput();
         startInput(combiningSpec, settingsValues);
+
     }
 
     /**
@@ -807,7 +809,6 @@ public final class InputLogic {
                     resetEntireInputState(mConnection.getExpectedSelectionStart(),
                             mConnection.getExpectedSelectionEnd(), true /* clearSuggestionStrip */);
                 } else {
-
                     commitTyped(inputTransaction.mSettingsValues, LastComposedWord.NOT_A_SEPARATOR);
                 }
             }
@@ -889,9 +890,12 @@ public final class InputLogic {
         if (isComposingWord) {
             mWordComposer.applyProcessedEvent(event);
             // If it's the first letter, make note of auto-caps state
+
             if (mWordComposer.isSingleLetter()) {
                 mWordComposer.setCapitalizedModeAtStartComposingTime(inputTransaction.mShiftState);
             }
+
+            Log.d(TAG, "handleNonSeparatorEvent: isComposingWord "+mWordComposer.getTypedWord());
             setComposingTextInternal(getTextWithUnderline(mWordComposer.getTypedWord()), 1);
         } else {
             final boolean swapWeakSpace = tryStripSpaceAndReturnWhetherShouldSwapInstead(event,
@@ -900,8 +904,14 @@ public final class InputLogic {
             if (swapWeakSpace && trySwapSwapperAndSpace(event, inputTransaction)) {
                 mSpaceState = SpaceState.WEAK;
             } else {
-                sendKeyCodePoint(settingsValues, codePoint);
-                //sendPhoneticKeyCodePoint(settingsValues, codePoint, mWordComposer.getTypedWord());
+                Log.d(TAG, "handleNonSeparatorEvent: not ComposingWord "+codePoint);
+
+                if(WordComposer.isPhonetic){
+                    sendPhoneticKeyCodePoint(settingsValues, codePoint, phoneticComposer.toString());
+                }else {
+                    sendKeyCodePoint(settingsValues, codePoint);
+                }
+
             }
         }
         inputTransaction.setRequiresUpdateSuggestions();
@@ -923,9 +933,16 @@ public final class InputLogic {
             // relying on this behavior so we continue to support it for older apps.
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER);
         } else {
-            Log.d(TAG, "sendPhoneticKeyCodePoint: "+typedWord);
-            StringBuilder phoneticKey = phoneticBangla.phonetic(new StringBuilder(typedWord));
-            mConnection.commitText(phoneticKey, 1);
+            phoneticComposer.append(StringUtils.newSingleCodePointString(codePoint));
+            Log.d(TAG, "sendPhoneticKeyCodePoint:  "+phoneticComposer.toString());
+            StringBuilder phoneticKey = phoneticBangla.phonetic(new StringBuilder(phoneticComposer.toString()));
+            Log.d(TAG, "sendPhoneticKeyCodePoint: phoneticKey "+phoneticKey);
+
+
+            mWordComposer.applyProcessedEvent(Event.createEventForCodePointFromUnknownSource(codePoint));
+            Log.d(TAG, "sendPhoneticKeyCodePoint: "+mWordComposer.getTypedWord());
+
+            mConnection.setComposingText(mWordComposer.getTypedWord(), 1);
         }
     }
 
@@ -1576,6 +1593,7 @@ public final class InputLogic {
             final boolean forStartInput,
             // TODO: remove this argument, put it into settingsValues
             final int currentKeyboardScriptId) {
+        Log.d(TAG, "restartSuggestionsOnWordTouchedByCursor: called");
         // HACK: We may want to special-case some apps that exhibit bad behavior in case of
         // recorrection. This is a temporary, stopgap measure that will be removed later.
         // TODO: remove this.
@@ -1614,6 +1632,7 @@ public final class InputLogic {
         }
         // If for some strange reason (editor bug or so) we measure the text before the cursor as
         // longer than what the entire text is supposed to be, the safe thing to do is bail out.
+        if(true) return; //changes
         if (range.mHasUrlSpans) return; // If there are links, we don't resume suggestions. Making
         // edits to a linkified text through batch commands would ruin the URL spans, and unless
         // we take very complicated steps to preserve the whole link, we can't do things right so
@@ -1647,6 +1666,7 @@ public final class InputLogic {
             }
         }
         final int[] codePoints = StringUtils.toCodePointArray(typedWordString);
+        Log.d(TAG, "restartSuggestionsOnWordTouchedByCursor: setComposingWord called");
         mWordComposer.setComposingWord(codePoints,
                 mLatinIME.getCoordinatesForCurrentKeyboard(codePoints));
         mWordComposer.setCursorPositionWithinWord(
@@ -1694,6 +1714,7 @@ public final class InputLogic {
      */
     private void revertCommit(final InputTransaction inputTransaction,
             final SettingsValues settingsValues) {
+        Log.d(TAG, "revertCommit: ");
         final CharSequence originallyTypedWord = mLastComposedWord.mTypedWord;
         final String originallyTypedWordString =
                 originallyTypedWord != null ? originallyTypedWord.toString() : "";
