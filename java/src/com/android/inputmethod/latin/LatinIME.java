@@ -31,7 +31,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.media.AudioManager;
 import android.os.Build;
@@ -40,6 +46,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.text.TextPaint;
 import android.util.Log;
 import android.util.PrintWriterPrinter;
 import android.util.Printer;
@@ -48,6 +55,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
@@ -78,6 +86,7 @@ import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.android.inputmethod.keyboard.MainKeyboardView;
 import com.android.inputmethod.latin.Suggest.OnGetSuggestedWordsCallback;
 import com.android.inputmethod.latin.SuggestedWords.SuggestedWordInfo;
+import com.android.inputmethod.latin.common.CodePointUtils;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.common.CoordinateUtils;
 import com.android.inputmethod.latin.common.InputPointers;
@@ -593,81 +602,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         JniUtils.loadNativeLibrary();
     }
 
-    private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Make your selection");
 
-        final View customLayout = getLayoutInflater().inflate(R.layout.dialog_radio_group, null);
-
-        RadioGroup grp = customLayout.findViewById(R.id.dialog_radio_group);
-
-        int subTypes = mRichImm.getInputMethodInfoOfThisIme().getSubtypeCount();
-        List<InputMethodSubtype> listOfInputMethods = new ArrayList<>();
-
-        for (int i=0; i<subTypes; i++){
-            InputMethodSubtype subType = mRichImm.getInputMethodInfoOfThisIme().getSubtypeAt(i);
-            listOfInputMethods.add(subType);
-            RadioButton btn = new RadioButton(this);
-            String name = "";
-
-
-
-
-            switch (subType.getLocale().toLowerCase()){
-                case "bn":
-                    name = "Bangla Phonetic";
-                    break;
-                case "bn_bd":
-                    name = "Bangla Akkhor";
-                    break;
-                default:
-                    name = "English";
-            }
-
-            btn.setText(name);
-
-
-            grp.addView(btn);
-
-            if(Objects.equals(subType.getLocale(), mRichImm.getCurrentSubtype().getRawSubtype().getLocale())){
-                grp.check(btn.getId());
-            }else {
-                Log.d(TAG, "subType: not matched");
-            }
-        }
-
-        builder.setView(customLayout);
-
-
-        AlertDialog alert = builder.create();
-        alert.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        grp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int index = group.indexOfChild(group.findViewById(checkedId));
-                //switchLanguage(listOfInputMethods.get(index));
-                mHandler.postSwitchLanguage(listOfInputMethods.get(index));
-
-                alert.dismiss();
-            }
-        });
-
-
-
-        Window window = alert.getWindow();
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.token = mInputView.getWindowToken();
-        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
-        window.setAttributes(lp);
-        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        alert.show();
-    }
 
 
 
@@ -1506,22 +1441,23 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         if (isShowingOptionDialog()) return false;
         switch (requestCode) {
         case Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER:
-            showDialog();
-//            if (mRichImm.hasMultipleEnabledIMEsOrSubtypes(true /* include aux subtypes */)) {
-//                mRichImm.getInputMethodManager().showInputMethodPicker();
-//
-//                return true;
-//            }
+            //showDialog();
+            if (mRichImm.hasMultipleEnabledIMEsOrSubtypes(true /* include aux subtypes */)) {
+                mRichImm.getInputMethodManager().showInputMethodPicker();
+
+                return true;
+            }
             return true;
         }
         return false;
     }
 
-    private boolean isShowingOptionDialog() {
+    protected boolean isShowingOptionDialog() {
         return mOptionsDialog != null && mOptionsDialog.isShowing();
     }
 
     public void switchLanguage(final InputMethodSubtype subtype) {
+        Log.d(TAG, "switchLanguage: "+subtype);
         final IBinder token = getWindow().getWindow().getAttributes().token;
         mRichImm.setInputMethodAndSubtype(token, subtype);
     }
@@ -1891,6 +1827,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     // Hooks for hardware keyboard
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
+
         if (mEmojiAltPhysicalKeyDetector == null) {
             mEmojiAltPhysicalKeyDetector = new EmojiAltPhysicalKeyDetector(
                     getApplicationContext().getResources());
@@ -2138,4 +2075,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                     visible ? Color.BLACK : Color.TRANSPARENT);
         }
     }
+
+
+
+
 }

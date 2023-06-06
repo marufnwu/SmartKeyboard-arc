@@ -302,7 +302,7 @@ public final class KeyboardLayoutSet {
             return this;
         }
 
-        public Builder setSubtype(@Nonnull final RichInputMethodSubtype subtype) {
+        public Builder  setSubtype(@Nonnull final RichInputMethodSubtype subtype) {
             final boolean asciiCapable = InputMethodSubtypeCompatUtils.isAsciiCapable(subtype);
             // TODO: Consolidate with {@link InputAttributes}.
             @SuppressWarnings("deprecation")
@@ -407,6 +407,10 @@ public final class KeyboardLayoutSet {
         private void parseKeyboardLayoutSet(final Resources res, final int resId)
                 throws XmlPullParserException, IOException {
             final XmlResourceParser parser = res.getXml(resId);
+            Log.d(TAG, "parseKeyboardLayoutSet: "+parser.getName());
+
+
+
             try {
                 while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
                     final int event = parser.next();

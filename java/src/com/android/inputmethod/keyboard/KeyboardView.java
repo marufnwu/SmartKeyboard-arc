@@ -30,6 +30,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.android.inputmethod.keyboard.internal.KeyDrawParams;
@@ -382,6 +383,8 @@ public class KeyboardView extends View {
     // Draw key top visuals.
     protected void onDrawKeyTopVisuals(@Nonnull final Key key, @Nonnull final Canvas canvas,
             @Nonnull final Paint paint, @Nonnull final KeyDrawParams params) {
+
+
         final int keyWidth = key.getDrawWidth();
         final int keyHeight = key.getHeight();
         final float centerX = keyWidth * 0.5f;

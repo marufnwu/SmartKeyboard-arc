@@ -27,6 +27,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.inputmethod.keyboard.internal.KeyDrawParams;
 import com.android.inputmethod.keyboard.internal.KeySpecParser;
@@ -238,6 +239,9 @@ public class Key implements Comparable<Key> {
         mHitBox.set(x, y, x + width + 1, y + height);
         mKeyVisualAttributes = null;
 
+        Log.d("KeyGen", "Key: ");
+
+
         mHashCode = computeHashCode(this);
     }
 
@@ -255,6 +259,7 @@ public class Key implements Comparable<Key> {
     public Key(@Nullable final String keySpec, @Nonnull final TypedArray keyAttr,
             @Nonnull final KeyStyle style, @Nonnull final KeyboardParams params,
             @Nonnull final KeyboardRow row) {
+
         mHorizontalGap = isSpacer() ? 0 : params.mHorizontalGap;
         mVerticalGap = params.mVerticalGap;
 
@@ -325,15 +330,23 @@ public class Key implements Comparable<Key> {
                     R.styleable.Keyboard_Key_additionalMoreKeys);
         }
         moreKeys = MoreKeySpec.insertAdditionalMoreKeys(moreKeys, additionalMoreKeys);
+
+
+
         if (moreKeys != null) {
+            Log.d("MoreKeysLog", "Not Null Key: "+keySpec);
+
             actionFlags |= ACTION_FLAGS_ENABLE_LONG_PRESS;
             mMoreKeys = new MoreKeySpec[moreKeys.length];
             for (int i = 0; i < moreKeys.length; i++) {
+                Log.d("MoreKeysLog", "Key "+keySpec +" Sub key "+moreKeys[i]);
                 mMoreKeys[i] = new MoreKeySpec(moreKeys[i], needsToUpcase, localeForUpcasing);
             }
         } else {
             mMoreKeys = null;
+            Log.d("MoreKeysLog", "Null Key: "+keySpec);
         }
+
         mActionFlags = actionFlags;
 
         mIconId = KeySpecParser.getIconId(keySpec);
@@ -359,6 +372,7 @@ public class Key implements Comparable<Key> {
         } else {
             final String hintLabel = style.getString(
                     keyAttr, R.styleable.Keyboard_Key_keyHintLabel);
+
             mHintLabel = needsToUpcase
                     ? StringUtils.toTitleCaseOfKeyLabel(hintLabel, localeForUpcasing)
                     : hintLabel;
@@ -440,6 +454,8 @@ public class Key implements Comparable<Key> {
         mPressed = key.mPressed;
         mEnabled = key.mEnabled;
     }
+
+
 
     @Nonnull
     public static Key removeRedundantMoreKeys(@Nonnull final Key key,
@@ -548,14 +564,14 @@ public class Key implements Comparable<Key> {
 
     private static String backgroundName(final int backgroundType) {
         switch (backgroundType) {
-        case BACKGROUND_TYPE_EMPTY: return "empty";
-        case BACKGROUND_TYPE_NORMAL: return "normal";
-        case BACKGROUND_TYPE_FUNCTIONAL: return "functional";
-        case BACKGROUND_TYPE_STICKY_OFF: return "stickyOff";
-        case BACKGROUND_TYPE_STICKY_ON: return "stickyOn";
-        case BACKGROUND_TYPE_ACTION: return "action";
-        case BACKGROUND_TYPE_SPACEBAR: return "spacebar";
-        default: return null;
+            case BACKGROUND_TYPE_EMPTY: return "empty";
+            case BACKGROUND_TYPE_NORMAL: return "normal";
+            case BACKGROUND_TYPE_FUNCTIONAL: return "functional";
+            case BACKGROUND_TYPE_STICKY_OFF: return "stickyOff";
+            case BACKGROUND_TYPE_STICKY_ON: return "stickyOn";
+            case BACKGROUND_TYPE_ACTION: return "action";
+            case BACKGROUND_TYPE_SPACEBAR: return "spacebar";
+            default: return null;
         }
     }
 

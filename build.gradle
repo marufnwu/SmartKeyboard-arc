@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:7.2.2'
     }
 }
 
@@ -21,7 +21,7 @@ android {
 
     // Required if using classes in android.test.mock
     useLibrary 'android.test.mock'
-
+    namespace 'com.android.inputmethod.latin'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 33
@@ -89,6 +89,8 @@ android {
             path "native/jni/CMakeLists.txt"
         }
     }
+    ndkVersion '25.1.8937393'
+    //ndkVersion '25.1.8937393'
 }
 
 repositories {

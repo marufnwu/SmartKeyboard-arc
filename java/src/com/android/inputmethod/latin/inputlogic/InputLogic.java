@@ -907,7 +907,7 @@ public final class InputLogic {
                 Log.d(TAG, "handleNonSeparatorEvent: not ComposingWord "+codePoint);
 
                 if(WordComposer.isPhonetic){
-                    sendPhoneticKeyCodePoint(settingsValues, codePoint, phoneticComposer.toString());
+                    sendPhoneticKeyCodePoint(settingsValues, codePoint);
                 }else {
                     sendKeyCodePoint(settingsValues, codePoint);
                 }
@@ -917,7 +917,7 @@ public final class InputLogic {
         inputTransaction.setRequiresUpdateSuggestions();
     }
 
-    private void sendPhoneticKeyCodePoint(final SettingsValues settingsValues, final int codePoint, String typedWord) {
+    private void sendPhoneticKeyCodePoint(final SettingsValues settingsValues, final int codePoint) {
         // TODO: Remove this special handling of digit letters.
         // For backward compatibility. See {@link InputMethodService#sendKeyChar(char)}.
         if (codePoint >= '0' && codePoint <= '9') {
@@ -933,12 +933,6 @@ public final class InputLogic {
             // relying on this behavior so we continue to support it for older apps.
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER);
         } else {
-            phoneticComposer.append(StringUtils.newSingleCodePointString(codePoint));
-            Log.d(TAG, "sendPhoneticKeyCodePoint:  "+phoneticComposer.toString());
-            StringBuilder phoneticKey = phoneticBangla.phonetic(new StringBuilder(phoneticComposer.toString()));
-            Log.d(TAG, "sendPhoneticKeyCodePoint: phoneticKey "+phoneticKey);
-
-
             mWordComposer.applyProcessedEvent(Event.createEventForCodePointFromUnknownSource(codePoint));
             Log.d(TAG, "sendPhoneticKeyCodePoint: "+mWordComposer.getTypedWord());
 

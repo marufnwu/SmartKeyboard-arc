@@ -22,12 +22,16 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.inputmethod.keyboard.Key;
 import com.android.inputmethod.latin.R;
+import com.android.inputmethod.utils.SlidingLocaleDrawable;
 
 import java.util.HashSet;
 
@@ -35,6 +39,7 @@ import java.util.HashSet;
  * The pop up key preview view.
  */
 public class KeyPreviewView extends TextView {
+    private static final String TAG = "KeyPreviewView";
     public static final int POSITION_MIDDLE = 0;
     public static final int POSITION_LEFT = 1;
     public static final int POSITION_RIGHT = 2;
@@ -54,18 +59,36 @@ public class KeyPreviewView extends TextView {
     public void setPreviewVisual(final Key key, final KeyboardIconsSet iconsSet,
             final KeyDrawParams drawParams) {
         // What we show as preview should match what we show on a key top in onDraw().
+
         final int iconId = key.getIconId();
         if (iconId != KeyboardIconsSet.ICON_UNDEFINED) {
             setCompoundDrawables(null, null, null, key.getPreviewIcon(iconsSet));
             setText(null);
+            Log.d(TAG, "setPreviewVisual: null");
             return;
         }
+
+
 
         setCompoundDrawables(null, null, null, null);
         setTextColor(drawParams.mPreviewTextColor);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, key.selectPreviewTextSize(drawParams));
         setTypeface(key.selectPreviewTypeface(drawParams));
         // TODO Should take care of temporaryShiftLabel here.
+        final Drawable background = getBackground();
+        if (background == null) {
+            return;
+        }
+//        final int maxWidth = background.getIntrinsicWidth() - mBackgroundPadding.left
+//                - mBackgroundPadding.right;
+
+//        TextView t = new TextView(getContext());
+//        t.setText("Hi");
+//        t.setTextScaleX(1.0f);
+//
+//        Log.d(TAG, "setPreviewVisual: textWidth "+t.getX()+" MaxWidth "+t.getY());
+//        this.addView(t);
+
         setTextAndScaleX(key.getPreviewLabel());
     }
 
@@ -85,6 +108,8 @@ public class KeyPreviewView extends TextView {
         final int maxWidth = background.getIntrinsicWidth() - mBackgroundPadding.left
                 - mBackgroundPadding.right;
         final float width = getTextWidth(text, getPaint());
+
+
         if (width <= maxWidth) {
             sNoScaleXTextSet.add(text);
             return;

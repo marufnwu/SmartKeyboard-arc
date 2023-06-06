@@ -48,11 +48,26 @@ import javax.annotation.Nullable;
 
 public final class PointerTracker implements PointerTrackerQueue.Element,
         BatchInputArbiterListener {
+
+    interface OnSpaceKeyMove{
+        void spaceKeyMove(final int x, final int y, final long eventTime, final MotionEvent me);
+    }
+
     private static final String TAG = PointerTracker.class.getSimpleName();
     private static final boolean DEBUG_EVENT = true;
     private static final boolean DEBUG_MOVE_EVENT = true;
     private static final boolean DEBUG_LISTENER = true;
     private static boolean DEBUG_MODE = DebugFlags.DEBUG_ENABLED || DEBUG_EVENT;
+
+    public OnSpaceKeyMove onSpaceKeyMove;
+
+    public OnSpaceKeyMove getOnSpaceKeyMove() {
+        return onSpaceKeyMove;
+    }
+
+    public void setOnSpaceKeyMove(OnSpaceKeyMove onSpaceKeyMove) {
+        this.onSpaceKeyMove = onSpaceKeyMove;
+    }
 
     static final class PointerTrackerParams {
         public final boolean mKeySelectionByDraggingFinger;
@@ -417,6 +432,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void setPressedKeyGraphics(@Nullable final Key key, final long eventTime) {
+        Log.d(TAG, "setPressedKeyGraphics: "+key.getCode());
         if (key == null) {
             return;
         }
@@ -431,9 +447,12 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         final boolean noKeyPreview = sInGesture || needsToSuppressKeyPreviewPopup(eventTime);
         sDrawingProxy.onKeyPressed(key, !noKeyPreview);
 
+
         if (key.isShift()) {
             for (final Key shiftKey : mKeyboard.mShiftKeys) {
                 if (shiftKey != key) {
+
+
                     sDrawingProxy.onKeyPressed(shiftKey, false /* withPreview */);
                 }
             }
@@ -443,10 +462,13 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             final int altCode = key.getAltCode();
             final Key altKey = mKeyboard.getKey(altCode);
             if (altKey != null) {
+
                 sDrawingProxy.onKeyPressed(altKey, false /* withPreview */);
             }
+
             for (final Key k : mKeyboard.mAltCodeKeysWhileTyping) {
                 if (k != key && k.getAltCode() == altCode) {
+                    Log.d(TAG, "setPressedKeyGraphics: "+!noKeyPreview);
                     sDrawingProxy.onKeyPressed(k, false /* withPreview */);
                 }
             }
@@ -473,7 +495,62 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         mDownTime = eventTime;
         CoordinateUtils.set(mDownCoordinates, x, y);
         mBogusMoveEventDetector.onDownKey();
+
+
+
+
+
+
         return onMoveToNewKey(onMoveKeyInternal(x, y), x, y);
+    }
+
+    private void test(){
+        sTimerProxy.cancelLongPressTimersOf(this);
+        if (isShowingMoreKeysPanel()) {
+            return;
+        }
+        final Key key = getKey();
+        if (key == null) {
+            return;
+        }
+
+
+
+        if (key.hasNoPanelAutoMoreKey()) {
+            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey");
+            cancelKeyTracking();
+            final int moreKeyCode = key.getMoreKeys()[0].mCode;
+            sListener.onPressKey(moreKeyCode, 0 /* repeatCont */, true /* isSinglePointer */);
+            sListener.onCodeInput(moreKeyCode, Constants.NOT_A_COORDINATE,
+                    Constants.NOT_A_COORDINATE, false /* isKeyRepeat */);
+            sListener.onReleaseKey(moreKeyCode, false /* withSliding */);
+            return;
+        }else{
+            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey not");
+
+        }
+        final int code = key.getCode();
+        if (code == Constants.CODE_SPACE || code == Constants.CODE_LANGUAGE_SWITCH) {
+            // Long pressing the space key invokes IME switcher dialog.
+            if (sListener.onCustomRequest(Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER)) {
+                cancelKeyTracking();
+                sListener.onReleaseKey(code, false /* withSliding */);
+                return;
+            }
+        }
+
+        setReleasedKeyGraphics(key, false /* withAnimation */);
+
+        final MoreKeysPanel moreKeysPanel =  /*null; */ sDrawingProxy.showMoreKeysKeyboard(key, this);
+        if (moreKeysPanel == null) {
+            return;
+        }
+
+
+        final int translatedX = moreKeysPanel.translateX(mLastX);
+        final int translatedY = moreKeysPanel.translateY(mLastY);
+        moreKeysPanel.onDownEvent(translatedX, translatedY, mPointerId, SystemClock.uptimeMillis());
+        mMoreKeysPanel = moreKeysPanel;
     }
 
     private static int getDistance(final int x1, final int y1, final int x2, final int y2) {
@@ -575,6 +652,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     public void processMotionEvent(final MotionEvent me, final KeyDetector keyDetector) {
+
         final int action = me.getActionMasked();
         final long eventTime = me.getEventTime();
         if (action == MotionEvent.ACTION_MOVE) {
@@ -582,6 +660,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             // we should ignore other pointers' motion event.
             final boolean shouldIgnoreOtherPointers =
                     isShowingMoreKeysPanel() && getActivePointerTrackerCount() == 1;
+
             final int pointerCount = me.getPointerCount();
             for (int index = 0; index < pointerCount; index++) {
                 final int id = me.getPointerId(index);
@@ -595,6 +674,9 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             }
             return;
         }
+
+
+
         final int index = me.getActionIndex();
         final int x = (int)me.getX(index);
         final int y = (int)me.getY(index);
@@ -670,6 +752,12 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
     private void onDownEventInternal(final int x, final int y, final long eventTime) {
         Key key = onDownKey(x, y, eventTime);
+
+        if (key.getCode()==Constants.CODE_SPACE){
+
+        }
+
+        Log.d(TAG, "onDownEventInternal: "+x+" "+y);
         // Key selection by dragging finger is allowed when 1) key selection by dragging finger is
         // enabled by configuration, 2) this pointer starts dragging from modifier key, or 3) this
         // pointer's KeyDetector always allows key selection by dragging finger, such as
@@ -677,6 +765,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         mIsAllowedDraggingFinger = sParams.mKeySelectionByDraggingFinger
                 || (key != null && key.isModifier())
                 || mKeyDetector.alwaysAllowsKeySelectionByDraggingFinger();
+
         mKeyboardLayoutHasBeenChanged = false;
         mIsTrackingForActionDisabled = false;
         resetKeySelectionByDraggingFinger();
@@ -726,6 +815,9 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         if (isShowingMoreKeysPanel()) {
             return;
         }
+
+        Log.d(TAG, "onGestureMoveEvent: "+sInGesture+ " "+key.getCode());
+
         if (!sInGesture && key != null && Character.isLetter(key.getCode())
                 && mBatchInputArbiter.mayStartBatchInput(this)) {
             sInGesture = true;
@@ -738,10 +830,25 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
     }
 
+
+
     private void onMoveEvent(final int x, final int y, final long eventTime, final MotionEvent me) {
         if (DEBUG_MOVE_EVENT) {
+            Log.d(TAG, "onMoveEvent: x="+me.getX()+" y="+me.getY()+" "+ getKey().getCode());
             printTouchEvent("onMoveEvent:", x, y, eventTime);
+
         }
+
+
+
+        if (getKey().getCode() == Constants.CODE_SPACE){
+            if(onSpaceKeyMove!=null){
+                onSpaceKeyMove.spaceKeyMove(x, y,eventTime,me);
+            }
+            return;
+        }
+
+
         if (mIsTrackingForActionDisabled) {
             return;
         }
@@ -763,6 +870,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             final int translatedX = mMoreKeysPanel.translateX(x);
             final int translatedY = mMoreKeysPanel.translateY(y);
             mMoreKeysPanel.onMoveEvent(translatedX, translatedY, mPointerId, eventTime);
+
             onMoveKey(x, y);
             if (mIsInSlidingKeyInput) {
                 sDrawingProxy.showSlidingKeyInputPreview(this);
@@ -787,6 +895,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
         startLongPressTimer(key);
         setPressedKeyGraphics(key, eventTime);
+
+
     }
 
     private void processPhantomSuddenMoveHack(final Key key, final int x, final int y,
@@ -888,6 +998,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
     }
 
+    //edited
     private void onMoveEventInternal(final int x, final int y, final long eventTime) {
         final int lastX = mLastX;
         final int lastY = mLastY;
@@ -1014,7 +1125,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     public void onLongPressed() {
-        Log.d(TAG, "onLongPressed: ");
         sTimerProxy.cancelLongPressTimersOf(this);
         if (isShowingMoreKeysPanel()) {
             return;
@@ -1023,7 +1133,11 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         if (key == null) {
             return;
         }
+
+
+
         if (key.hasNoPanelAutoMoreKey()) {
+            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey");
             cancelKeyTracking();
             final int moreKeyCode = key.getMoreKeys()[0].mCode;
             sListener.onPressKey(moreKeyCode, 0 /* repeatCont */, true /* isSinglePointer */);
@@ -1031,9 +1145,13 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                     Constants.NOT_A_COORDINATE, false /* isKeyRepeat */);
             sListener.onReleaseKey(moreKeyCode, false /* withSliding */);
             return;
+        }else{
+            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey not");
+
         }
         final int code = key.getCode();
         if (code == Constants.CODE_SPACE || code == Constants.CODE_LANGUAGE_SWITCH) {
+            Log.d(TAG, "onLongPressed: ");
             // Long pressing the space key invokes IME switcher dialog.
             if (sListener.onCustomRequest(Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER)) {
                 cancelKeyTracking();
@@ -1043,10 +1161,13 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
 
         setReleasedKeyGraphics(key, false /* withAnimation */);
-        final MoreKeysPanel moreKeysPanel = sDrawingProxy.showMoreKeysKeyboard(key, this);
+
+        final MoreKeysPanel moreKeysPanel =  /*null; */ sDrawingProxy.showMoreKeysKeyboard(key, this);
         if (moreKeysPanel == null) {
             return;
         }
+
+
         final int translatedX = moreKeysPanel.translateX(mLastX);
         final int translatedY = moreKeysPanel.translateY(mLastY);
         moreKeysPanel.onDownEvent(translatedX, translatedY, mPointerId, SystemClock.uptimeMillis());
@@ -1191,6 +1312,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
     private void printTouchEvent(final String title, final int x, final int y,
             final long eventTime) {
+        Log.d(TAG, "printTouchEvent: "+title);
         final Key key = mKeyDetector.detectHitKey(x, y);
         final String code = (key == null ? "none" : Constants.printableCode(key.getCode()));
         Log.d(TAG, String.format("[%d]%s%s %4d %4d %5d %s", mPointerId,

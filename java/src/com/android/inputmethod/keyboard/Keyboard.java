@@ -50,6 +50,13 @@ import javax.annotation.Nullable;
  * </pre>
  */
 public class Keyboard {
+
+    public static final int EDGE_LEFT = 0x01;
+    public static final int EDGE_RIGHT = 0x02;
+    public static final int EDGE_TOP = 0x04;
+    public static final int EDGE_BOTTOM = 0x08;
+
+
     @Nonnull
     public final KeyboardId mId;
     public final int mThemeId;
@@ -258,4 +265,7 @@ public class Keyboard {
         }
         return coordinates;
     }
+
+
+
 }

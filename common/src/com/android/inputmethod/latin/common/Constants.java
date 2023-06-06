@@ -196,6 +196,9 @@ public final class Constants {
     // The code to show input method picker.
     public static final int CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER = 1;
 
+    public static final int KEYCODE_NEXT_LANGUAGE = -1002;
+    public static final int  KEYCODE_PREV_LANGUAGE = -1003;
+
     /**
      * Some common keys code. Must be positive.
      */

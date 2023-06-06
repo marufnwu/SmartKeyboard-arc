@@ -30,10 +30,13 @@ import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.android.inputmethod.accessibility.AccessibilityUtils;
 import com.android.inputmethod.accessibility.MainKeyboardAccessibilityDelegate;
@@ -58,6 +61,7 @@ import com.android.inputmethod.latin.common.CoordinateUtils;
 import com.android.inputmethod.latin.settings.DebugSettings;
 import com.android.inputmethod.latin.utils.LanguageOnSpacebarUtils;
 import com.android.inputmethod.latin.utils.TypefaceUtils;
+import com.android.inputmethod.utils.SlidingLocaleDrawable;
 
 import java.util.WeakHashMap;
 
@@ -109,6 +113,26 @@ import javax.annotation.Nullable;
  */
 public final class MainKeyboardView extends KeyboardView implements DrawingProxy,
         MoreKeysPanel.Controller {
+
+    private static final float SPACEBAR_DRAG_THRESHOLD = 0.50f;
+    private float startX;
+    private float startY;
+    private static final int SWIPE_THRESHOLD = 1;
+
+    // Key preview popup
+    protected TextView mPreviewText;
+    protected PopupWindow mPreviewPopup;
+    protected int mPreviewTextSizeLarge;
+    protected int[] mOffsetInWindow;
+    protected boolean mShowPreview = true;
+    protected boolean mShowTouchPoints = true;
+    protected int mPopupPreviewOffsetX;
+    protected int mPopupPreviewOffsetY;
+    protected int mWindowY;
+    protected int mPopupPreviewDisplayedY;
+
+
+
     private static final String TAG = MainKeyboardView.class.getSimpleName();
 
     /** Listener for {@link KeyboardActionListener}. */
@@ -168,7 +192,12 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     private final int mLanguageOnSpacebarHorizontalMargin;
 
     private MainKeyboardAccessibilityDelegate mAccessibilityDelegate;
-
+    private SlidingLocaleDrawable iconPreview;
+    private int mSpaceDragStartX;
+    private int mSpaceDragLastDiff;
+    private float endX;
+    private float endY;
+    private boolean isSpaceDrag;
 
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
@@ -444,6 +473,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
     private void locatePreviewPlacerView() {
         getLocationInWindow(mOriginCoords);
+        Log.d(TAG, "locatePreviewPlacerView: "+getWidth()+" "+getHeight());
         mDrawingPreviewPlacerView.setKeyboardViewGeometry(mOriginCoords, getWidth(), getHeight());
     }
 
@@ -462,33 +492,145 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         windowContentView.addView(mDrawingPreviewPlacerView);
     }
 
+
+
     // Implements {@link DrawingProxy#onKeyPressed(Key,boolean)}.
     @Override
     public void onKeyPressed(@Nonnull final Key key, final boolean withPreview) {
+        Log.d(TAG, "onKeyPressed: "+withPreview);
         key.onPressed();
         invalidateKey(key);
+
         if (withPreview && !key.noKeyPreview()) {
             showKeyPreview(key);
         }
 
 
+
     }
 
     private void showKeyPreview(@Nonnull final Key key) {
+
         final Keyboard keyboard = getKeyboard();
         if (keyboard == null) {
             return;
         }
-        final KeyPreviewDrawParams previewParams = mKeyPreviewDrawParams;
-        if (!previewParams.isPopupEnabled()) {
-            previewParams.setVisibleOffset(-keyboard.mVerticalGap);
+
+        if(key.getCode()==Constants.CODE_SPACE){
+            showSpacePreview(key);
             return;
         }
 
+        final KeyPreviewDrawParams previewParams = mKeyPreviewDrawParams;
+        if (!previewParams.isPopupEnabled()) {
+            Log.d(TAG, "showKeyPreview: not enable");
+            previewParams.setVisibleOffset(-keyboard.mVerticalGap);
+            return;
+        }else{
+            Log.d(TAG, "showKeyPreview: enable");
+
+        }
+
+
+
         locatePreviewPlacerView();
         getLocationInWindow(mOriginCoords);
+
+
         mKeyPreviewChoreographer.placeAndShowKeyPreview(key, keyboard.mIconsSet, getKeyDrawParams(),
                 getWidth(), mOriginCoords, mDrawingPreviewPlacerView, isHardwareAccelerated());
+
+    }
+
+    private void showSpacePreview(Key key) {
+        if (key == null)
+            return;
+
+        Log.d(TAG, "showSpacePreview: called");
+        //Log.i(TAG, "showKey() for " + this);
+        // Should not draw hint icon in key preview
+
+        if(iconPreview==null){
+            iconPreview = new SlidingLocaleDrawable(getContext().getResources().getDrawable(R.color.key_hint_letter_color_lxx_dark), key.getWidth(), key.getHeight(),getContext());
+            iconPreview.setBounds(0, 0, key.getWidth(), (int) ((int)(key.getHeight())/1.25));
+        }
+
+        if(mPreviewText==null)
+            mPreviewText = new TextView(getContext());
+
+        mPreviewText.setCompoundDrawables(null, null, null,
+                iconPreview);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mPreviewText.setLayoutParams(params);
+        mPreviewText.setText(null);
+        mPreviewText.setGravity(Gravity.CENTER);
+
+
+        mPreviewText.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+        int popupWidth = Math.max(mPreviewText.getMeasuredWidth(), key.getWidth()
+                + mPreviewText.getPaddingLeft() + mPreviewText.getPaddingRight());
+        final int popupHeight = key.getHeight();
+        ViewGroup.LayoutParams lp = mPreviewText.getLayoutParams();
+
+        if (lp != null) {
+            lp.width = popupWidth;
+            lp.height = key.getHeight();
+        }
+
+        int popupPreviewX = key.getX() - (popupWidth - key.getWidth()) / 2;
+        int popupPreviewY = key.getY() - popupHeight;
+
+        //mHandler.cancelDismissPreview();
+        if (mOffsetInWindow == null) {
+            mOffsetInWindow = new int[2];
+            getLocationInWindow(mOffsetInWindow);
+            mOffsetInWindow[0] += mPopupPreviewOffsetX; // Offset may be zero
+            mOffsetInWindow[1] += mPopupPreviewOffsetY; // Offset may be zero
+            int[] windowLocation = new int[2];
+            getLocationOnScreen(windowLocation);
+            mWindowY = windowLocation[1];
+        }
+        // Set the preview background state.
+        // Retrieve and cache the popup keyboard if any.
+        popupPreviewX += mOffsetInWindow[0];
+        popupPreviewY += mOffsetInWindow[1];
+
+        // If the popup cannot be shown above the key, put it on the side
+//        if (popupPreviewY + mWindowY < 0) {
+//            // If the key you're pressing is on the left side of the keyboard, show the popup on
+//            // the right, offset by enough to see at least one key to the left/right.
+//            if (key.x + key.width <= getWidth() / 2) {
+//                popupPreviewX += (int) (key.width * 2.5);
+//            } else {
+//                popupPreviewX -= (int) (key.width * 2.5);
+//            }
+//            popupPreviewY += popupHeight;
+//        }
+
+        if (mPreviewPopup==null)
+            mPreviewPopup = new PopupWindow(getContext());
+        mPreviewPopup.setContentView(mPreviewText);
+
+        if (mPreviewPopup.isShowing()) {
+            mPreviewPopup.update(popupPreviewX, popupPreviewY, popupWidth, popupHeight);
+        } else {
+            mPreviewPopup.setWidth(popupWidth);
+            mPreviewPopup.setHeight(popupHeight);
+
+
+            mPreviewPopup.showAtLocation(this, Gravity.NO_GRAVITY,
+                    popupPreviewX, popupPreviewY);
+
+            Log.d(TAG, "showSpacePreview: "+mPreviewPopup.isShowing());
+
+
+        }
+        // Record popup preview position to display mini-keyboard later at the same positon
+        mPopupPreviewDisplayedY = popupPreviewY;
+        mPreviewText.setVisibility(VISIBLE);
+
+
     }
 
     private void dismissKeyPreviewWithoutDelay(@Nonnull final Key key) {
@@ -500,6 +642,11 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     @Override
     public void onKeyReleased(@Nonnull final Key key, final boolean withAnimation) {
         key.onReleased();
+        if(mPreviewPopup!=null && mPreviewPopup.isShowing()){
+            mPreviewPopup.dismiss();
+            return;
+        }
+
         invalidateKey(key);
         if (!key.noKeyPreview()) {
             if (withAnimation) {
@@ -701,6 +848,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         if (getKeyboard() == null) {
             return false;
         }
+
+
+
         if (mNonDistinctMultitouchHelper != null) {
             if (event.getPointerCount() > 1 && mTimerHandler.isInKeyRepeat()) {
                 // Key repeating timer will be canceled if 2 or more keys are in action.
@@ -714,6 +864,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     }
 
     public boolean processMotionEvent(final MotionEvent event) {
+
+
+
         final int index = event.getActionIndex();
         final int id = event.getPointerId(index);
         final PointerTracker tracker = PointerTracker.getPointerTracker(id);
@@ -723,9 +876,90 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                 && PointerTracker.getActivePointerTrackerCount() == 1) {
             return true;
         }
+
+
+
+        Log.d(TAG, "processMotionEvent: "+event);
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+                startX = event.getX();
+                startY = event.getY();
+                Log.d(TAG, "processMotionEvent: "+tracker.getKey());
+                isSpaceDrag = false;
+                break;
+            case MotionEvent.ACTION_UP:
+                if (isSpaceDrag){
+                    int languageDirection = getLanguageChangeDirection();
+                    Log.d(TAG, "languageDirection: "+languageDirection);
+                    if (languageDirection != 0) {
+                        mKeyboardActionListener.onCustomRequest(languageDirection == 1 ? Constants.KEYCODE_NEXT_LANGUAGE : Constants.KEYCODE_PREV_LANGUAGE);
+                    }
+                    event.setAction(MotionEvent.ACTION_CANCEL);
+                }
+                isSpaceDrag =false;
+                break;
+
+            case MotionEvent.ACTION_POINTER_UP:
+                Log.d(TAG, "processMotionEvent: ACTION_POINTER_UP");
+                event.setAction(MotionEvent.ACTION_CANCEL);
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if(tracker.getKey()!=null && tracker.getKey().getCode()==Constants.CODE_SPACE){
+
+
+
+                    endX = event.getX();
+                    endY = event.getY();
+                    float deltaX = endX - startX;
+                    float deltaY = endY - startY;
+
+
+
+                    int diff = (int) (event.getX() - startX);
+
+                    if (Math.abs(diff - mSpaceDragLastDiff) > 0) {
+                        isSpaceDrag = true;
+                        if(mPreviewPopup==null || !mPreviewPopup.isShowing()){
+                            showKeyPreview(tracker.getKey());
+                        }
+
+                        updateLocaleDrag(diff, tracker.getKey());
+                    }
+
+                    mSpaceDragLastDiff = diff;
+                }else {
+                    mSpaceDragStartX = (int) startX;
+                    isSpaceDrag = false;
+                }
+
+                break;
+        }
+
         tracker.processMotionEvent(event, mKeyDetector);
+
+        Log.d(TAG, "processMotionEvent: "+event.getAction());
+
+
         return true;
     }
+
+    private int getLanguageChangeDirection() {
+        if (mSpaceKey == null || Math.abs(mSpaceDragLastDiff) < mPreviewPopup.getWidth() * SPACEBAR_DRAG_THRESHOLD) {
+            return 0; // No change
+        }
+        return mSpaceDragLastDiff > 0 ? 1 : -1;
+    }
+
+    private void updateLocaleDrag(int diff, Key key) {
+        Log.d(TAG, "updateLocaleDrag: "+diff);
+
+
+        iconPreview.setDiff(diff);
+        this.invalidate();
+    }
+
 
     public void cancelAllOngoingEvents() {
         mTimerHandler.cancelAllMessages();
@@ -819,6 +1053,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             }
             // Whether space key needs to show the "..." popup hint for special purposes
             if (key.isLongPressEnabled() && mHasMultipleEnabledIMEsOrSubtypes) {
+
+
                 drawKeyPopupHint(key, canvas, paint, params);
             }
         } else if (code == Constants.CODE_LANGUAGE_SWITCH) {

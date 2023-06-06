@@ -98,11 +98,12 @@
     <include
         latin:keyboardLayout="@xml/key_styles_enter" />
     <!-- TODO: Currently there is no way to specify icon alignment per theme. -->
+
     <key-style
         latin:styleName="spaceKeyStyle"
         latin:keySpec="!icon/space_key|!code/key_space"
-        latin:backgroundType="spacebar"
-        latin:keyActionFlags="noKeyPreview|enableLongPress" />
+        latin:backgroundType="functional"
+        latin:keyActionFlags="noKeyPreview" />
     <!-- U+200C: ZERO WIDTH NON-JOINER
          U+200D: ZERO WIDTH JOINER -->
     <key-style

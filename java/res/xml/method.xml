@@ -121,17 +121,14 @@
 
 
     <subtype android:icon="@drawable/ic_ime_switcher_dark"
-            android:label="@string/subtype_en_US"
             android:subtypeId="0xc9194f98"
-            android:imeSubtypeLocale="en_US"
-            android:languageTag="en-US"
             android:imeSubtypeMode="keyboard"
+            android:imeSubtypeLocale="en_US"
             android:imeSubtypeExtraValue="TrySuppressingImeSwitcher,AsciiCapable,SupportTouchPositionCorrection,EmojiCapable"
             android:isAsciiCapable="true"
     />
 
     <subtype android:icon="@drawable/ic_ime_switcher_dark"
-        android:label="Avro"
         android:imeSubtypeLocale="bn"
         android:subtypeId="0xb045e755"
         android:imeSubtypeMode="keyboard"
@@ -140,7 +137,6 @@
         />
 
     <subtype android:icon="@drawable/ic_ime_switcher_dark"
-        android:label="@string/subtype_generic"
         android:subtypeId="0xa2144b0c"
         android:imeSubtypeLocale="bn_BD"
         android:imeSubtypeMode="keyboard"
