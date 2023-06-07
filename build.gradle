@@ -62,6 +62,7 @@ android {
         main {
             res.srcDirs = ['java/res']
             java.srcDirs = ['common/src', 'java/src']
+            jniLibs.srcDirs = ['java/jni']
             manifest.srcFile 'java/AndroidManifest.xml'
         }
 
@@ -84,12 +85,12 @@ android {
 //        ndkBuild {
 //            path 'native/jni/Android.mk'
 //        }
-        cmake {
-            // Provides a relative path to your CMake build script.
-            path "native/jni/CMakeLists.txt"
-        }
+//        cmake {
+//            // Provides a relative path to your CMake build script.
+//            path "native/jni/CMakeLists.txt"
+//        }
     }
-    ndkVersion '25.1.8937393'
+    //ndkVersion '25.1.8937393'
     //ndkVersion '25.1.8937393'
 }
 

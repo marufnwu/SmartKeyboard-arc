@@ -19,22 +19,22 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
-    <string name="english_ime_input_options">Input options</string>
+    <string name="english_ime_input_options" translatable="false">Input options</string>
 
     <!-- Title for the spell checker option to turn on/off contact names lookup [CHAR LIMIT=25] -->
-    <string name="use_contacts_for_spellchecking_option_title">Look up contact names</string>
+    <string name="use_contacts_for_spellchecking_option_title" translatable="false">Look up contact names</string>
 
     <!-- Description for the spell checker option to turn on/off contact names lookup. [CHAR LIMIT=65] -->
-    <string name="use_contacts_for_spellchecking_option_summary">Spell checker uses entries from your contact list</string>
+    <string name="use_contacts_for_spellchecking_option_summary" translatable="false">Spell checker uses entries from your contact list</string>
 
     <!-- Option to provide vibrate/haptic feedback on keypress -->
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
+    <string name="vibrate_on_keypress" translatable="false">Vibrate on keypress</string>
 
     <!-- Option to play back sound on keypress in soft keyboard -->
-    <string name="sound_on_keypress">Sound on keypress</string>
+    <string name="sound_on_keypress" translatable="false">Sound on keypress</string>
 
     <!-- Option to control whether or not to show a popup with a larger font on each key press. -->
-    <string name="popup_on_keypress">Popup on keypress</string>
+    <string name="popup_on_keypress" translatable="false">Popup on keypress</string>
 
     <!-- Settings screen title for preferences [CHAR LIMIT=33]-->
     <string name="settings_screen_preferences">Preferences</string>

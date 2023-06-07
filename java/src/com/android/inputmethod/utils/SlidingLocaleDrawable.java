@@ -49,7 +49,7 @@ public class SlidingLocaleDrawable extends Drawable {
     public SlidingLocaleDrawable(Drawable background, int width, int height, Context context) {
         this.context = context;
         mBackground = background;
-        //setDefaultBounds(mBackground);
+        setDefaultBounds(mBackground);
         mWidth = width;
         mHeight = height;
         mTextPaint = new TextPaint();
@@ -88,7 +88,6 @@ public class SlidingLocaleDrawable extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         canvas.save();
-        Log.d(TAG, "draw: ");
         if (mHitThreshold) {
             Paint paint = mTextPaint;
             final int width = mWidth;
@@ -99,15 +98,15 @@ public class SlidingLocaleDrawable extends Drawable {
             canvas.clipRect(0, 0, width, height);
 
             if (mCurrentLanguage == null) {
-                final LanguageSwitcher languageSwitcher = mLanguageSwitcher;
-//                    mCurrentLanguage = getLanguageName(languageSwitcher.getInputLocale());
-//                    mNextLanguage = getLanguageName(languageSwitcher.getNextInputLocale());
-//                    mPrevLanguage = getLanguageName(languageSwitcher.getPrevInputLocale());
-                mCurrentLanguage = "English";
-                mNextLanguage = "Avro";
-                mPrevLanguage = "Bangla";
+                final LanguageSwitcher languageSwitcher = LanguageSwitcher.instance;
+                    mCurrentLanguage = Constant.getLanguageName(languageSwitcher.getInputLocale());
+                    mNextLanguage =  Constant.getLanguageName(languageSwitcher.getNextInputLocale());
+                    mPrevLanguage =  Constant.getLanguageName(languageSwitcher.getPrevInputLocale());
             }
 
+            Log.d(TAG, "mCurrentLanguage: "+mCurrentLanguage);
+            Log.d(TAG, "mNextLanguage: "+mNextLanguage);
+            Log.d(TAG, "mPrevLanguage: "+mPrevLanguage);
 
 
             // Draw language text with shadow
@@ -123,10 +122,10 @@ public class SlidingLocaleDrawable extends Drawable {
             //lArrow.draw(canvas);
             //rArrow.draw(canvas);
         }
-//        if (mBackground != null) {
-//            canvas.translate(mMiddleX, 0);
-//            mBackground.draw(canvas);
-//        }
+        if (mBackground != null) {
+            canvas.translate(mMiddleX, 0);
+            mBackground.draw(canvas);
+        }
         canvas.restore();
     }
 
@@ -171,8 +170,6 @@ public class SlidingLocaleDrawable extends Drawable {
         return textSize;
     }
 
-    private String getLanguageName(Locale locale) {
-        return LanguageSwitcher.toTitleCase(locale.getDisplayLanguage(locale));
-    }
+
 
 }

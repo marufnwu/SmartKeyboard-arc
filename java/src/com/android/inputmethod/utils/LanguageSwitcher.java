@@ -44,9 +44,18 @@ public class LanguageSwitcher {
     private Locale   mDefaultInputLocale;
     private Locale   mSystemLocale;
 
-    public LanguageSwitcher(LatinIME ime) {
+    public static LanguageSwitcher instance = null;
+
+    private LanguageSwitcher(LatinIME ime) {
         mIme = ime;
         mLocales = new Locale[0];
+    }
+
+    public static LanguageSwitcher getInstance(LatinIME ime){
+        if(instance==null){
+            instance = new LanguageSwitcher(ime);
+        }
+        return instance;
     }
 
     public Locale[]  getLocales() {
@@ -66,18 +75,8 @@ public class LanguageSwitcher {
     public boolean loadLocales(SharedPreferences sp) {
         String selectedLanguages = "en_US, bn, bn_BD";
         String currentLanguage   = sp.getString(PREF_INPUT_LANGUAGE, null);
-        if (selectedLanguages == null || selectedLanguages.length() < 1) {
-            loadDefaults();
-            if (mLocales.length == 0) {
-                return false;
-            }
-            mLocales = new Locale[0];
-            return true;
-        }
-        if (selectedLanguages.equals(mSelectedLanguages)) {
-            return false;
-        }
-        mSelectedLanguageArray = selectedLanguages.split(",");
+
+        mSelectedLanguageArray = new String[]{"en_US","bn", "bn_BD"};
         mSelectedLanguages = selectedLanguages; // Cache it for comparison later
         constructLocales();
         mCurrentIndex = 0;

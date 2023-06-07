@@ -48,7 +48,7 @@ public final class LanguageOnSpacebarUtils {
         }
         // Only this subtype is enabled and equals to the system locale.
         if (sEnabledSubtypes.size() < 2 && sIsSystemLanguageSameAsInputLanguage) {
-            return FORMAT_TYPE_NONE;
+            return FORMAT_TYPE_LANGUAGE_ONLY;
         }
         final Locale locale = subtype.getLocale();
         if (locale == null) {

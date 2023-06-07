@@ -45,8 +45,10 @@ import com.android.inputmethod.latin.utils.LanguageOnSpacebarUtils;
 import com.android.inputmethod.latin.utils.RecapitalizeStatus;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
+import com.android.inputmethod.utils.LanguageSwitcher;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     private static final String TAG = KeyboardSwitcher.class.getSimpleName();
@@ -69,6 +71,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     private Context mThemeContext;
 
     private static final KeyboardSwitcher sInstance = new KeyboardSwitcher();
+
+
+
+
 
     public static KeyboardSwitcher getInstance() {
         return sInstance;

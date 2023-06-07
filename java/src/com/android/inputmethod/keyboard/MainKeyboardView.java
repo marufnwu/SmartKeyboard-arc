@@ -61,6 +61,8 @@ import com.android.inputmethod.latin.common.CoordinateUtils;
 import com.android.inputmethod.latin.settings.DebugSettings;
 import com.android.inputmethod.latin.utils.LanguageOnSpacebarUtils;
 import com.android.inputmethod.latin.utils.TypefaceUtils;
+import com.android.inputmethod.utils.Constant;
+import com.android.inputmethod.utils.LanguageSwitcher;
 import com.android.inputmethod.utils.SlidingLocaleDrawable;
 
 import java.util.WeakHashMap;
@@ -115,6 +117,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         MoreKeysPanel.Controller {
 
     private static final float SPACEBAR_DRAG_THRESHOLD = 0.50f;
+    private  int keyPreviewBg;
     private float startX;
     private float startY;
     private static final int SWIPE_THRESHOLD = 1;
@@ -200,6 +203,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     private boolean isSpaceDrag;
 
 
+
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
     }
@@ -212,6 +216,11 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
         final TypedArray mainKeyboardViewAttr = context.obtainStyledAttributes(
                 attrs, R.styleable.MainKeyboardView, defStyle, R.style.MainKeyboardView);
+
+        keyPreviewBg = mainKeyboardViewAttr.getResourceId(
+                R.styleable.MainKeyboardView_keyPreviewBackground, 0);
+
+
         final int ignoreAltCodeKeyTimeout = mainKeyboardViewAttr.getInt(
                 R.styleable.MainKeyboardView_ignoreAltCodeKeyTimeout, 0);
         final int gestureRecognitionUpdateTime = mainKeyboardViewAttr.getInt(
@@ -483,6 +492,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             Log.w(TAG, "Cannot find root view");
             return;
         }
+        Log.d(TAG, "installPreviewPlacerView: "+rootView.getId());
+
+
         final ViewGroup windowContentView = (ViewGroup)rootView.findViewById(android.R.id.content);
         // Note: It'd be very weird if we get null by android.R.id.content.
         if (windowContentView == null) {
@@ -551,7 +563,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         // Should not draw hint icon in key preview
 
         if(iconPreview==null){
-            iconPreview = new SlidingLocaleDrawable(getContext().getResources().getDrawable(R.color.key_hint_letter_color_lxx_dark), key.getWidth(), key.getHeight(),getContext());
+            iconPreview = new SlidingLocaleDrawable(getContext().getResources().getDrawable(R.color.gesture_floating_preview_color_lxx_light), key.getWidth(), key.getHeight(),getContext());
             iconPreview.setBounds(0, 0, key.getWidth(), (int) ((int)(key.getHeight())/1.25));
         }
 
@@ -611,6 +623,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         if (mPreviewPopup==null)
             mPreviewPopup = new PopupWindow(getContext());
         mPreviewPopup.setContentView(mPreviewText);
+        //mPreviewPopup.setBackgroundDrawable(null);
+        Log.d(TAG, "showSpacePreview: "+mPreviewPopup.getHeight());
 
         if (mPreviewPopup.isShowing()) {
             mPreviewPopup.update(popupPreviewX, popupPreviewY, popupWidth, popupHeight);
@@ -896,7 +910,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                         mKeyboardActionListener.onCustomRequest(languageDirection == 1 ? Constants.KEYCODE_NEXT_LANGUAGE : Constants.KEYCODE_PREV_LANGUAGE);
                     }
                     event.setAction(MotionEvent.ACTION_CANCEL);
+                    updateLocaleDrag(Integer.MAX_VALUE);
                 }
+
                 isSpaceDrag =false;
                 break;
 
@@ -925,13 +941,14 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                             showKeyPreview(tracker.getKey());
                         }
 
-                        updateLocaleDrag(diff, tracker.getKey());
+                        updateLocaleDrag(diff);
                     }
 
                     mSpaceDragLastDiff = diff;
                 }else {
                     mSpaceDragStartX = (int) startX;
                     isSpaceDrag = false;
+                    updateLocaleDrag(0);
                 }
 
                 break;
@@ -952,12 +969,14 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         return mSpaceDragLastDiff > 0 ? 1 : -1;
     }
 
-    private void updateLocaleDrag(int diff, Key key) {
+    private void updateLocaleDrag(int diff) {
         Log.d(TAG, "updateLocaleDrag: "+diff);
 
 
-        iconPreview.setDiff(diff);
-        this.invalidate();
+       if(iconPreview!=null){
+           iconPreview.setDiff(diff);
+           this.invalidate();
+       }
     }
 
 
@@ -1047,6 +1066,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         super.onDrawKeyTopVisuals(key, canvas, paint, params);
         final int code = key.getCode();
         if (code == Constants.CODE_SPACE) {
+
             // If input language are explicitly selected.
             if (mLanguageOnSpacebarFormatType != LanguageOnSpacebarUtils.FORMAT_TYPE_NONE) {
                 drawLanguageOnSpacebar(key, canvas, paint);
@@ -1108,7 +1128,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         paint.setTextAlign(Align.CENTER);
         paint.setTypeface(Typeface.DEFAULT);
         paint.setTextSize(mLanguageOnSpacebarTextSize);
-        final String language = layoutLanguageOnSpacebar(paint, keyboard.mId.mSubtype, width);
+        //final String language = layoutLanguageOnSpacebar(paint, keyboard.mId.mSubtype, width);
+        final String language = Constant.getLanguageName(LanguageSwitcher.instance.getInputLocale());
         // Draw language text with shadow
         final float descent = paint.descent();
         final float textHeight = -paint.ascent() + descent;

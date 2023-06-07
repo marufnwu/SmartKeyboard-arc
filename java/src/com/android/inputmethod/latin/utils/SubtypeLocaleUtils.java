@@ -207,6 +207,9 @@ public final class SubtypeLocaleUtils {
     @Nonnull
     private static String getSubtypeLocaleDisplayNameInternal(@Nonnull final String localeString,
             @Nonnull final Locale displayLocale) {
+
+        Log.d(TAG, "getSubtypeLocaleDisplayNameInternal: "+localeString);
+
         if (NO_LANGUAGE.equals(localeString)) {
             // No language subtype should be displayed in system locale.
             return sResources.getString(R.string.subtype_no_language);

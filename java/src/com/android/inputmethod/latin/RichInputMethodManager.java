@@ -360,6 +360,9 @@ public class RichInputMethodManager {
     }
 
     public boolean hasMultipleEnabledIMEsOrSubtypes(final boolean shouldIncludeAuxiliarySubtypes) {
+        if(true){
+            return true;
+        }
         final List<InputMethodInfo> enabledImis = mImmWrapper.mImm.getEnabledInputMethodList();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             enabledImis.forEach(inputMethodInfo -> {
@@ -378,6 +381,10 @@ public class RichInputMethodManager {
 
     private boolean hasMultipleEnabledSubtypes(final boolean shouldIncludeAuxiliarySubtypes,
             final List<InputMethodInfo> imiList) {
+
+        if (true){
+            return false;
+        }
         // Number of the filtered IMEs
         int filteredImisCount = 0;
 

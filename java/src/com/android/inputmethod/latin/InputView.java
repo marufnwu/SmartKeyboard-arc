@@ -27,6 +27,7 @@ import com.android.inputmethod.accessibility.AccessibilityUtils;
 import com.android.inputmethod.keyboard.MainKeyboardView;
 import com.android.inputmethod.latin.suggestions.MoreSuggestionsView;
 import com.android.inputmethod.latin.suggestions.SuggestionStripView;
+import com.android.inputmethod.latin.R;
 
 public final class InputView extends FrameLayout {
     private final Rect mInputViewRect = new Rect();
@@ -43,13 +44,15 @@ public final class InputView extends FrameLayout {
 
     @Override
     protected void onFinishInflate() {
+
         final SuggestionStripView suggestionStripView =
-                (SuggestionStripView)findViewById(R.id.suggestion_strip_view);
-        mMainKeyboardView = (MainKeyboardView)findViewById(R.id.keyboard_view);
+                (SuggestionStripView) findViewById(R.id.suggestion_strip_view);
+        mMainKeyboardView = (MainKeyboardView) findViewById(R.id.keyboard_view);
         mKeyboardTopPaddingForwarder = new KeyboardTopPaddingForwarder(
                 mMainKeyboardView, suggestionStripView);
         mMoreSuggestionsViewCanceler = new MoreSuggestionsViewCanceler(
                 mMainKeyboardView, suggestionStripView);
+        super.onFinishInflate();
     }
 
     public void setKeyboardTopPadding(final int keyboardTopPadding) {

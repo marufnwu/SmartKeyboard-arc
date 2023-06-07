@@ -55,14 +55,14 @@
          android:protectionLevel="signature"/>
 
     <application android:label="@string/english_ime_name"
-         android:icon="@drawable/ic_launcher_keyboard"
+         android:icon="@drawable/ic_launcher_keybaord"
          android:supportsRtl="true"
          android:allowBackup="true"
          android:defaultToDeviceProtectedStorage="true"
          android:directBootAware="true">
 
         <!-- Services -->
-        <service android:name="com.android.inputmethod.utils.MyLatinIME"
+        <service android:name="com.sikderithub.keyboard.SikderKeyBaord"
              android:label="@string/english_ime_name"
              android:permission="android.permission.BIND_INPUT_METHOD"
              android:exported="true">
@@ -92,7 +92,7 @@
         <activity android:name="com.android.inputmethod.latin.setup.SetupActivity"
              android:theme="@style/platformActivityTheme"
              android:label="@string/english_ime_name"
-             android:icon="@drawable/ic_launcher_keyboard"
+             android:icon="@drawable/ic_launcher_keybaord"
              android:launchMode="singleTask"
              android:noHistory="true"
              android:exported="true">
