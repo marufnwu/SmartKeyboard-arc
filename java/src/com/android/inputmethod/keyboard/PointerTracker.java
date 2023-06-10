@@ -33,7 +33,8 @@ import com.android.inputmethod.keyboard.internal.GestureStrokeRecognitionParams;
 import com.android.inputmethod.keyboard.internal.PointerTrackerQueue;
 import com.android.inputmethod.keyboard.internal.TimerProxy;
 import com.android.inputmethod.keyboard.internal.TypingTimeRecorder;
-import com.android.inputmethod.latin.R;
+import com.android.inputmethod.latin.common.CodePointUtils;
+import com.sikderithub.keyboard.R;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.common.CoordinateUtils;
 import com.android.inputmethod.latin.common.InputPointers;
@@ -56,7 +57,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private static final String TAG = PointerTracker.class.getSimpleName();
     private static final boolean DEBUG_EVENT = true;
     private static final boolean DEBUG_MOVE_EVENT = true;
-    private static final boolean DEBUG_LISTENER = true;
+    private static final boolean DEBUG_LISTENER = false;
     private static boolean DEBUG_MODE = DebugFlags.DEBUG_ENABLED || DEBUG_EVENT;
 
     public OnSpaceKeyMove onSpaceKeyMove;
@@ -432,7 +433,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void setPressedKeyGraphics(@Nullable final Key key, final long eventTime) {
-        Log.d(TAG, "setPressedKeyGraphics: "+key.getCode());
         if (key == null) {
             return;
         }
@@ -468,7 +468,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
             for (final Key k : mKeyboard.mAltCodeKeysWhileTyping) {
                 if (k != key && k.getAltCode() == altCode) {
-                    Log.d(TAG, "setPressedKeyGraphics: "+!noKeyPreview);
                     sDrawingProxy.onKeyPressed(k, false /* withPreview */);
                 }
             }
@@ -517,7 +516,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
 
         if (key.hasNoPanelAutoMoreKey()) {
-            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey");
             cancelKeyTracking();
             final int moreKeyCode = key.getMoreKeys()[0].mCode;
             sListener.onPressKey(moreKeyCode, 0 /* repeatCont */, true /* isSinglePointer */);
@@ -525,9 +523,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                     Constants.NOT_A_COORDINATE, false /* isKeyRepeat */);
             sListener.onReleaseKey(moreKeyCode, false /* withSliding */);
             return;
-        }else{
-            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey not");
-
         }
         final int code = key.getCode();
         if (code == Constants.CODE_SPACE || code == Constants.CODE_LANGUAGE_SWITCH) {
@@ -757,7 +752,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
         }
 
-        Log.d(TAG, "onDownEventInternal: "+x+" "+y);
         // Key selection by dragging finger is allowed when 1) key selection by dragging finger is
         // enabled by configuration, 2) this pointer starts dragging from modifier key, or 3) this
         // pointer's KeyDetector always allows key selection by dragging finger, such as
@@ -816,7 +810,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             return;
         }
 
-        Log.d(TAG, "onGestureMoveEvent: "+sInGesture+ " "+key.getCode());
 
         if (!sInGesture && key != null && Character.isLetter(key.getCode())
                 && mBatchInputArbiter.mayStartBatchInput(this)) {
@@ -834,19 +827,21 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
     private void onMoveEvent(final int x, final int y, final long eventTime, final MotionEvent me) {
         if (DEBUG_MOVE_EVENT) {
-            Log.d(TAG, "onMoveEvent: x="+me.getX()+" y="+me.getY()+" "+ getKey().getCode());
             printTouchEvent("onMoveEvent:", x, y, eventTime);
 
         }
 
-
-
-        if (getKey().getCode() == Constants.CODE_SPACE){
-            if(onSpaceKeyMove!=null){
-                onSpaceKeyMove.spaceKeyMove(x, y,eventTime,me);
+        if(getKey()!=null){
+            if (getKey().getCode() == Constants.CODE_SPACE){
+                if(onSpaceKeyMove!=null){
+                    onSpaceKeyMove.spaceKeyMove(x, y,eventTime,me);
+                }
+                return;
             }
-            return;
         }
+
+
+
 
 
         if (mIsTrackingForActionDisabled) {
@@ -1087,6 +1082,9 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             return;
         }
 
+        Log.d(TAG, "onUpEventInternal: ");
+
+
         if (sInGesture) {
             if (currentKey != null) {
                 callListenerOnRelease(currentKey, currentKey.getCode(), true /* withSliding */);
@@ -1137,7 +1135,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
 
         if (key.hasNoPanelAutoMoreKey()) {
-            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey");
             cancelKeyTracking();
             final int moreKeyCode = key.getMoreKeys()[0].mCode;
             sListener.onPressKey(moreKeyCode, 0 /* repeatCont */, true /* isSinglePointer */);
@@ -1145,13 +1142,9 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                     Constants.NOT_A_COORDINATE, false /* isKeyRepeat */);
             sListener.onReleaseKey(moreKeyCode, false /* withSliding */);
             return;
-        }else{
-            Log.d(TAG, "onLongPressed: hasNoPanelAutoMoreKey not");
-
         }
         final int code = key.getCode();
         if (code == Constants.CODE_SPACE || code == Constants.CODE_LANGUAGE_SWITCH) {
-            Log.d(TAG, "onLongPressed: ");
             // Long pressing the space key invokes IME switcher dialog.
             if (sListener.onCustomRequest(Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER)) {
                 cancelKeyTracking();
@@ -1312,7 +1305,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
     private void printTouchEvent(final String title, final int x, final int y,
             final long eventTime) {
-        Log.d(TAG, "printTouchEvent: "+title);
         final Key key = mKeyDetector.detectHitKey(x, y);
         final String code = (key == null ? "none" : Constants.printableCode(key.getCode()));
         Log.d(TAG, String.format("[%d]%s%s %4d %4d %5d %s", mPointerId,

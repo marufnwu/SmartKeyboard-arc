@@ -19,41 +19,41 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted"
+            keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted"
         >
             <Key
-                latin:keySpec="&quot;"
-                latin:keyHintLabel="1"
-                latin:additionalMoreKeys="1" />
+                keybaord:keySpec="&quot;"
+                keybaord:keyHintLabel="1"
+                keybaord:additionalMoreKeys="1" />
             <Key
-                latin:keySpec="&lt;"
-                latin:keyHintLabel="2"
-                latin:additionalMoreKeys="2" />
+                keybaord:keySpec="&lt;"
+                keybaord:keyHintLabel="2"
+                keybaord:additionalMoreKeys="2" />
             <Key
-                latin:keySpec="&gt;"
-                latin:keyHintLabel="3"
-                latin:additionalMoreKeys="3" />
+                keybaord:keySpec="&gt;"
+                keybaord:keyHintLabel="3"
+                keybaord:additionalMoreKeys="3" />
         </case>
         <default>
             <Key
-                latin:keySpec="\'"
-                latin:keyHintLabel="1"
-                latin:additionalMoreKeys="1"
-                latin:moreKeys="!,&quot;" />
+                keybaord:keySpec="\'"
+                keybaord:keyHintLabel="1"
+                keybaord:additionalMoreKeys="1"
+                keybaord:moreKeys="!,&quot;" />
             <Key
-                latin:keySpec=","
-                latin:keyHintLabel="2"
-                latin:additionalMoreKeys="2"
-                latin:moreKeys="\?,&lt;" />
+                keybaord:keySpec=","
+                keybaord:keyHintLabel="2"
+                keybaord:additionalMoreKeys="2"
+                keybaord:moreKeys="\?,&lt;" />
             <Key
-                latin:keySpec="."
-                latin:keyHintLabel="3"
-                latin:additionalMoreKeys="3"
-                latin:moreKeys="&gt;" />
+                keybaord:keySpec="."
+                keybaord:keyHintLabel="3"
+                keybaord:additionalMoreKeys="3"
+                keybaord:moreKeys="&gt;" />
         </default>
     </switch>
 </merge>

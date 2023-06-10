@@ -5,7 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.Window;
 
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 
 public class InputMethodChooser {
 

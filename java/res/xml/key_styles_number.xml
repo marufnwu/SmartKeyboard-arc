@@ -19,111 +19,111 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <key-style
-        latin:styleName="numKeyBaseStyle"
-        latin:keyActionFlags="noKeyPreview" />
+        keybaord:styleName="numKeyBaseStyle"
+        keybaord:keyActionFlags="noKeyPreview" />
     <key-style
-        latin:styleName="numKeyStyle"
-        latin:keyLabelFlags="followKeyLargeLetterRatio"
-        latin:parentStyle="numKeyBaseStyle" />
+        keybaord:styleName="numKeyStyle"
+        keybaord:keyLabelFlags="followKeyLargeLetterRatio"
+        keybaord:parentStyle="numKeyBaseStyle" />
     <key-style
-        latin:styleName="numModeKeyStyle"
-        latin:keyLabelFlags="fontNormal|followKeyLetterRatio|followFunctionalTextColor"
-        latin:parentStyle="numKeyBaseStyle" />
+        keybaord:styleName="numModeKeyStyle"
+        keybaord:keyLabelFlags="fontNormal|followKeyLetterRatio|followFunctionalTextColor"
+        keybaord:parentStyle="numKeyBaseStyle" />
     <key-style
-        latin:styleName="numSymbolKeyStyle"
-        latin:parentStyle="numKeyBaseStyle" />
+        keybaord:styleName="numSymbolKeyStyle"
+        keybaord:parentStyle="numKeyBaseStyle" />
     <key-style
-        latin:styleName="numberKeyStyle"
-        latin:keyLabelFlags="alignLabelOffCenter|hasHintLabel"
-        latin:parentStyle="numKeyStyle" />
+        keybaord:styleName="numberKeyStyle"
+        keybaord:keyLabelFlags="alignLabelOffCenter|hasHintLabel"
+        keybaord:parentStyle="numKeyStyle" />
     <key-style
-        latin:styleName="num0KeyStyle"
-        latin:keySpec="0"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num0KeyStyle"
+        keybaord:keySpec="0"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num1KeyStyle"
-        latin:keySpec="1"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num1KeyStyle"
+        keybaord:keySpec="1"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num2KeyStyle"
-        latin:keySpec="2"
-        latin:keyHintLabel="ABC"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num2KeyStyle"
+        keybaord:keySpec="2"
+        keybaord:keyHintLabel="ABC"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num3KeyStyle"
-        latin:keySpec="3"
-        latin:keyHintLabel="DEF"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num3KeyStyle"
+        keybaord:keySpec="3"
+        keybaord:keyHintLabel="DEF"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num4KeyStyle"
-        latin:keySpec="4"
-        latin:keyHintLabel="GHI"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num4KeyStyle"
+        keybaord:keySpec="4"
+        keybaord:keyHintLabel="GHI"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num5KeyStyle"
-        latin:keySpec="5"
-        latin:keyHintLabel="JKL"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num5KeyStyle"
+        keybaord:keySpec="5"
+        keybaord:keyHintLabel="JKL"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num6KeyStyle"
-        latin:keySpec="6"
-        latin:keyHintLabel="MNO"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num6KeyStyle"
+        keybaord:keySpec="6"
+        keybaord:keyHintLabel="MNO"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num7KeyStyle"
-        latin:keySpec="7"
-        latin:keyHintLabel="PQRS"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num7KeyStyle"
+        keybaord:keySpec="7"
+        keybaord:keyHintLabel="PQRS"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num8KeyStyle"
-        latin:keySpec="8"
-        latin:keyHintLabel="TUV"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num8KeyStyle"
+        keybaord:keySpec="8"
+        keybaord:keyHintLabel="TUV"
+        keybaord:parentStyle="numberKeyStyle" />
     <key-style
-        latin:styleName="num9KeyStyle"
-        latin:keySpec="9"
-        latin:keyHintLabel="WXYZ"
-        latin:parentStyle="numberKeyStyle" />
+        keybaord:styleName="num9KeyStyle"
+        keybaord:keySpec="9"
+        keybaord:keyHintLabel="WXYZ"
+        keybaord:parentStyle="numberKeyStyle" />
     <!-- Only for non-tablet device -->
     <key-style
-        latin:styleName="numPhoneToSymbolKeyStyle"
-        latin:keySpec="!text/keylabel_to_phone_symbols|!code/key_switch_alpha_symbol"
-        latin:parentStyle="numModeKeyStyle" />
+        keybaord:styleName="numPhoneToSymbolKeyStyle"
+        keybaord:keySpec="!text/keylabel_to_phone_symbols|!code/key_switch_alpha_symbol"
+        keybaord:parentStyle="numModeKeyStyle" />
     <key-style
-        latin:styleName="numPhoneToNumericKeyStyle"
-        latin:keySpec="!text/keylabel_to_phone_numeric|!code/key_switch_alpha_symbol"
-        latin:parentStyle="numModeKeyStyle" />
+        keybaord:styleName="numPhoneToNumericKeyStyle"
+        keybaord:keySpec="!text/keylabel_to_phone_numeric|!code/key_switch_alpha_symbol"
+        keybaord:parentStyle="numModeKeyStyle" />
     <key-style
-        latin:styleName="numTabKeyStyle"
-        latin:keyActionFlags="noKeyPreview"
-        latin:parentStyle="tabKeyStyle" />
+        keybaord:styleName="numTabKeyStyle"
+        keybaord:keyActionFlags="noKeyPreview"
+        keybaord:parentStyle="tabKeyStyle" />
     <key-style
-        latin:styleName="numSpaceKeyStyle"
-        latin:keySpec="!icon/space_key_for_number_layout|!code/key_space"
-        latin:keyLabelFlags="alignIconToBottom"
-        latin:keyActionFlags="enableLongPress"
-        latin:parentStyle="numKeyBaseStyle" />
+        keybaord:styleName="numSpaceKeyStyle"
+        keybaord:keySpec="!icon/space_key_for_number_layout|!code/key_space"
+        keybaord:keyLabelFlags="alignIconToBottom"
+        keybaord:keyActionFlags="enableLongPress"
+        keybaord:parentStyle="numKeyBaseStyle" />
     <!-- TODO: Consolidate these space key styles with numSpaceKeyStyle above by introducing <case>
          predicator that checks device form-factor. -->
     <switch>
-        <case latin:keyboardTheme="ICS|KLP">
+        <case keybaord:keyboardTheme="ICS|KLP">
             <key-style
-                latin:styleName="tabletNumSpaceKeyStyle"
-                latin:keySpec="!icon/space_key|!code/key_space"
-                latin:backgroundType="functional"
-                latin:keyActionFlags="enableLongPress"
-                latin:parentStyle="numKeyBaseStyle" />
+                keybaord:styleName="tabletNumSpaceKeyStyle"
+                keybaord:keySpec="!icon/space_key|!code/key_space"
+                keybaord:backgroundType="functional"
+                keybaord:keyActionFlags="enableLongPress"
+                keybaord:parentStyle="numKeyBaseStyle" />
         </case>
-        <case latin:keyboardTheme="LXXLight|LXXDark">
+        <case keybaord:keyboardTheme="LXXLight|LXXDark">
             <key-style
-                latin:styleName="tabletNumSpaceKeyStyle"
-                latin:keySpec="!icon/space_key|!code/key_space"
-                latin:backgroundType="spacebar"
-                latin:keyActionFlags="enableLongPress"
-                latin:parentStyle="numKeyBaseStyle" />
+                keybaord:styleName="tabletNumSpaceKeyStyle"
+                keybaord:keySpec="!icon/space_key|!code/key_space"
+                keybaord:backgroundType="spacebar"
+                keybaord:keyActionFlags="enableLongPress"
+                keybaord:parentStyle="numKeyBaseStyle" />
         </case>
     </switch>
 </merge>

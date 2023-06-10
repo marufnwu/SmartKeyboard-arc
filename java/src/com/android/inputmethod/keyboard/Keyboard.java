@@ -37,12 +37,12 @@ import javax.annotation.Nullable;
  * <p>The layout file for a keyboard contains XML that looks like the following snippet:</p>
  * <pre>
  * &lt;Keyboard
- *         latin:keyWidth="10%p"
- *         latin:rowHeight="50px"
- *         latin:horizontalGap="2%p"
- *         latin:verticalGap="2%p" &gt;
- *     &lt;Row latin:keyWidth="10%p" &gt;
- *         &lt;Key latin:keyLabel="A" /&gt;
+ *         keybaord:keyWidth="10%p"
+ *         keybaord:rowHeight="50px"
+ *         keybaord:horizontalGap="2%p"
+ *         keybaord:verticalGap="2%p" &gt;
+ *     &lt;Row keybaord:keyWidth="10%p" &gt;
+ *         &lt;Key keybaord:keyLabel="A" /&gt;
  *         ...
  *     &lt;/Row&gt;
  *     ...

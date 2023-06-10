@@ -19,55 +19,55 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <Key
-        latin:keySpec="a"
-        latin:keyHintLabel="1"
-        latin:additionalMoreKeys="1"
-        latin:moreKeys="!text/morekeys_a" />
+        keybaord:keySpec="a"
+        keybaord:keyHintLabel="1"
+        keybaord:additionalMoreKeys="1"
+        keybaord:moreKeys="!text/morekeys_a" />
     <Key
-        latin:keySpec="z"
-        latin:keyHintLabel="2"
-        latin:additionalMoreKeys="2"
-        latin:moreKeys="!text/morekeys_z" />
+        keybaord:keySpec="z"
+        keybaord:keyHintLabel="2"
+        keybaord:additionalMoreKeys="2"
+        keybaord:moreKeys="!text/morekeys_z" />
     <Key
-        latin:keySpec="e"
-        latin:keyHintLabel="3"
-        latin:additionalMoreKeys="3"
-        latin:moreKeys="!text/morekeys_e" />
+        keybaord:keySpec="e"
+        keybaord:keyHintLabel="3"
+        keybaord:additionalMoreKeys="3"
+        keybaord:moreKeys="!text/morekeys_e" />
     <Key
-        latin:keySpec="r"
-        latin:keyHintLabel="4"
-        latin:additionalMoreKeys="4"
-        latin:moreKeys="!text/morekeys_r" />
+        keybaord:keySpec="r"
+        keybaord:keyHintLabel="4"
+        keybaord:additionalMoreKeys="4"
+        keybaord:moreKeys="!text/morekeys_r" />
     <Key
-        latin:keySpec="t"
-        latin:keyHintLabel="5"
-        latin:additionalMoreKeys="5"
-        latin:moreKeys="!text/morekeys_t" />
+        keybaord:keySpec="t"
+        keybaord:keyHintLabel="5"
+        keybaord:additionalMoreKeys="5"
+        keybaord:moreKeys="!text/morekeys_t" />
     <Key
-        latin:keySpec="y"
-        latin:keyHintLabel="6"
-        latin:additionalMoreKeys="6"
-        latin:moreKeys="!text/morekeys_y" />
+        keybaord:keySpec="y"
+        keybaord:keyHintLabel="6"
+        keybaord:additionalMoreKeys="6"
+        keybaord:moreKeys="!text/morekeys_y" />
     <Key
-        latin:keySpec="u"
-        latin:keyHintLabel="7"
-        latin:additionalMoreKeys="7"
-        latin:moreKeys="!text/morekeys_u" />
+        keybaord:keySpec="u"
+        keybaord:keyHintLabel="7"
+        keybaord:additionalMoreKeys="7"
+        keybaord:moreKeys="!text/morekeys_u" />
     <Key
-        latin:keySpec="i"
-        latin:keyHintLabel="8"
-        latin:additionalMoreKeys="8"
-        latin:moreKeys="!text/morekeys_i" />
+        keybaord:keySpec="i"
+        keybaord:keyHintLabel="8"
+        keybaord:additionalMoreKeys="8"
+        keybaord:moreKeys="!text/morekeys_i" />
     <Key
-        latin:keySpec="o"
-        latin:keyHintLabel="9"
-        latin:additionalMoreKeys="9"
-        latin:moreKeys="!text/morekeys_o" />
+        keybaord:keySpec="o"
+        keybaord:keyHintLabel="9"
+        keybaord:additionalMoreKeys="9"
+        keybaord:moreKeys="!text/morekeys_o" />
     <Key
-        latin:keySpec="p"
-        latin:keyHintLabel="0"
-        latin:additionalMoreKeys="0" />
+        keybaord:keySpec="p"
+        keybaord:keyHintLabel="0"
+        keybaord:additionalMoreKeys="0" />
 </merge>

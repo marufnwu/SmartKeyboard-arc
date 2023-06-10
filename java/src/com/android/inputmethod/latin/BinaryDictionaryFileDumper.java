@@ -36,7 +36,7 @@ import com.android.inputmethod.latin.utils.DictionaryInfoUtils;
 import com.android.inputmethod.latin.utils.DictionaryInfoUtils.DictionaryInfo;
 import com.android.inputmethod.latin.utils.FileTransforms;
 import com.android.inputmethod.latin.utils.MetadataFileUriGetter;
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

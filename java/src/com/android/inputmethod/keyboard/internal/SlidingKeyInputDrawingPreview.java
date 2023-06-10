@@ -23,7 +23,7 @@ import android.graphics.Path;
 import android.util.Log;
 
 import com.android.inputmethod.keyboard.PointerTracker;
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 import com.android.inputmethod.latin.common.CoordinateUtils;
 
 /**

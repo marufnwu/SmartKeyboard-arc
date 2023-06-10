@@ -19,12 +19,12 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <!-- U+0630: "ذ" ARABIC LETTER THAL -->
     <Key
-        latin:keySpec="&#x0630;" />
+        keybaord:keySpec="&#x0630;" />
     <!-- U+0626: "ئ" ARABIC LETTER YEH WITH HAMZA ABOVE -->
     <Key
-        latin:keySpec="&#x0626;" />
+        keybaord:keySpec="&#x0626;" />
 </merge>

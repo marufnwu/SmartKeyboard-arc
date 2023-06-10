@@ -298,7 +298,7 @@ public final class Constants {
 
     /**
      * Screen metrics (a.k.a. Device form factor) constants of
-     * {@link com.android.inputmethod.latin.R.integer#config_screen_metrics}.
+     * {@link xmlns:keybaord="http://schemas.android.com/apk/res-auto".integer#config_screen_metrics}.
      */
     public static final int SCREEN_METRICS_SMALL_PHONE = 0;
     public static final int SCREEN_METRICS_LARGE_PHONE = 1;

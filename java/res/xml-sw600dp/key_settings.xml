@@ -19,14 +19,14 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:clobberSettingsKey="false"
+            keybaord:clobberSettingsKey="false"
         >
             <Key
-                latin:keyStyle="settingsKeyStyle" />
+                keybaord:keyStyle="settingsKeyStyle" />
         </case>
         <!-- clobberSettingsKey="true" -->
         <default>

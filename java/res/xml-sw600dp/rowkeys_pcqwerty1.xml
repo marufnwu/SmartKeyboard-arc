@@ -19,100 +19,100 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:keyboardLayoutSetElement="alphabet|alphabetAutomaticShifted|alphabetShiftLocked"
+            keybaord:keyboardLayoutSetElement="alphabet|alphabetAutomaticShifted|alphabetShiftLocked"
         >
             <Key
-                latin:keySpec="`"
-                latin:keyHintLabel="~"
-                latin:additionalMoreKeys="~"
-                latin:keyStyle="hasShiftedLetterHintStyle" />
+                keybaord:keySpec="`"
+                keybaord:keyHintLabel="~"
+                keybaord:additionalMoreKeys="~"
+                keybaord:keyStyle="hasShiftedLetterHintStyle" />
             <Key
-                latin:keySpec="1"
-                latin:keyHintLabel="!"
-                latin:additionalMoreKeys="!"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_exclamation,!text/morekeys_symbols_1" />
+                keybaord:keySpec="1"
+                keybaord:keyHintLabel="!"
+                keybaord:additionalMoreKeys="!"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_exclamation,!text/morekeys_symbols_1" />
             <Key
-                latin:keySpec="2"
-                latin:keyHintLabel="\@"
-                latin:additionalMoreKeys="\@"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_2" />
+                keybaord:keySpec="2"
+                keybaord:keyHintLabel="\@"
+                keybaord:additionalMoreKeys="\@"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_2" />
             <Key
-                latin:keySpec="3"
-                latin:keyHintLabel="\#"
-                latin:additionalMoreKeys="\#"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_3" />
+                keybaord:keySpec="3"
+                keybaord:keyHintLabel="\#"
+                keybaord:additionalMoreKeys="\#"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_3" />
             <Key
-                latin:keySpec="4"
-                latin:keyHintLabel="$"
-                latin:additionalMoreKeys="$"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_4" />
+                keybaord:keySpec="4"
+                keybaord:keyHintLabel="$"
+                keybaord:additionalMoreKeys="$"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_4" />
             <Key
-                latin:keySpec="5"
-                latin:keyHintLabel="%"
-                latin:additionalMoreKeys="\\%"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_5" />
+                keybaord:keySpec="5"
+                keybaord:keyHintLabel="%"
+                keybaord:additionalMoreKeys="\\%"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_5" />
             <Key
-                latin:keySpec="6"
-                latin:keyHintLabel="^"
-                latin:additionalMoreKeys="^"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_6" />
+                keybaord:keySpec="6"
+                keybaord:keyHintLabel="^"
+                keybaord:additionalMoreKeys="^"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_6" />
             <Key
-                latin:keySpec="7"
-                latin:keyHintLabel="&amp;"
-                latin:additionalMoreKeys="&amp;"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_7" />
+                keybaord:keySpec="7"
+                keybaord:keyHintLabel="&amp;"
+                keybaord:additionalMoreKeys="&amp;"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_7" />
             <Key
-                latin:keySpec="8"
-                latin:keyHintLabel="*"
-                latin:additionalMoreKeys="*"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_8" />
+                keybaord:keySpec="8"
+                keybaord:keyHintLabel="*"
+                keybaord:additionalMoreKeys="*"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_8" />
             <Key
-                latin:keySpec="9"
-                latin:keyHintLabel="("
-                latin:additionalMoreKeys="("
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_9" />
+                keybaord:keySpec="9"
+                keybaord:keyHintLabel="("
+                keybaord:additionalMoreKeys="("
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_9" />
             <Key
-                latin:keySpec="0"
-                latin:keyHintLabel=")"
-                latin:additionalMoreKeys=")"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_symbols_0" />
+                keybaord:keySpec="0"
+                keybaord:keyHintLabel=")"
+                keybaord:additionalMoreKeys=")"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_symbols_0" />
             <!-- U+2013: "–" EN DASH
                  U+2014: "—" EM DASH
                  U+00B7: "·" MIDDLE DOT -->
             <Key
-                latin:keySpec="-"
-                latin:keyHintLabel="_"
-                latin:additionalMoreKeys="_"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="&#x2013;,&#x2014;,&#x00B7;" />
+                keybaord:keySpec="-"
+                keybaord:keyHintLabel="_"
+                keybaord:additionalMoreKeys="_"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="&#x2013;,&#x2014;,&#x00B7;" />
             <!-- U+221E: "∞" INFINITY
                  U+2260: "≠" NOT EQUAL TO
                  U+2248: "≈" ALMOST EQUAL TO -->
             <Key
-                latin:keySpec="="
-                latin:keyHintLabel="+"
-                latin:additionalMoreKeys="+"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="&#x221E;,&#x2260;,&#x2248;" />
+                keybaord:keySpec="="
+                keybaord:keyHintLabel="+"
+                keybaord:additionalMoreKeys="+"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="&#x221E;,&#x2260;,&#x2248;" />
         </case>
         <!-- keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLockShifted" -->
         <default>
             <include
-                 latin:keyboardLayout="@xml/rowkeys_pcqwerty1_shift" />
+                 keybaord:keyboardLayout="@xml/rowkeys_pcqwerty1_shift" />
         </default>
     </switch>
 </merge>

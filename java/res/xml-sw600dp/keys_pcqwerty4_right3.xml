@@ -19,28 +19,28 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:keyboardLayoutSetElement="alphabet|alphabetAutomaticShifted|alphabetShiftLocked"
+            keybaord:keyboardLayoutSetElement="alphabet|alphabetAutomaticShifted|alphabetShiftLocked"
         >
             <Key
-                latin:keySpec=","
-                latin:keyHintLabel="&lt;"
-                latin:additionalMoreKeys="&lt;"
-                latin:keyStyle="hasShiftedLetterHintStyle" />
+                keybaord:keySpec=","
+                keybaord:keyHintLabel="&lt;"
+                keybaord:additionalMoreKeys="&lt;"
+                keybaord:keyStyle="hasShiftedLetterHintStyle" />
             <Key
-                latin:keySpec="."
-                latin:keyHintLabel="&gt;"
-                latin:additionalMoreKeys="&gt;"
-                latin:keyStyle="hasShiftedLetterHintStyle" />
+                keybaord:keySpec="."
+                keybaord:keyHintLabel="&gt;"
+                keybaord:additionalMoreKeys="&gt;"
+                keybaord:keyStyle="hasShiftedLetterHintStyle" />
             <Key
-                latin:keySpec="/"
-                latin:keyHintLabel="\?"
-                latin:additionalMoreKeys="\?"
-                latin:keyStyle="hasShiftedLetterHintStyle"
-                latin:moreKeys="!text/morekeys_question" />
+                keybaord:keySpec="/"
+                keybaord:keyHintLabel="\?"
+                keybaord:additionalMoreKeys="\?"
+                keybaord:keyStyle="hasShiftedLetterHintStyle"
+                keybaord:moreKeys="!text/morekeys_question" />
         </case>
         <!-- keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted" -->
         <default>
@@ -51,14 +51,14 @@
                  U+00AB: "«" LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
                  U+00BB: "»" RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK -->
             <Key
-                latin:keySpec="&lt;"
-                latin:moreKeys="!fixedColumnOrder!3,&#x2039;,&#x2264;,&#x00AB;" />
+                keybaord:keySpec="&lt;"
+                keybaord:moreKeys="!fixedColumnOrder!3,&#x2039;,&#x2264;,&#x00AB;" />
             <Key
-                latin:keySpec="&gt;"
-                latin:moreKeys="!fixedColumnOrder!3,&#x203A;,&#x2265;,&#x00BB;" />
+                keybaord:keySpec="&gt;"
+                keybaord:moreKeys="!fixedColumnOrder!3,&#x203A;,&#x2265;,&#x00BB;" />
             <Key
-                latin:keySpec="\?"
-                latin:moreKeys="!text/morekeys_question" />
+                keybaord:keySpec="\?"
+                keybaord:moreKeys="!text/morekeys_question" />
         </default>
     </switch>
 </merge>

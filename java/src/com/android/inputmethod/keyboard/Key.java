@@ -39,7 +39,7 @@ import com.android.inputmethod.keyboard.internal.KeyboardRow;
 import com.android.inputmethod.keyboard.internal.MoreKeySpec;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.common.StringUtils;
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -334,17 +334,14 @@ public class Key implements Comparable<Key> {
 
 
         if (moreKeys != null) {
-            Log.d("MoreKeysLog", "Not Null Key: "+keySpec);
 
             actionFlags |= ACTION_FLAGS_ENABLE_LONG_PRESS;
             mMoreKeys = new MoreKeySpec[moreKeys.length];
             for (int i = 0; i < moreKeys.length; i++) {
-                Log.d("MoreKeysLog", "Key "+keySpec +" Sub key "+moreKeys[i]);
                 mMoreKeys[i] = new MoreKeySpec(moreKeys[i], needsToUpcase, localeForUpcasing);
             }
         } else {
             mMoreKeys = null;
-            Log.d("MoreKeysLog", "Null Key: "+keySpec);
         }
 
         mActionFlags = actionFlags;

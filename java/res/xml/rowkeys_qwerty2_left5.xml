@@ -19,20 +19,20 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <Key
-        latin:keySpec="a"
-        latin:moreKeys="!text/morekeys_a" />
+        keybaord:keySpec="a"
+        keybaord:moreKeys="!text/morekeys_a" />
     <Key
-        latin:keySpec="s"
-        latin:moreKeys="!text/morekeys_s" />
+        keybaord:keySpec="s"
+        keybaord:moreKeys="!text/morekeys_s" />
     <Key
-        latin:keySpec="d"
-        latin:moreKeys="!text/morekeys_d" />
+        keybaord:keySpec="d"
+        keybaord:moreKeys="!text/morekeys_d" />
     <Key
-        latin:keySpec="f" />
+        keybaord:keySpec="f" />
     <Key
-        latin:keySpec="g"
-        latin:moreKeys="!text/morekeys_g" />
+        keybaord:keySpec="g"
+        keybaord:moreKeys="!text/morekeys_g" />
 </merge>

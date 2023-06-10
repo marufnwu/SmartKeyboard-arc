@@ -18,61 +18,61 @@
 */
 -->
 
-<merge xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin">
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
     <switch>
-        <case latin:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
+        <case keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
             <!-- U+0906: "आ" DEVANAGARI LETTER AA -->
-            <Key latin:keySpec="&#x0906;" />
+            <Key keybaord:keySpec="&#x0906;" />
             <!-- U+0936: "श" DEVANAGARI LETTER SHA -->
-            <Key latin:keySpec="&#x0936;" />
+            <Key keybaord:keySpec="&#x0936;" />
             <!-- U+0927: "ध" DEVANAGARI LETTER DHA -->
-            <Key latin:keySpec="&#x0927;" />
+            <Key keybaord:keySpec="&#x0927;" />
             <!-- U+090A: "ऊ" DEVANAGARI LETTER UU -->
-            <Key latin:keySpec="&#x090A;" />
+            <Key keybaord:keySpec="&#x090A;" />
             <!-- U+0918: "घ" DEVANAGARI LETTER GHA -->
-            <Key latin:keySpec="&#x0918;" />
+            <Key keybaord:keySpec="&#x0918;" />
             <!-- U+0905: "अ" DEVANAGARI LETTER A -->
-            <Key latin:keySpec="&#x0905;" />
+            <Key keybaord:keySpec="&#x0905;" />
             <!-- U+091D: "झ" DEVANAGARI LETTER JHA -->
-            <Key latin:keySpec="&#x091D;" />
+            <Key keybaord:keySpec="&#x091D;" />
             <!-- U+0916: "ख" DEVANAGARI LETTER KHA -->
-            <Key latin:keySpec="&#x0916;" />
+            <Key keybaord:keySpec="&#x0916;" />
             <!-- U+0965: "॥" DEVANAGARI DOUBLE DANDA -->
-            <Key latin:keySpec="&#x0965;" />
+            <Key keybaord:keySpec="&#x0965;" />
             <!-- U+0910: "ऐ" DEVANAGARI LETTER AI -->
-            <Key latin:keySpec="&#x0910;" />
+            <Key keybaord:keySpec="&#x0910;" />
             <!-- Because the font rendering system prior to API version 16 can't automatically
                  render dotted circle for incomplete combining letter of some scripts, different
                  set of Key definitions are needed based on the API version. -->
-            <include latin:keyboardLayout="@xml/keystyle_devanagari_sign_visarga" />
-            <Key latin:keyStyle="baseKeyDevanagariSignVisarga" />
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_sign_visarga" />
+            <Key keybaord:keyStyle="baseKeyDevanagariSignVisarga" />
         </case>
         <default>
             <!-- Because the font rendering system prior to API version 16 can't automatically
                  render dotted circle for incomplete combining letter of some scripts, different
                  set of Key definitions are needed based on the API version. -->
-            <include latin:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_aa" />
-            <Key latin:keyStyle="baseKeyDevanagariVowelSignAa" />
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_aa" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignAa" />
             <!-- U+0938: "स" DEVANAGARI LETTER SA -->
-            <Key latin:keySpec="&#x0938;" />
+            <Key keybaord:keySpec="&#x0938;" />
             <!-- U+0926: "द" DEVANAGARI LETTER DA -->
-            <Key latin:keySpec="&#x0926;" />
+            <Key keybaord:keySpec="&#x0926;" />
             <!-- U+0909: "उ" DEVANAGARI LETTER U -->
-            <Key latin:keySpec="&#x0909;" />
+            <Key keybaord:keySpec="&#x0909;" />
             <!-- U+0917: "ग" DEVANAGARI LETTER GA -->
-            <Key latin:keySpec="&#x0917;" />
+            <Key keybaord:keySpec="&#x0917;" />
             <!-- U+0939: "ह" DEVANAGARI LETTER HA -->
-            <Key latin:keySpec="&#x0939;" />
+            <Key keybaord:keySpec="&#x0939;" />
             <!-- U+091C: "ज" DEVANAGARI LETTER JA -->
-            <Key latin:keySpec="&#x091C;" />
+            <Key keybaord:keySpec="&#x091C;" />
             <!-- U+0915: "क" DEVANAGARI LETTER KA -->
-            <Key latin:keySpec="&#x0915;" />
+            <Key keybaord:keySpec="&#x0915;" />
             <!-- U+0932: "ल" DEVANAGARI LETTER LA -->
-            <Key latin:keySpec="&#x0932;" />
+            <Key keybaord:keySpec="&#x0932;" />
             <!-- U+090F: "ए" DEVANAGARI LETTER E -->
-            <Key latin:keySpec="&#x090F;" />
+            <Key keybaord:keySpec="&#x090F;" />
             <!-- U+0950: "ॐ" DEVANAGARI OM -->
-            <Key latin:keySpec="&#x0950;" />
+            <Key keybaord:keySpec="&#x0950;" />
         </default>
     </switch>
 </merge>

@@ -30,7 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.inputmethod.keyboard.Key;
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 import com.android.inputmethod.utils.SlidingLocaleDrawable;
 
 import java.util.HashSet;

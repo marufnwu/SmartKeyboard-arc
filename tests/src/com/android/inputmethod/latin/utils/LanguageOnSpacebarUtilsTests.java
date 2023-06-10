@@ -29,9 +29,8 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.android.inputmethod.latin.RichInputMethodManager;
-import com.android.inputmethod.latin.RichInputMethodSubtype;
 
+import com.sikderithub.keyboard.R;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

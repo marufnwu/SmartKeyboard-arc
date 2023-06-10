@@ -19,20 +19,20 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:mode="email|url"
+            keybaord:mode="email|url"
         >
             <Key
-                latin:keyStyle="comKeyStyle"
-                latin:keyWidth="fillRight" />
+                keybaord:keyStyle="comKeyStyle"
+                keybaord:keyWidth="fillRight" />
         </case>
         <default>
             <Key
-                latin:keyStyle="emojiKeyStyle"
-                latin:keyWidth="fillRight" />
+                keybaord:keyStyle="emojiKeyStyle"
+                keybaord:keyWidth="fillRight" />
         </default>
     </switch>
 </merge>

@@ -18,8 +18,8 @@
 */
 -->
 
-<merge xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin" >
-    <include latin:keyboardLayout="@xml/rowkeys_qwertz1" />
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard" >
+    <include keybaord:keyboardLayout="@xml/rowkeys_qwertz1" />
     <!-- U+0161: "š" LATIN SMALL LETTER S WITH CARON -->
-    <Key latin:keySpec="&#x0161;" />
+    <Key keybaord:keySpec="&#x0161;" />
 </merge>

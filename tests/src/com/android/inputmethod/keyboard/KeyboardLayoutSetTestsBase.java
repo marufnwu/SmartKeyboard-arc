@@ -26,10 +26,9 @@ import android.view.inputmethod.InputMethodSubtype;
 
 import com.android.inputmethod.compat.InputMethodSubtypeCompatUtils;
 import com.android.inputmethod.keyboard.KeyboardLayoutSet.Builder;
-import com.android.inputmethod.latin.R;
-import com.android.inputmethod.latin.RichInputMethodManager;
-import com.android.inputmethod.latin.RichInputMethodSubtype;
-import com.android.inputmethod.latin.common.Constants;
+import com.sikderithub.keyboard.R;
+
+import com.sikderithub.keyboard.R;import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.settings.Settings;
 import com.android.inputmethod.latin.utils.AdditionalSubtypeUtils;
 import com.android.inputmethod.latin.utils.ResourceUtils;

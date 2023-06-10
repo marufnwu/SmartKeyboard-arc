@@ -22,7 +22,7 @@ import android.content.res.AssetFileDescriptor;
 import android.util.Log;
 
 import com.android.inputmethod.latin.utils.DictionaryInfoUtils;
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 
 import java.io.File;
 import java.util.ArrayList;

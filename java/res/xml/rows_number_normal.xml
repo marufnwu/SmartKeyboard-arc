@@ -19,117 +19,117 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <Row>
         <Key
-            latin:keySpec="1"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="1"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keySpec="2"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="2"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keySpec="3"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="3"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keySpec="-"
-            latin:moreKeys="+"
-            latin:keyLabelFlags="hasPopupHint"
-            latin:keyStyle="numKeyStyle"
-            latin:backgroundType="functional"
-            latin:keyWidth="fillRight" />
+            keybaord:keySpec="-"
+            keybaord:moreKeys="+"
+            keybaord:keyLabelFlags="hasPopupHint"
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:backgroundType="functional"
+            keybaord:keyWidth="fillRight" />
     </Row>
     <Row>
         <Key
-            latin:keySpec="4"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="4"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keySpec="5"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="5"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keySpec="6"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="6"
+            keybaord:keyStyle="numKeyStyle" />
         <switch>
             <case
-                latin:mode="date"
+                keybaord:mode="date"
             >
                 <Key
-                    latin:keySpec="."
-                    latin:keyStyle="numKeyStyle"
-                    latin:backgroundType="functional"
-                    latin:keyWidth="fillRight" />
+                    keybaord:keySpec="."
+                    keybaord:keyStyle="numKeyStyle"
+                    keybaord:backgroundType="functional"
+                    keybaord:keyWidth="fillRight" />
             </case>
             <case
-                latin:mode="time|datetime"
+                keybaord:mode="time|datetime"
             >
                 <Key
-                    latin:keySpec="."
-                    latin:moreKeys="!text/morekeys_am_pm"
-                    latin:keyLabelFlags="hasPopupHint"
-                    latin:keyStyle="numKeyStyle"
-                    latin:backgroundType="functional"
-                    latin:keyWidth="fillRight" />
+                    keybaord:keySpec="."
+                    keybaord:moreKeys="!text/morekeys_am_pm"
+                    keybaord:keyLabelFlags="hasPopupHint"
+                    keybaord:keyStyle="numKeyStyle"
+                    keybaord:backgroundType="functional"
+                    keybaord:keyWidth="fillRight" />
             </case>
             <default>
                 <Key
-                    latin:keySpec=","
-                    latin:keyStyle="numKeyStyle"
-                    latin:backgroundType="functional"
-                    latin:keyWidth="fillRight" />
+                    keybaord:keySpec=","
+                    keybaord:keyStyle="numKeyStyle"
+                    keybaord:backgroundType="functional"
+                    keybaord:keyWidth="fillRight" />
             </default>
         </switch>
     </Row>
     <Row>
         <Key
-            latin:keySpec="7"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="7"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keySpec="8"
-            latin:keyStyle="numKeyStyle"/>
+            keybaord:keySpec="8"
+            keybaord:keyStyle="numKeyStyle"/>
         <Key
-            latin:keySpec="9"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="9"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keyStyle="deleteKeyStyle"
-            latin:keyWidth="fillRight" />
+            keybaord:keyStyle="deleteKeyStyle"
+            keybaord:keyWidth="fillRight" />
     </Row>
     <Row>
         <switch>
             <case
-                latin:mode="date"
+                keybaord:mode="date"
             >
                 <Key
-                    latin:keySpec="/"
-                    latin:keyStyle="numKeyStyle" />
+                    keybaord:keySpec="/"
+                    keybaord:keyStyle="numKeyStyle" />
             </case>
             <case
-                latin:mode="time"
+                keybaord:mode="time"
             >
                 <Key
-                    latin:keySpec=":"
-                    latin:keyStyle="numKeyStyle" />
+                    keybaord:keySpec=":"
+                    keybaord:keyStyle="numKeyStyle" />
             </case>
             <case
-                latin:mode="datetime"
+                keybaord:mode="datetime"
             >
                 <Key
-                    latin:keySpec="/ :|/"
-                    latin:moreKeys="!noPanelAutoMoreKey!,:"
-                    latin:keyStyle="numKeyStyle" />
+                    keybaord:keySpec="/ :|/"
+                    keybaord:moreKeys="!noPanelAutoMoreKey!,:"
+                    keybaord:keyStyle="numKeyStyle" />
             </case>
             <default>
                 <Key
-                    latin:keySpec="."
-                    latin:keyStyle="numKeyStyle" />
+                    keybaord:keySpec="."
+                    keybaord:keyStyle="numKeyStyle" />
             </default>
         </switch>
         <Key
-            latin:keySpec="0"
-            latin:keyStyle="numKeyStyle" />
+            keybaord:keySpec="0"
+            keybaord:keyStyle="numKeyStyle" />
         <Key
-            latin:keyStyle="numSpaceKeyStyle" />
+            keybaord:keyStyle="numSpaceKeyStyle" />
         <Key
-            latin:keyStyle="enterKeyStyle"
-            latin:keyWidth="fillRight" />
+            keybaord:keyStyle="enterKeyStyle"
+            keybaord:keyWidth="fillRight" />
     </Row>
 </merge>

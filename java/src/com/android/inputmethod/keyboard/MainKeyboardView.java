@@ -53,9 +53,9 @@ import com.android.inputmethod.keyboard.internal.MoreKeySpec;
 import com.android.inputmethod.keyboard.internal.NonDistinctMultitouchHelper;
 import com.android.inputmethod.keyboard.internal.SlidingKeyInputDrawingPreview;
 import com.android.inputmethod.keyboard.internal.TimerHandler;
-import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
-import com.android.inputmethod.latin.SuggestedWords;
+import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.R;import com.android.inputmethod.latin.SuggestedWords;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.common.CoordinateUtils;
 import com.android.inputmethod.latin.settings.DebugSettings;
@@ -482,7 +482,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
     private void locatePreviewPlacerView() {
         getLocationInWindow(mOriginCoords);
-        Log.d(TAG, "locatePreviewPlacerView: "+getWidth()+" "+getHeight());
         mDrawingPreviewPlacerView.setKeyboardViewGeometry(mOriginCoords, getWidth(), getHeight());
     }
 
@@ -492,7 +491,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             Log.w(TAG, "Cannot find root view");
             return;
         }
-        Log.d(TAG, "installPreviewPlacerView: "+rootView.getId());
 
 
         final ViewGroup windowContentView = (ViewGroup)rootView.findViewById(android.R.id.content);
@@ -509,7 +507,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     // Implements {@link DrawingProxy#onKeyPressed(Key,boolean)}.
     @Override
     public void onKeyPressed(@Nonnull final Key key, final boolean withPreview) {
-        Log.d(TAG, "onKeyPressed: "+withPreview);
         key.onPressed();
         invalidateKey(key);
 
@@ -535,12 +532,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
         final KeyPreviewDrawParams previewParams = mKeyPreviewDrawParams;
         if (!previewParams.isPopupEnabled()) {
-            Log.d(TAG, "showKeyPreview: not enable");
             previewParams.setVisibleOffset(-keyboard.mVerticalGap);
             return;
-        }else{
-            Log.d(TAG, "showKeyPreview: enable");
-
         }
 
 
@@ -558,7 +551,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         if (key == null)
             return;
 
-        Log.d(TAG, "showSpacePreview: called");
         //Log.i(TAG, "showKey() for " + this);
         // Should not draw hint icon in key preview
 
@@ -624,7 +616,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             mPreviewPopup = new PopupWindow(getContext());
         mPreviewPopup.setContentView(mPreviewText);
         //mPreviewPopup.setBackgroundDrawable(null);
-        Log.d(TAG, "showSpacePreview: "+mPreviewPopup.getHeight());
 
         if (mPreviewPopup.isShowing()) {
             mPreviewPopup.update(popupPreviewX, popupPreviewY, popupWidth, popupHeight);
@@ -636,7 +627,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             mPreviewPopup.showAtLocation(this, Gravity.NO_GRAVITY,
                     popupPreviewX, popupPreviewY);
 
-            Log.d(TAG, "showSpacePreview: "+mPreviewPopup.isShowing());
 
 
         }
@@ -893,19 +883,16 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
 
 
-        Log.d(TAG, "processMotionEvent: "+event);
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
                 startY = event.getY();
-                Log.d(TAG, "processMotionEvent: "+tracker.getKey());
                 isSpaceDrag = false;
                 break;
             case MotionEvent.ACTION_UP:
                 if (isSpaceDrag){
                     int languageDirection = getLanguageChangeDirection();
-                    Log.d(TAG, "languageDirection: "+languageDirection);
                     if (languageDirection != 0) {
                         mKeyboardActionListener.onCustomRequest(languageDirection == 1 ? Constants.KEYCODE_NEXT_LANGUAGE : Constants.KEYCODE_PREV_LANGUAGE);
                     }
@@ -917,21 +904,19 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
-                Log.d(TAG, "processMotionEvent: ACTION_POINTER_UP");
-                event.setAction(MotionEvent.ACTION_CANCEL);
+                if (isSpaceDrag){
+                    event.setAction(MotionEvent.ACTION_CANCEL);
+                }
+
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 if(tracker.getKey()!=null && tracker.getKey().getCode()==Constants.CODE_SPACE){
 
-
-
                     endX = event.getX();
                     endY = event.getY();
                     float deltaX = endX - startX;
                     float deltaY = endY - startY;
-
-
 
                     int diff = (int) (event.getX() - startX);
 
@@ -956,7 +941,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
         tracker.processMotionEvent(event, mKeyDetector);
 
-        Log.d(TAG, "processMotionEvent: "+event.getAction());
 
 
         return true;
@@ -970,9 +954,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     }
 
     private void updateLocaleDrag(int diff) {
-        Log.d(TAG, "updateLocaleDrag: "+diff);
-
-
        if(iconPreview!=null){
            iconPreview.setDiff(diff);
            this.invalidate();
@@ -1101,7 +1082,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
     // Layout language name on spacebar.
     private String layoutLanguageOnSpacebar(final Paint paint,
-            final RichInputMethodSubtype subtype, final int width) {
+                                            final RichInputMethodSubtype subtype, final int width) {
         // Choose appropriate language name to fit into the width.
         if (mLanguageOnSpacebarFormatType == LanguageOnSpacebarUtils.FORMAT_TYPE_FULL_LOCALE) {
             final String fullText = subtype.getFullDisplayName();

@@ -19,40 +19,40 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <Key
-        latin:keySpec="*"
-        latin:moreKeys="!text/morekeys_star" />
+        keybaord:keySpec="*"
+        keybaord:moreKeys="!text/morekeys_star" />
     <switch>
         <case
-            latin:languageCode="fa"
+            keybaord:languageCode="fa"
         >
             <Key
-                latin:keySpec="!text/keyspec_left_double_angle_quote"
-                latin:moreKeys="!text/morekeys_double_quote" />
+                keybaord:keySpec="!text/keyspec_left_double_angle_quote"
+                keybaord:moreKeys="!text/morekeys_double_quote" />
             <Key
-                latin:keySpec="!text/keyspec_right_double_angle_quote"
-                latin:moreKeys="!text/morekeys_single_quote" />
+                keybaord:keySpec="!text/keyspec_right_double_angle_quote"
+                keybaord:moreKeys="!text/morekeys_single_quote" />
         </case>
         <default>
             <Key
-                latin:keySpec="&quot;"
-                latin:moreKeys="!text/morekeys_double_quote" />
+                keybaord:keySpec="&quot;"
+                keybaord:moreKeys="!text/morekeys_double_quote" />
             <Key
-                latin:keySpec="\'"
-                latin:moreKeys="!text/morekeys_single_quote" />
+                keybaord:keySpec="\'"
+                keybaord:moreKeys="!text/morekeys_single_quote" />
         </default>
     </switch>
     <Key
-        latin:keySpec=":" />
+        keybaord:keySpec=":" />
     <Key
-        latin:keySpec="!text/keyspec_symbols_semicolon"
-        latin:moreKeys="!text/morekeys_symbols_semicolon" />
+        keybaord:keySpec="!text/keyspec_symbols_semicolon"
+        keybaord:moreKeys="!text/morekeys_symbols_semicolon" />
     <Key
-        latin:keySpec="!"
-        latin:moreKeys="!text/morekeys_exclamation" />
+        keybaord:keySpec="!"
+        keybaord:moreKeys="!text/morekeys_exclamation" />
     <Key
-        latin:keySpec="!text/keyspec_symbols_question"
-        latin:moreKeys="!text/morekeys_question" />
+        keybaord:keySpec="!text/keyspec_symbols_question"
+        keybaord:moreKeys="!text/morekeys_question" />
 </merge>

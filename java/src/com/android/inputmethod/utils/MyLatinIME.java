@@ -21,7 +21,7 @@ import com.android.inputmethod.keyboard.MoreKeysPanel;
 import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.keyboard.internal.DrawingProxy;
 import com.android.inputmethod.latin.LatinIME;
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 import com.android.inputmethod.latin.common.Constants;
 
 import java.util.ArrayList;
@@ -92,7 +92,6 @@ public class MyLatinIME extends LatinIME implements DrawingProxy {
             }
         }
 
-        Log.d(TAG, "toogleLanguage: "+listOfInputMethods.get(index).getExtraValue());
         mHandler.postSwitchLanguage(listOfInputMethods.get(index));
     }
 

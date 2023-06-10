@@ -22,34 +22,34 @@
      API version 16 can't automatically render dotted circle for incomplete combining letter
      of some scripts. The files named res/xml/key_*.xml have this U+25CC hack, although the
      counterpart files named res/xml-v16/key_*.xml don't have this hack. -->
-<merge xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin">
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
     <switch>
-        <case latin:keyboardLayoutSet="hindi_compact">
+        <case keybaord:keyboardLayoutSet="hindi_compact">
             <!-- U+25CC: "◌" DOTTED CIRCLE
                  U+0903: "ः‍" DEVANAGARI SIGN VISARGA
                  U+0901: "ँ" DEVANAGARI SIGN CANDRABINDU
                  U+093C: "़" DEVANAGARI SIGN NUKTA -->
             <key-style
-                latin:styleName="moreKeysDevanagariSignAnusvara"
-                latin:moreKeys="&#x25CC;&#x0903;|&#x0903;,&#x25CC;&#x0901;|&#x0901;,&#x25CC;&#x093C;|&#x093C;" />
+                keybaord:styleName="moreKeysDevanagariSignAnusvara"
+                keybaord:moreKeys="&#x25CC;&#x0903;|&#x0903;,&#x25CC;&#x0901;|&#x0901;,&#x25CC;&#x093C;|&#x093C;" />
         </case>
-        <case latin:keyboardLayoutSet="marathi">
+        <case keybaord:keyboardLayoutSet="marathi">
             <!-- U+25CC: "◌" DOTTED CIRCLE
                  U+0903: "ः‍" DEVANAGARI SIGN VISARGA
                  U+0901: "ँ" DEVANAGARI SIGN CANDRABINDU -->
             <key-style
-                latin:styleName="moreKeysDevanagariSignAnusvara"
-                latin:moreKeys="&#x25CC;&#x0903;|&#x0903;,&#x25CC;&#x0901;|&#x0901;" />
+                keybaord:styleName="moreKeysDevanagariSignAnusvara"
+                keybaord:moreKeys="&#x25CC;&#x0903;|&#x0903;,&#x25CC;&#x0901;|&#x0901;" />
         </case>
         <default>
-            <key-style latin:styleName="moreKeysDevanagariSignAnusvara" />
+            <key-style keybaord:styleName="moreKeysDevanagariSignAnusvara" />
         </default>
     </switch>
     <!-- U+25CC: "◌" DOTTED CIRCLE
          U+0902: "ं" DEVANAGARI SIGN ANUSVARA -->
     <key-style
-        latin:styleName="baseKeyDevanagariSignAnusvara"
-        latin:parentStyle="moreKeysDevanagariSignAnusvara"
-        latin:keySpec="&#x25CC;&#x0902;|&#x0902;"
-        latin:keyLabelFlags="followKeyLetterRatio" />
+        keybaord:styleName="baseKeyDevanagariSignAnusvara"
+        keybaord:parentStyle="moreKeysDevanagariSignAnusvara"
+        keybaord:keySpec="&#x25CC;&#x0902;|&#x0902;"
+        keybaord:keyLabelFlags="followKeyLetterRatio" />
 </merge>

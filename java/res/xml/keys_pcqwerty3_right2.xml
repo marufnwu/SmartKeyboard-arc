@@ -19,27 +19,27 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:keyboardLayoutSetElement="alphabet|alphabetAutomaticShifted|alphabetShiftLocked"
+            keybaord:keyboardLayoutSetElement="alphabet|alphabetAutomaticShifted|alphabetShiftLocked"
         >
             <Key
-                latin:keySpec=";"
-                latin:additionalMoreKeys=":" />
+                keybaord:keySpec=";"
+                keybaord:additionalMoreKeys=":" />
             <Key
-                latin:keySpec="\'"
-                latin:additionalMoreKeys="&quot;"
-                latin:moreKeys="!fixedColumnOrder!4,!text/double_quotes,%,!text/single_quotes" />
+                keybaord:keySpec="\'"
+                keybaord:additionalMoreKeys="&quot;"
+                keybaord:moreKeys="!fixedColumnOrder!4,!text/double_quotes,%,!text/single_quotes" />
         </case>
         <!-- keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted" -->
         <default>
             <Key
-                latin:keySpec=":" />
+                keybaord:keySpec=":" />
             <Key
-                latin:keySpec="&quot;"
-                latin:moreKeys="!fixedColumnOrder!3,!text/double_quotes,!text/single_quotes" />
+                keybaord:keySpec="&quot;"
+                keybaord:moreKeys="!fixedColumnOrder!3,!text/double_quotes,!text/single_quotes" />
         </default>
     </switch>
 </merge>

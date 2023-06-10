@@ -18,32 +18,32 @@
 */
 -->
 
-<merge xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin">
-    <include latin:keyboardLayout="@xml/key_styles_common" />
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <include keybaord:keyboardLayout="@xml/key_styles_common" />
     <Row
-        latin:keyWidth="8.182%p"
-        latin:keyLabelFlags="fontNormal|autoXScale"
+        keybaord:keyWidth="8.182%p"
+        keybaord:keyLabelFlags="fontNormal|autoXScale"
     >
-        <include latin:keyboardLayout="@xml/rowkeys_kannada1" />
+        <include keybaord:keyboardLayout="@xml/rowkeys_kannada1" />
         <Key
-            latin:keyStyle="deleteKeyStyle"
-            latin:keyWidth="fillRight" />
+            keybaord:keyStyle="deleteKeyStyle"
+            keybaord:keyWidth="fillRight" />
     </Row>
     <Row
-        latin:keyWidth="8.182%p"
-        latin:keyLabelFlags="fontNormal|autoXScale"
+        keybaord:keyWidth="8.182%p"
+        keybaord:keyLabelFlags="fontNormal|autoXScale"
     >
-        <include latin:keyboardLayout="@xml/rowkeys_kannada2" />
+        <include keybaord:keyboardLayout="@xml/rowkeys_kannada2" />
         <Key
-            latin:keyStyle="enterKeyStyle"
-            latin:keyWidth="fillRight" />
+            keybaord:keyStyle="enterKeyStyle"
+            keybaord:keyWidth="fillRight" />
     </Row>
     <Row
-        latin:keyWidth="8.182%p"
-        latin:keyLabelFlags="fontNormal|autoXScale"
+        keybaord:keyWidth="8.182%p"
+        keybaord:keyLabelFlags="fontNormal|autoXScale"
     >
-        <include latin:keyboardLayout="@xml/rowkeys_kannada3" />
-        <include latin:keyboardLayout="@xml/keys_exclamation_question" />
+        <include keybaord:keyboardLayout="@xml/rowkeys_kannada3" />
+        <include keybaord:keyboardLayout="@xml/keys_exclamation_question" />
     </Row>
-    <include latin:keyboardLayout="@xml/row_qwerty4" />
+    <include keybaord:keyboardLayout="@xml/row_qwerty4" />
 </merge>

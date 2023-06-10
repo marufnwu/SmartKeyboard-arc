@@ -18,84 +18,84 @@
 */
 -->
 
-<merge xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin">
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
     <!-- U+0994: "ঔ" BENGALI LETTER AU
          U+09CC: "ৌ" BENGALI VOWEL SIGN AU
          U+09E7: "১" BENGALI DIGIT ONE -->
     <Key
-        latin:keySpec="&#x0994;"
-        latin:keyHintLabel="&#x09E7;"
-        latin:additionalMoreKeys="&#x09CC;,&#x09E7;,1" />
+        keybaord:keySpec="&#x0994;"
+        keybaord:keyHintLabel="&#x09E7;"
+        keybaord:additionalMoreKeys="&#x09CC;,&#x09E7;,1" />
     <!-- U+0990: "ঐ" BENGALI LETTER AI
          U+09C8: "ৈ" BENGALI VOWEL SIGN AI
          U+09E8: "২" BENGALI DIGIT TWO -->
     <Key
-        latin:keySpec="&#x0990;"
-        latin:keyHintLabel="&#x09E8;"
-        latin:additionalMoreKeys="&#x09C8;,&#x09E8;,2" />
+        keybaord:keySpec="&#x0990;"
+        keybaord:keyHintLabel="&#x09E8;"
+        keybaord:additionalMoreKeys="&#x09C8;,&#x09E8;,2" />
     <!-- U+0986: "আ" BENGALI LETTER AA
          U+09BE: "া" BENGALI VOWEL SIGN AA
          U+09E9: "৩" BENGALI DIGIT THREE -->
     <Key
-        latin:keySpec="&#x0986;"
-        latin:keyHintLabel="&#x09E9;"
-        latin:additionalMoreKeys="&#x09BE;,&#x09E9;,3" />
+        keybaord:keySpec="&#x0986;"
+        keybaord:keyHintLabel="&#x09E9;"
+        keybaord:additionalMoreKeys="&#x09BE;,&#x09E9;,3" />
     <!-- U+0988: "ঈ" BENGALI LETTER II
          U+09C0: "ী" BENGALI VOWEL SIGN II
          U+09EA: "৪" BENGALI DIGIT FOUR -->
     <Key
-        latin:keySpec="&#x0988;"
-        latin:keyHintLabel="&#x09EA;"
-        latin:additionalMoreKeys="&#x09C0;,&#x09EA;,4" />
+        keybaord:keySpec="&#x0988;"
+        keybaord:keyHintLabel="&#x09EA;"
+        keybaord:additionalMoreKeys="&#x09C0;,&#x09EA;,4" />
     <!-- U+098A: "ঊ" BENGALI LETTER UU
          U+09C2: "ূ" BENGALI VOWEL SIGN UU
          U+09EB: "৫" BENGALI DIGIT FIVE -->
     <Key
-        latin:keySpec="&#x098A;"
-        latin:keyHintLabel="&#x09EB;"
-        latin:additionalMoreKeys="&#x09C2;,&#x09EB;,5" />
+        keybaord:keySpec="&#x098A;"
+        keybaord:keyHintLabel="&#x09EB;"
+        keybaord:additionalMoreKeys="&#x09C2;,&#x09EB;,5" />
     <!-- U+09AC: "ব" BENGALI LETTER BA
          U+09AD: "ভ" BENGALI LETTER BHA
          U+09EC: "৬" BENGALI DIGIT SIX -->
     <Key
-        latin:keySpec="&#x09AC;"
-        latin:moreKeys="&#x09AD;,%"
-        latin:keyHintLabel="&#x09EC;"
-        latin:additionalMoreKeys="&#x09EC;,6" />
+        keybaord:keySpec="&#x09AC;"
+        keybaord:moreKeys="&#x09AD;,%"
+        keybaord:keyHintLabel="&#x09EC;"
+        keybaord:additionalMoreKeys="&#x09EC;,6" />
     <!-- U+09B9: "হ" BENGALI LETTER HA
          U+09ED: "৭" BENGALI DIGIT SEVEN -->
     <Key
-        latin:keySpec="&#x09B9;"
-        latin:keyHintLabel="&#x09ED;"
-        latin:additionalMoreKeys="&#x09ED;,7" />
+        keybaord:keySpec="&#x09B9;"
+        keybaord:keyHintLabel="&#x09ED;"
+        keybaord:additionalMoreKeys="&#x09ED;,7" />
     <!-- U+0997: "গ" BENGALI LETTER GA
          U+0998: "ঘ" BENGALI LETTER GHA
          U+09EE: "৮" BENGALI DIGIT EIGHT -->
     <Key
-        latin:keySpec="&#x0997;"
-        latin:moreKeys="&#x0998;,%"
-        latin:keyHintLabel="&#x09EE;"
-        latin:additionalMoreKeys="&#x09EE;,8" />
+        keybaord:keySpec="&#x0997;"
+        keybaord:moreKeys="&#x0998;,%"
+        keybaord:keyHintLabel="&#x09EE;"
+        keybaord:additionalMoreKeys="&#x09EE;,8" />
     <!-- U+09A6: "দ" BENGALI LETTER DA
          U+09A7: "ধ" BENGALI LETTER DHA
          U+09EF: "৯" BENGALI DIGIT NINE -->
     <Key
-        latin:keySpec="&#x09A6;"
-        latin:moreKeys="&#x09A7;,%"
-        latin:keyHintLabel="&#x09EF;"
-        latin:additionalMoreKeys="&#x09EF;,9" />
+        keybaord:keySpec="&#x09A6;"
+        keybaord:moreKeys="&#x09A7;,%"
+        keybaord:keyHintLabel="&#x09EF;"
+        keybaord:additionalMoreKeys="&#x09EF;,9" />
     <!-- U+099C: "জ" BENGALI LETTER JA
          U+099D: "ঝ" BENGALI LETTER JHA
          U+099C/U+09CD/U+099E: "জ্ঞ" BENGALI LETTER JA/BENGALI SIGN VIRAMA/BENGALI LETTER NYA
          U+09E6: "০" BENGALI DIGIT ZERO -->
     <Key
-        latin:keySpec="&#x099C;"
-        latin:moreKeys="&#x099D;,&#x099C;&#x09CD;&#x099E;,%"
-        latin:keyHintLabel="&#x09E6;"
-        latin:additionalMoreKeys="&#x09E6;,0" />
+        keybaord:keySpec="&#x099C;"
+        keybaord:moreKeys="&#x099D;,&#x099C;&#x09CD;&#x099E;,%"
+        keybaord:keyHintLabel="&#x09E6;"
+        keybaord:additionalMoreKeys="&#x09E6;,0" />
     <!-- U+09A1: "ড" BENGALI LETTER DDA
          U+09A1/U+09BC: "ড়" BENGALI LETTER DDA/BENGALI SIGN NUKTA -->
     <Key
-        latin:keySpec="&#x09A1;"
-        latin:moreKeys="&#x09A1;&#x09BC;" />
+        keybaord:keySpec="&#x09A1;"
+        keybaord:moreKeys="&#x09A1;&#x09BC;" />
 </merge>

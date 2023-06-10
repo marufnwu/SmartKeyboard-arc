@@ -21,14 +21,14 @@ android {
 
     // Required if using classes in android.test.mock
     useLibrary 'android.test.mock'
-    namespace 'com.android.inputmethod.latin'
+    namespace 'com.sikderithub.keyboard'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 33
         compileSdk 33
         versionName "1.0"
 
-        applicationId 'com.android.inputmethod.latin'
+        applicationId 'com.sikderithub.keyboard'
         testApplicationId 'com.android.inputmethod.latin.tests'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = false
@@ -81,17 +81,6 @@ android {
         noCompress 'dict'
     }
 
-    externalNativeBuild {
-//        ndkBuild {
-//            path 'native/jni/Android.mk'
-//        }
-//        cmake {
-//            // Provides a relative path to your CMake build script.
-//            path "native/jni/CMakeLists.txt"
-//        }
-    }
-    //ndkVersion '25.1.8937393'
-    //ndkVersion '25.1.8937393'
 }
 
 repositories {

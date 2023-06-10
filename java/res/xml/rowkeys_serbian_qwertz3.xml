@@ -18,10 +18,10 @@
 */
 -->
 
-<merge xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin" >
-    <include latin:keyboardLayout="@xml/rowkeys_qwertz3" />
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard" >
+    <include keybaord:keyboardLayout="@xml/rowkeys_qwertz3" />
     <!-- U+0111: "đ" LATIN SMALL LETTER D WITH STROKE -->
-    <Key latin:keySpec="&#x0111;" />
+    <Key keybaord:keySpec="&#x0111;" />
     <!-- U+017E: "ž" LATIN SMALL LETTER Z WITH CARON -->
-    <Key latin:keySpec="&#x017E;" />
+    <Key keybaord:keySpec="&#x017E;" />
 </merge>

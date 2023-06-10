@@ -19,47 +19,47 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:languageCode="fa"
+            keybaord:languageCode="fa"
         >
             <!-- U+066C: "٬" ARABIC THOUSANDS SEPARATOR
                  U+066B: "٫" ARABIC DECIMAL SEPARATOR -->
             <Key
-                latin:keySpec="&#x066C;"
-                latin:keyHintLabel="\@"
-                latin:moreKeys="\@" />
+                keybaord:keySpec="&#x066C;"
+                keybaord:keyHintLabel="\@"
+                keybaord:moreKeys="\@" />
             <Key
-                latin:keySpec="&#x066B;"
-                latin:keyHintLabel="\#"
-                latin:moreKeys="\#" />
+                keybaord:keySpec="&#x066B;"
+                keybaord:keyHintLabel="\#"
+                keybaord:moreKeys="\#" />
         </case>
         <default>
             <Key
-                latin:keySpec="\@" />
+                keybaord:keySpec="\@" />
             <Key
-                latin:keySpec="\#" />
+                keybaord:keySpec="\#" />
         </default>
     </switch>
     <Key
-        latin:keyStyle="currencyKeyStyle"
-        latin:keyLabelFlags="followKeyLetterRatio" />
+        keybaord:keyStyle="currencyKeyStyle"
+        keybaord:keyLabelFlags="followKeyLetterRatio" />
     <Key
-        latin:keySpec="!text/keyspec_symbols_percent"
-        latin:moreKeys="!text/morekeys_symbols_percent" />
+        keybaord:keySpec="!text/keyspec_symbols_percent"
+        keybaord:moreKeys="!text/morekeys_symbols_percent" />
     <Key
-        latin:keySpec="&amp;" />
+        keybaord:keySpec="&amp;" />
     <!-- U+2013: "–" EN DASH
          U+2014: "—" EM DASH
          U+00B7: "·" MIDDLE DOT -->
     <Key
-        latin:keySpec="-"
-        latin:moreKeys="_,&#x2013;,&#x2014;,&#x00B7;" />
+        keybaord:keySpec="-"
+        keybaord:moreKeys="_,&#x2013;,&#x2014;,&#x00B7;" />
     <Key
-        latin:keySpec="+"
-        latin:moreKeys="!text/morekeys_plus" />
+        keybaord:keySpec="+"
+        keybaord:moreKeys="!text/morekeys_plus" />
     <include
-        latin:keyboardLayout="@xml/keys_parentheses" />
+        keybaord:keyboardLayout="@xml/keys_parentheses" />
 </merge>

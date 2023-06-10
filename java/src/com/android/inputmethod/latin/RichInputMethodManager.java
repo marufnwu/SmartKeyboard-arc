@@ -506,7 +506,6 @@ public class RichInputMethodManager {
     }
 
     public void refreshSubtypeCaches() {
-        Log.d(TAG, "refreshSubtypeCaches: "+mImmWrapper.mImm.getCurrentInputMethodSubtype().getLocale());
         mInputMethodInfoCache.clear();
         updateCurrentSubtype(mImmWrapper.mImm.getCurrentInputMethodSubtype());
         updateShortcutIme();

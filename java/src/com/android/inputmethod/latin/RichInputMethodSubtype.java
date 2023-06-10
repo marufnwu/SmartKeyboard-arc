@@ -27,7 +27,7 @@ import com.android.inputmethod.compat.InputMethodSubtypeCompatUtils;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.common.LocaleUtils;
 import com.android.inputmethod.latin.utils.SubtypeLocaleUtils;
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 
 import java.util.HashMap;
 import java.util.Locale;

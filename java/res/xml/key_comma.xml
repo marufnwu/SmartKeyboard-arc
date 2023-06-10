@@ -19,37 +19,37 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <switch>
         <case
-            latin:keyboardLayoutSet="dvorak"
+            keybaord:keyboardLayoutSet="dvorak"
         >
             <Key
-                latin:keySpec="q"
-                latin:moreKeys="!text/morekeys_q,%"
-                latin:backgroundType="normal"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                keybaord:keySpec="q"
+                keybaord:moreKeys="!text/morekeys_q,%"
+                keybaord:backgroundType="normal"
+                keybaord:keyStyle="settingsMoreKeysStyle" />
         </case>
         <case
-            latin:mode="url"
+            keybaord:mode="url"
         >
             <Key
-                latin:keySpec="/"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                keybaord:keySpec="/"
+                keybaord:keyStyle="settingsMoreKeysStyle" />
         </case>
         <case
-            latin:mode="email"
+            keybaord:mode="email"
         >
             <Key
-                latin:keySpec="\@"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                keybaord:keySpec="\@"
+                keybaord:keyStyle="settingsMoreKeysStyle" />
         </case>
         <default>
             <Key
-                latin:keySpec="!text/keyspec_comma"
-                latin:keyLabelFlags="hasPopupHint"
-                latin:keyStyle="settingsMoreKeysStyle" />
+                keybaord:keySpec="!text/keyspec_comma"
+                keybaord:keyLabelFlags="hasPopupHint"
+                keybaord:keyStyle="settingsMoreKeysStyle" />
         </default>
     </switch>
 </merge>

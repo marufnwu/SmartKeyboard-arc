@@ -19,76 +19,76 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <include
-        latin:keyboardLayout="@xml/key_styles_common" />
+        keybaord:keyboardLayout="@xml/key_styles_common" />
     <include
-        latin:keyboardLayout="@xml/key_styles_number" />
+        keybaord:keyboardLayout="@xml/key_styles_number" />
     <Row>
         <Key
-            latin:keySpec="("
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="("
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keySpec="/"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="/"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keySpec=")"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec=")"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keySpec="-"
-            latin:moreKeys="+"
-            latin:keyLabelFlags="hasPopupHint"
-            latin:keyStyle="numKeyStyle"
-            latin:backgroundType="functional"
-            latin:keyWidth="fillRight" />
+            keybaord:keySpec="-"
+            keybaord:moreKeys="+"
+            keybaord:keyLabelFlags="hasPopupHint"
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:backgroundType="functional"
+            keybaord:keyWidth="fillRight" />
     </Row>
     <Row>
         <Key
-            latin:keySpec="N"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="N"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <!-- Pause is a comma. Check PhoneNumberUtils.java to see if this
             has changed. -->
         <Key
-            latin:keySpec="!string/label_pause_key|,"
-            latin:keyLabelFlags="followKeyLabelRatio|autoXScale"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="!string/label_pause_key|,"
+            keybaord:keyLabelFlags="followKeyLabelRatio|autoXScale"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keySpec=","
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec=","
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keySpec="."
-            latin:keyStyle="numKeyStyle"
-            latin:backgroundType="functional"
-            latin:keyWidth="fillRight" />
+            keybaord:keySpec="."
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:backgroundType="functional"
+            keybaord:keyWidth="fillRight" />
     </Row>
     <Row>
         <!-- U+FF0A: "＊" FULLWIDTH ASTERISK -->
         <Key
-            latin:keySpec="&#xFF0A;|*"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="&#xFF0A;|*"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <!-- Wait is a semicolon. -->
         <Key
-            latin:keySpec="!string/label_wait_key|;"
-            latin:keyLabelFlags="followKeyLabelRatio|autoXScale"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="!string/label_wait_key|;"
+            keybaord:keyLabelFlags="followKeyLabelRatio|autoXScale"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keySpec="\#"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="\#"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keyStyle="deleteKeyStyle"
-            latin:keyWidth="fillRight" />
+            keybaord:keyStyle="deleteKeyStyle"
+            keybaord:keyWidth="fillRight" />
     </Row>
     <Row>
         <Key
-            latin:keyStyle="numPhoneToNumericKeyStyle" />
+            keybaord:keyStyle="numPhoneToNumericKeyStyle" />
         <Key
-            latin:keySpec="+"
-            latin:keyStyle="numSymbolKeyStyle" />
+            keybaord:keySpec="+"
+            keybaord:keyStyle="numSymbolKeyStyle" />
         <Key
-            latin:keyStyle="numSpaceKeyStyle" />
+            keybaord:keyStyle="numSpaceKeyStyle" />
         <Key
-            latin:keyStyle="enterKeyStyle"
-            latin:keyWidth="fillRight" />
+            keybaord:keyStyle="enterKeyStyle"
+            keybaord:keyWidth="fillRight" />
     </Row>
 </merge>

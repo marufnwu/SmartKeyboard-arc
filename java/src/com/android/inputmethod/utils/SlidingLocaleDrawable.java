@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.ViewConfiguration;
 import android.widget.TextView;
 
-import com.android.inputmethod.latin.R;
+import com.sikderithub.keyboard.R;
 
 import java.util.Locale;
 

@@ -19,7 +19,7 @@ package com.android.inputmethod.latin.utils;
 import android.view.inputmethod.InputMethodSubtype;
 
 import com.android.inputmethod.latin.RichInputMethodSubtype;
-
+import com.sikderithub.keyboard.R;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;

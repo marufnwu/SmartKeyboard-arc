@@ -19,33 +19,33 @@
 -->
 
 <merge
-    xmlns:latin="http://schemas.android.com/apk/res/com.android.inputmethod.latin"
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
 >
     <Key
-        latin:keySpec="q" />
+        keybaord:keySpec="q" />
     <Key
-        latin:keySpec="s"
-        latin:moreKeys="!text/morekeys_s" />
+        keybaord:keySpec="s"
+        keybaord:moreKeys="!text/morekeys_s" />
     <Key
-        latin:keySpec="d"
-        latin:moreKeys="!text/morekeys_d" />
+        keybaord:keySpec="d"
+        keybaord:moreKeys="!text/morekeys_d" />
     <Key
-        latin:keySpec="f" />
+        keybaord:keySpec="f" />
     <Key
-        latin:keySpec="g"
-        latin:moreKeys="!text/morekeys_g" />
+        keybaord:keySpec="g"
+        keybaord:moreKeys="!text/morekeys_g" />
     <Key
-        latin:keySpec="h"
-        latin:moreKeys="!text/morekeys_h" />
+        keybaord:keySpec="h"
+        keybaord:moreKeys="!text/morekeys_h" />
     <Key
-        latin:keySpec="j"
-        latin:moreKeys="!text/morekeys_j" />
+        keybaord:keySpec="j"
+        keybaord:moreKeys="!text/morekeys_j" />
     <Key
-        latin:keySpec="k"
-        latin:moreKeys="!text/morekeys_k" />
+        keybaord:keySpec="k"
+        keybaord:moreKeys="!text/morekeys_k" />
     <Key
-        latin:keySpec="l"
-        latin:moreKeys="!text/morekeys_l" />
+        keybaord:keySpec="l"
+        keybaord:moreKeys="!text/morekeys_l" />
     <Key
-        latin:keySpec="m" />
+        keybaord:keySpec="m" />
 </merge>
