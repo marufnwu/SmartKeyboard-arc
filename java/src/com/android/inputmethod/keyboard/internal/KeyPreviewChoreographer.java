@@ -119,6 +119,7 @@ public final class KeyPreviewChoreographer {
         mParams.setGeometry(keyPreviewView);
         final int previewWidth = keyPreviewView.getMeasuredWidth();
          int previewHeight = mParams.mPreviewHeight;
+
         final int keyDrawWidth = key.getDrawWidth();
         // The key preview is horizontally aligned with the center of the visible part of the
         // parent key. If it doesn't fit in this {@link KeyboardView}, it is moved inward to fit and

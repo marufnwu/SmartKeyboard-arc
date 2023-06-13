@@ -10,11 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.ViewConfiguration;
-import android.widget.TextView;
 
 import com.sikderithub.keyboard.R;
-
-import java.util.Locale;
 
 /**
  * Animation to be displayed on the spacebar preview popup when switching
@@ -43,18 +40,20 @@ public class SlidingLocaleDrawable extends Drawable {
     private static final float SPACEBAR_LANGUAGE_BASELINE = 0.6f;
     private Context context;
     private LanguageSwitcher mLanguageSwitcher;
+    private int spaceSlideTextColor;
 
 
 
-    public SlidingLocaleDrawable(Drawable background, int width, int height, Context context) {
+    public SlidingLocaleDrawable(Drawable background, int width, int height, Context context, int spaceSlideTextColor) {
         this.context = context;
+        this.spaceSlideTextColor = spaceSlideTextColor;
         mBackground = background;
         setDefaultBounds(mBackground);
         mWidth = width;
         mHeight = height;
         mTextPaint = new TextPaint();
         mTextPaint.setTextSize(getTextSizeFromTheme(android.R.style.TextAppearance_Medium, 18));
-        mTextPaint.setColor(context.getResources().getColor(R.color.highlight_translucent_color_klp));
+        mTextPaint.setColor(context.getResources().getColor(R.color.highlight_color_lxx_light));
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setAlpha(OPACITY_FULLY_OPAQUE);
         mTextPaint.setAntiAlias(true);
@@ -64,6 +63,7 @@ public class SlidingLocaleDrawable extends Drawable {
         mRightDrawable =
                 context.getDrawable(R.drawable.btn_keyboard_key_functional_ics);
         mThreshold = ViewConfiguration.get(context).getScaledTouchSlop();
+
     }
 
     public void setDiff(int diff) {
@@ -111,7 +111,7 @@ public class SlidingLocaleDrawable extends Drawable {
 
             // Draw language text with shadow
             final float baseline = mHeight * SPACEBAR_LANGUAGE_BASELINE - paint.descent();
-            paint.setColor(context.getResources().getColor(R.color.sliding_key_input_preview_color_lxx_light));
+            paint.setColor(spaceSlideTextColor);
             canvas.drawText(mCurrentLanguage, width / 2 + diff, baseline, paint);
             canvas.drawText(mNextLanguage, diff - width / 2, baseline, paint);
             canvas.drawText(mPrevLanguage, diff + width + width / 2, baseline, paint);
@@ -119,8 +119,8 @@ public class SlidingLocaleDrawable extends Drawable {
             setDefaultBounds(lArrow);
             rArrow.setBounds(width - rArrow.getIntrinsicWidth(), 0, width,
                     rArrow.getIntrinsicHeight());
-            //lArrow.draw(canvas);
-            //rArrow.draw(canvas);
+//            lArrow.draw(canvas);
+//            rArrow.draw(canvas);
         }
         if (mBackground != null) {
             canvas.translate(mMiddleX, 0);

@@ -35,13 +35,13 @@
 
         <Key
             keybaord:keyStyle="spaceKeyStyle"
-            keybaord:keyWidth="30%p" />
+            keybaord:keyWidth="35%p" />
 
 
         <include
             keybaord:keyboardLayout="@xml/key_period" />
         <Key
             keybaord:keyStyle="enterKeyStyle"
-            keybaord:keyWidth="10%p" />
+            keybaord:keyWidth="15%p" />
     </Row>
 </merge>

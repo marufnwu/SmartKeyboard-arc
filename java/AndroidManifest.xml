@@ -15,12 +15,12 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-     coreApp="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    coreApp="true"
      package="com.sikderithub.keyboard"
-     android:versionCode="30">
+     >
 
-    <uses-sdk android:minSdkVersion="21"
-         android:targetSdkVersion="30"/>
+
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
@@ -33,7 +33,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY"/>
 

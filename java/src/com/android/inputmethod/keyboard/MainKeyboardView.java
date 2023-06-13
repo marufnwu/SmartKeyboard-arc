@@ -18,6 +18,7 @@ package com.android.inputmethod.keyboard;
 
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -27,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -117,6 +119,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         MoreKeysPanel.Controller {
 
     private static final float SPACEBAR_DRAG_THRESHOLD = 0.50f;
+    private final TypedArray mainKeyboardViewAttr;
+    private final int spaceSlideBg;
+    private final int spaceSlideTextColor;
     private  int keyPreviewBg;
     private float startX;
     private float startY;
@@ -206,19 +211,25 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
+
     }
 
     public MainKeyboardView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
-
         final DrawingPreviewPlacerView drawingPreviewPlacerView =
                 new DrawingPreviewPlacerView(context, attrs);
 
-        final TypedArray mainKeyboardViewAttr = context.obtainStyledAttributes(
+        mainKeyboardViewAttr = context.obtainStyledAttributes(
                 attrs, R.styleable.MainKeyboardView, defStyle, R.style.MainKeyboardView);
 
         keyPreviewBg = mainKeyboardViewAttr.getResourceId(
                 R.styleable.MainKeyboardView_keyPreviewBackground, 0);
+
+        spaceSlideBg = mainKeyboardViewAttr.getColor(
+                R.styleable.MainKeyboardView_slidingKeyInputPreviewColor, 0);
+
+        spaceSlideTextColor = mainKeyboardViewAttr.getColor(
+                R.styleable.MainKeyboardView_languageOnSpacebarTextColor, 0);
 
 
         final int ignoreAltCodeKeyTimeout = mainKeyboardViewAttr.getInt(
@@ -547,6 +558,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
     }
 
+    @SuppressLint("ResourceAsColor")
     private void showSpacePreview(Key key) {
         if (key == null)
             return;
@@ -555,12 +567,15 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         // Should not draw hint icon in key preview
 
         if(iconPreview==null){
-            iconPreview = new SlidingLocaleDrawable(getContext().getResources().getDrawable(R.color.gesture_floating_preview_color_lxx_light), key.getWidth(), key.getHeight(),getContext());
+            iconPreview = new SlidingLocaleDrawable(getContext().getResources().getDrawable(R.drawable.gradiet_bg), key.getWidth(), key.getHeight(), getContext(), getKeyDrawParams().mTextColor);
             iconPreview.setBounds(0, 0, key.getWidth(), (int) ((int)(key.getHeight())/1.25));
         }
 
-        if(mPreviewText==null)
+        if(mPreviewText==null){
             mPreviewText = new TextView(getContext());
+            mPreviewText.setBackgroundColor(spaceSlideBg);
+        }
+
 
         mPreviewText.setCompoundDrawables(null, null, null,
                 iconPreview);
@@ -612,8 +627,10 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 //            popupPreviewY += popupHeight;
 //        }
 
-        if (mPreviewPopup==null)
+        if (mPreviewPopup==null){
             mPreviewPopup = new PopupWindow(getContext());
+        }
+
         mPreviewPopup.setContentView(mPreviewText);
         //mPreviewPopup.setBackgroundDrawable(null);
 
@@ -917,6 +934,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                     endY = event.getY();
                     float deltaX = endX - startX;
                     float deltaY = endY - startY;
+
+                    endX+= getContext().getResources().getDimensionPixelOffset(R.dimen.config_accessibility_edge_slop);
 
                     int diff = (int) (event.getX() - startX);
 
