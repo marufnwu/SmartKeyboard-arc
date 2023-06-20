@@ -25,6 +25,14 @@
     android:layout_gravity="bottom"
     android:orientation="vertical" >
 
+    <com.android.inputmethod.utils.GkView
+        android:id="@+id/gk_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+    </com.android.inputmethod.utils.GkView>
+
+
+
     <!-- To ensure that key preview popup is correctly placed when the current system locale is
          one of RTL locales, layoutDirection="ltr" is needed in the SDK version 17+. -->
     <com.android.inputmethod.latin.suggestions.SuggestionStripView
@@ -37,9 +45,24 @@
 
     <!-- To ensure that key preview popup is correctly placed when the current system locale is
          one of RTL locales, layoutDirection="ltr" is needed in the SDK version 17+. -->
-    <com.android.inputmethod.keyboard.MainKeyboardView
-        android:id="@+id/keyboard_view"
-        android:layoutDirection="ltr"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <com.sikderithub.keyboard.Views.SavedGkViews
+            android:visibility="gone"
+            android:id="@+id/saved_gk_view"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:orientation="horizontal"/>
+
+        <com.android.inputmethod.keyboard.MainKeyboardView
+            android:id="@+id/keyboard_view"
+            android:layoutDirection="ltr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
+
 </LinearLayout>

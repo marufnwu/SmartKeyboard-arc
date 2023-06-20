@@ -47,6 +47,8 @@ import com.android.inputmethod.keyboard.internal.KeyVisualAttributes;
 import com.android.inputmethod.keyboard.internal.KeyboardIconsSet;
 import com.android.inputmethod.latin.AudioAndHapticFeedbackManager;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.sikderithub.keyboard.R;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.utils.ResourceUtils;
@@ -90,6 +92,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
     private KeyboardActionListener mKeyboardActionListener = KeyboardActionListener.EMPTY_LISTENER;
 
     private final EmojiCategory mEmojiCategory;
+    private AdView mAdView;
+    private AdRequest adRequest;
 
     public EmojiPalettesView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.emojiPalettesViewStyle);
@@ -130,6 +134,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
                 R.styleable.EmojiPalettesView_categoryPageIndicatorBackground, 0);
         emojiPalettesViewAttr.recycle();
         mDeleteKeyOnTouchListener = new DeleteKeyOnTouchListener();
+        adRequest = new AdRequest.Builder().build();
     }
 
     @Override
@@ -141,7 +146,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
                 + getPaddingLeft() + getPaddingRight();
         final int height = ResourceUtils.getDefaultKeyboardHeight(res)
                 + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
-                + getPaddingTop() + getPaddingBottom();
+                + getPaddingTop() + getPaddingBottom()
+                +mAdView.getHeight();
         setMeasuredDimension(width, height);
     }
 
@@ -229,6 +235,13 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mSpacebar.setOnClickListener(this);
         mEmojiLayoutParams.setKeyProperties(mSpacebar);
         mSpacebarIcon = findViewById(R.id.emoji_keyboard_space_icon);
+        mAdView = findViewById(R.id.adView);
+
+        loadBannerAd();
+    }
+
+    private void loadBannerAd() {
+        mAdView.loadAd(adRequest);
     }
 
     @Override

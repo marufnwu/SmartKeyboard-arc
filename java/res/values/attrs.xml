@@ -40,6 +40,12 @@
         <attr name="suggestionStripViewStyle" format="reference" />
         <!-- Suggestion word style -->
         <attr name="suggestionWordStyle" format="reference" />
+
+
+    </declare-styleable>
+
+    <declare-styleable name="GkView">
+        <attr name="gkTextStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="KeyboardView">
@@ -228,6 +234,12 @@
         <attr name="centerSuggestionPercentile" format="fraction" />
         <attr name="maxMoreSuggestionsRow" format="integer" />
         <attr name="minMoreSuggestionsWidth" format="float" />
+
+        <attr name="savedGkIcon" format="reference"/>
+        <attr name="emojiIcon" format="reference"/>
+        <attr name="backIcon" format="reference"/>
+        <attr name="messageIcon" format="reference"/>
+
     </declare-styleable>
 
     <declare-styleable name="Keyboard">
@@ -599,4 +611,5 @@
         <attr name="minValue" format="integer" />
         <attr name="stepValue" format="integer" />
     </declare-styleable>
+
 </resources>

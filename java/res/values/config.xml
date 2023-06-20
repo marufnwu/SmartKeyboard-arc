@@ -109,4 +109,5 @@
     <string-array name="keyboard_switcher_symbols_shifted" translatable="false">
         <item>58,32</item> <!-- KeyEvent.KEYCODE_ALT_RIGHT , KeyEvent.META_ALT_RIGHT_ON -->
     </string-array>
+
 </resources>

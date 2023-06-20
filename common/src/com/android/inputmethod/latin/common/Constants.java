@@ -245,6 +245,8 @@ public final class Constants {
     public static final int CODE_ACTION_PREVIOUS = -9;
     public static final int CODE_LANGUAGE_SWITCH = -10;
     public static final int CODE_EMOJI = -11;
+    public static final int CODE_SAVED_GK = -20;
+    public static final int CODE_ACTION_BACK = -21;
     public static final int CODE_SHIFT_ENTER = -12;
     public static final int CODE_SYMBOL_SHIFT = -13;
     public static final int CODE_ALPHA_FROM_EMOJI = -14;

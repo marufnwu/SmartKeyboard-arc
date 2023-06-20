@@ -50,8 +50,10 @@ public final class KeyboardState {
         public void setAlphabetShiftLockedKeyboard();
         public void setAlphabetShiftLockShiftedKeyboard();
         public void setEmojiKeyboard();
+        public void setSavedGk();
         public void setSymbolsKeyboard();
         public void setSymbolsShiftedKeyboard();
+        public void setActionBack();
 
         /**
          * Request to call back {@link KeyboardState#onUpdateShiftState(int, int)}.
@@ -348,6 +350,23 @@ public final class KeyboardState {
         mPrevMainKeyboardWasShiftLocked = mAlphabetShiftState.isShiftLocked();
         mAlphabetShiftState.setShiftLocked(false);
         mSwitchActions.setEmojiKeyboard();
+    }
+
+    private void actionBack() {
+        mSwitchActions.setActionBack();
+    }
+
+    private void setSavedGk(){
+        if (DEBUG_INTERNAL_ACTION) {
+            Log.d(TAG, "setSavedGk");
+        }
+        mIsAlphabetMode = false;
+        mIsEmojiMode = false;
+        mRecapitalizeMode = RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE;
+        // Remember caps lock mode and reset alphabet shift state.
+        mPrevMainKeyboardWasShiftLocked = mAlphabetShiftState.isShiftLocked();
+        mAlphabetShiftState.setShiftLocked(false);
+        mSwitchActions.setSavedGk();
     }
 
     public void onPressKey(final int code, final boolean isSinglePointer, final int autoCapsFlags,
@@ -669,10 +688,16 @@ public final class KeyboardState {
             updateAlphabetShiftState(autoCapsFlags, recapitalizeMode);
         } else if (code == Constants.CODE_EMOJI) {
             setEmojiKeyboard();
+        } else if (code == Constants.CODE_SAVED_GK) {
+            setSavedGk();
+        } else if (code == Constants.CODE_ACTION_BACK) {
+            actionBack();
         } else if (code == Constants.CODE_ALPHA_FROM_EMOJI) {
             setAlphabetKeyboard(autoCapsFlags, recapitalizeMode);
         }
     }
+
+
 
     static String shiftModeToString(final int shiftMode) {
         switch (shiftMode) {

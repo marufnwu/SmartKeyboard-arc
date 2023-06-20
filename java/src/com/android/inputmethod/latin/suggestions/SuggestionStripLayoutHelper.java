@@ -546,14 +546,14 @@ final class SuggestionStripLayoutHelper {
 
     public void layoutImportantNotice(final View importantNoticeStrip,
             final String importantNoticeTitle) {
-        final TextView titleView = (TextView)importantNoticeStrip.findViewById(
-                R.id.important_notice_title);
-        final int width = titleView.getWidth() - titleView.getPaddingLeft()
-                - titleView.getPaddingRight();
-        titleView.setTextColor(mColorAutoCorrect);
-        titleView.setText(importantNoticeTitle); // TextView.setText() resets text scale x to 1.0.
-        final float titleScaleX = getTextScaleX(importantNoticeTitle, width, titleView.getPaint());
-        titleView.setTextScaleX(titleScaleX);
+//        final TextView titleView = (TextView)importantNoticeStrip.findViewById(
+//                R.id.important_notice_title);
+//        final int width = titleView.getWidth() - titleView.getPaddingLeft()
+//                - titleView.getPaddingRight();
+//        titleView.setTextColor(mColorAutoCorrect);
+//        titleView.setText(importantNoticeTitle); // TextView.setText() resets text scale x to 1.0.
+//        final float titleScaleX = getTextScaleX(importantNoticeTitle, width, titleView.getPaint());
+//        titleView.setTextScaleX(titleScaleX);
     }
 
     static void setLayoutWeight(final View v, final float weight, final int height) {

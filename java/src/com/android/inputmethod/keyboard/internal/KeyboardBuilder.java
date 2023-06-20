@@ -121,7 +121,7 @@ import javax.annotation.Nonnull;
 // TODO: Write unit tests for this class.
 public class KeyboardBuilder<KP extends KeyboardParams> {
     private static final String BUILDER_TAG = "Keyboard.Builder";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     // Keyboard XML Tags
     private static final String TAG_KEYBOARD = "Keyboard";

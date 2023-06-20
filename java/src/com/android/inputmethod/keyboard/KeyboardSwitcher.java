@@ -23,6 +23,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -72,9 +73,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     private Context mThemeContext;
 
     private static final KeyboardSwitcher sInstance = new KeyboardSwitcher();
-
-
-
+    private LinearLayout mSavedGkView;
 
 
     public static KeyboardSwitcher getInstance() {
@@ -169,6 +168,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
 
 
+
+
         keyboardView.setKeyboard(newKeyboard);
         mCurrentInputView.setKeyboardTopPadding(newKeyboard.mTopPadding);
         keyboardView.setKeyPreviewPopupEnabled(
@@ -228,6 +229,9 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
         if (DEBUG_ACTION) {
             Log.d(TAG, "setAlphabetKeyboard");
         }
+        if(isShowingSavedGk()){
+            hideSkSavedView();
+        }
         setKeyboard(KeyboardId.ELEMENT_ALPHABET, KeyboardSwitchState.OTHER);
     }
 
@@ -285,6 +289,11 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
         setKeyboard(KeyboardId.ELEMENT_SYMBOLS_SHIFTED, KeyboardSwitchState.SYMBOLS_SHIFTED);
     }
 
+    @Override
+    public void setActionBack() {
+       setAlphabetKeyboard();
+    }
+
     public boolean isImeSuppressedByHardwareKeyboard(
             @Nonnull final SettingsValues settingsValues,
             @Nonnull final KeyboardSwitchState toggleState) {
@@ -323,10 +332,52 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
         mEmojiPalettesView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void setSavedGk() {
+       if(isShowingSavedGk()){
+           hideSkSavedView();
+           return;
+       }
+       showGkSavedView();
+    }
+
+    public void hideSkSavedView(){
+        if (DEBUG_ACTION) {
+            Log.d(TAG, "hideSkSavedView");
+        }
+        final Keyboard keyboard = mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET);
+        mMainKeyboardFrame.setVisibility(View.VISIBLE);
+        // The visibility of {@link #mKeyboardView} must be aligned with {@link #MainKeyboardFrame}.
+        // @see #getVisibleKeyboardView() and
+        // @see LatinIME#onComputeInset(android.inputmethodservice.InputMethodService.Insets)
+        mKeyboardView.setVisibility(View.VISIBLE);
+        //mEmojiPalettesView.startEmojiPalettes(mKeyboardTextsSet.getText(KeyboardTextsSet.SWITCH_TO_ALPHA_KEY_LABEL), mKeyboardView.getKeyVisualAttribute(), keyboard.mIconsSet);
+        mEmojiPalettesView.setVisibility(View.GONE);
+        mEmojiPalettesView.stopEmojiPalettes();
+        mSavedGkView.setVisibility(View.GONE);
+    }
+
+    public void showGkSavedView(){
+        if (DEBUG_ACTION) {
+            Log.d(TAG, "setSavedGk");
+        }
+        final Keyboard keyboard = mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET);
+        mMainKeyboardFrame.setVisibility(View.VISIBLE);
+        // The visibility of {@link #mKeyboardView} must be aligned with {@link #MainKeyboardFrame}.
+        // @see #getVisibleKeyboardView() and
+        // @see LatinIME#onComputeInset(android.inputmethodservice.InputMethodService.Insets)
+        mKeyboardView.setVisibility(View.GONE);
+        //mEmojiPalettesView.startEmojiPalettes(mKeyboardTextsSet.getText(KeyboardTextsSet.SWITCH_TO_ALPHA_KEY_LABEL), mKeyboardView.getKeyVisualAttribute(), keyboard.mIconsSet);
+        mEmojiPalettesView.setVisibility(View.GONE);
+        mEmojiPalettesView.stopEmojiPalettes();
+        mSavedGkView.setVisibility(View.VISIBLE);
+    }
+
     public enum KeyboardSwitchState {
         HIDDEN(-1),
         SYMBOLS_SHIFTED(KeyboardId.ELEMENT_SYMBOLS_SHIFTED),
         EMOJI(KeyboardId.ELEMENT_EMOJI_RECENTS),
+        SAVED_GK(-1),
         OTHER(-1);
 
         final int mKeyboardId;
@@ -337,7 +388,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     public KeyboardSwitchState getKeyboardSwitchState() {
-        boolean hidden = !isShowingEmojiPalettes()
+        boolean hidden = !isShowingEmojiPalettes() && !isShowingSavedGk()
                 && (mKeyboardLayoutSet == null
                 || mKeyboardView == null
                 || !mKeyboardView.isShown());
@@ -348,6 +399,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
             return KeyboardSwitchState.EMOJI;
         } else if (isShowingKeyboardId(KeyboardId.ELEMENT_SYMBOLS_SHIFTED)) {
             return KeyboardSwitchState.SYMBOLS_SHIFTED;
+        }else if (isShowingSavedGk()) {
+            return KeyboardSwitchState.SAVED_GK;
         }
         return KeyboardSwitchState.OTHER;
     }
@@ -363,6 +416,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
             mLatinIME.startShowingInputView(true);
             if (toggleState == KeyboardSwitchState.EMOJI) {
                 setEmojiKeyboard();
+            } else if (toggleState == KeyboardSwitchState.SAVED_GK) {
+                //showGkSavedView();
             } else {
                 mEmojiPalettesView.stopEmojiPalettes();
                 mEmojiPalettesView.setVisibility(View.GONE);
@@ -442,8 +497,11 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     public boolean isShowingEmojiPalettes() {
-        //return false;
         return mEmojiPalettesView != null && mEmojiPalettesView.isShown();
+    }
+    
+    public boolean isShowingSavedGk() {
+        return mSavedGkView != null && mSavedGkView.isShown();
     }
 
     public boolean isShowingMoreKeysPanel() {
@@ -456,6 +514,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     public View getVisibleKeyboardView() {
         if (isShowingEmojiPalettes()) {
             return mEmojiPalettesView;
+        }
+
+        if(mSavedGkView.isShown()){
+            return mSavedGkView;
         }
         return mKeyboardView;
     }
@@ -482,11 +544,14 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
         updateKeyboardThemeAndContextThemeWrapper(
                 displayContext, KeyboardTheme.getKeyboardTheme(displayContext /* context */));
+
         mCurrentInputView = (InputView)LayoutInflater.from(mThemeContext).inflate(
                 R.layout.input_view, null);
         mMainKeyboardFrame = mCurrentInputView.findViewById(R.id.main_keyboard_frame);
         mEmojiPalettesView = (EmojiPalettesView)mCurrentInputView.findViewById(
                 R.id.emoji_palettes_view);
+        
+        mSavedGkView = mMainKeyboardFrame.findViewById(R.id.saved_gk_view);
 
         mKeyboardView = (MainKeyboardView) mCurrentInputView.findViewById(R.id.keyboard_view);
         mKeyboardView.setHardwareAcceleratedDrawingEnabled(isHardwareAcceleratedDrawingEnabled);

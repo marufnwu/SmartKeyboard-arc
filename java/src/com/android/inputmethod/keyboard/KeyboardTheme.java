@@ -46,7 +46,7 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
     private static KeyboardTheme[] AVAILABLE_KEYBOARD_THEMES;
 
     /* package private for testing */
-    static final KeyboardTheme[] KEYBOARD_THEMES = {
+    public static final KeyboardTheme[] KEYBOARD_THEMES = {
         new KeyboardTheme(THEME_ID_ICS, "ICS", R.style.KeyboardTheme_ICS,
                 // This has never been selected because we support ICS or later.
                 VERSION_CODES.BASE),

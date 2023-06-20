@@ -17,6 +17,7 @@
 package com.android.inputmethod.latin.suggestions;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -35,6 +36,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,6 +54,7 @@ import com.android.inputmethod.latin.settings.Settings;
 import com.android.inputmethod.latin.settings.SettingsValues;
 import com.android.inputmethod.latin.suggestions.MoreSuggestionsView.MoreSuggestionsListener;
 import com.android.inputmethod.latin.utils.ImportantNoticeUtils;
+import com.sikderithub.keyboard.Activity.ThemeDemoActivity;
 
 import java.util.ArrayList;
 
@@ -61,6 +64,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         public void showImportantNoticeContents();
         public void pickSuggestionManually(SuggestedWordInfo word);
         public void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat);
+
     }
 
     static final boolean DBG = DebugFlags.DEBUG_ENABLED;
@@ -68,6 +72,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     private final ViewGroup mSuggestionsStrip;
     private final ImageButton mVoiceKey;
+    private final ImageButton mBackIcon;
     private final View mImportantNoticeStrip;
     MainKeyboardView mMainKeyboardView;
 
@@ -139,10 +144,38 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         inflater.inflate(R.layout.suggestions_strip, this);
 
         mSuggestionsStrip = (ViewGroup)findViewById(R.id.suggestions_strip);
+
         mVoiceKey = (ImageButton)findViewById(R.id.suggestions_strip_voice_key);
+        mBackIcon = (ImageButton)findViewById(R.id.action_back);
+
         mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,
                 mImportantNoticeStrip);
+
+        ImageView savedGkIcon = (ImageView) findViewById(R.id.saved_gk_icon);
+        ImageView emoji_icon = (ImageView) findViewById(R.id.emoji_icon);
+        ImageView message_icon = (ImageView) findViewById(R.id.message_icon);
+        ImageView theme_icon = (ImageView) findViewById(R.id.theme_icon);
+
+        TypedArray ss = context.obtainStyledAttributes(attrs, R.styleable.SuggestionStripView);
+        int savedIconRes = ss.getResourceId(R.styleable.SuggestionStripView_savedGkIcon, 0);
+        savedGkIcon.setImageResource(savedIconRes);
+
+        final Drawable iconBack = ss.getDrawable(R.styleable.SuggestionStripView_backIcon);
+        mBackIcon.setImageDrawable(iconBack);
+
+        Drawable emojiIconRes = ss.getDrawable(R.styleable.SuggestionStripView_emojiIcon);
+        emoji_icon.setImageDrawable(emojiIconRes);
+
+        Drawable messgeIconRes = ss.getDrawable(R.styleable.SuggestionStripView_messageIcon);
+        message_icon.setImageDrawable(messgeIconRes);
+
+        emoji_icon.setOnClickListener(this);
+        savedGkIcon.setOnClickListener(this);
+        mBackIcon.setOnClickListener(this);
+        theme_icon.setOnClickListener(this);
+
+
 
         for (int pos = 0; pos < SuggestedWords.MAX_SUGGESTIONS; pos++) {
             final TextView word = new TextView(context, null, R.attr.suggestionWordStyle);
@@ -175,6 +208,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final TypedArray keyboardAttr = context.obtainStyledAttributes(attrs,
                 R.styleable.Keyboard, defStyle, R.style.SuggestionStripView);
         final Drawable iconVoice = keyboardAttr.getDrawable(R.styleable.Keyboard_iconShortcutKey);
+
+
         keyboardAttr.recycle();
         mVoiceKey.setImageDrawable(iconVoice);
         mVoiceKey.setOnClickListener(this);
@@ -228,9 +263,11 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         if (isShowingMoreSuggestionPanel()) {
             dismissMoreSuggestionsPanel();
         }
-        mLayoutHelper.layoutImportantNotice(mImportantNoticeStrip, importantNoticeTitle);
+        //mLayoutHelper.layoutImportantNotice(mImportantNoticeStrip, importantNoticeTitle);
+
+
         mStripVisibilityGroup.showImportantNoticeStrip();
-        mImportantNoticeStrip.setOnClickListener(this);
+        //mImportantNoticeStrip.setOnClickListener(this);
         return true;
     }
 
@@ -454,6 +491,27 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             mListener.onCodeInput(Constants.CODE_SHORTCUT,
                     Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
                     false /* isKeyRepeat */);
+            return;
+        }
+
+        if(view.getId()==R.id.emoji_icon){
+            mListener.onCodeInput(Constants.CODE_EMOJI,Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
+                    false);
+            return;
+        }
+        if(view.getId()==R.id.saved_gk_icon){
+            mListener.onCodeInput(Constants.CODE_SAVED_GK,Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
+                    false);
+            return;
+        }
+
+        if(view.getId()==R.id.action_back){
+            mListener.onCodeInput(Constants.CODE_ACTION_BACK,Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
+                    false);
+            return;
+        }
+        if(view.getId()==R.id.theme_icon){
+            getContext().startActivity(new Intent(getContext(), ThemeDemoActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return;
         }
 

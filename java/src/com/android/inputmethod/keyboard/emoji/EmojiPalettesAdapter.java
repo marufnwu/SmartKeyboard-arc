@@ -93,6 +93,7 @@ final class EmojiPalettesAdapter extends PagerAdapter {
         if (mActivePosition == position) {
             return;
         }
+
         final EmojiPageKeyboardView oldKeyboardView = mActiveKeyboardViews.get(mActivePosition);
         if (oldKeyboardView != null) {
             oldKeyboardView.releaseCurrentKey(false /* withKeyRegistering */);
@@ -115,8 +116,10 @@ final class EmojiPalettesAdapter extends PagerAdapter {
         final Keyboard keyboard =
                 mEmojiCategory.getKeyboardFromPagePosition(position);
         final LayoutInflater inflater = LayoutInflater.from(container.getContext());
+
         final EmojiPageKeyboardView keyboardView = (EmojiPageKeyboardView)inflater.inflate(
                 R.layout.emoji_keyboard_page, container, false /* attachToRoot */);
+
         keyboardView.setKeyboard(keyboard);
         keyboardView.setOnKeyEventListener(mListener);
         container.addView(keyboardView);

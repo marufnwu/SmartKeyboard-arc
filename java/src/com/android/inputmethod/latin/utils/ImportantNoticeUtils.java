@@ -83,6 +83,14 @@ public final class ImportantNoticeUtils {
     public static boolean shouldShowImportantNotice(final Context context,
             final SettingsValues settingsValues) {
         // Check to see whether "Use Contacts" is enabled by the user.
+
+        //We modified here to show the important notice view
+        //cause important noticeview hold ation icon
+        boolean showImportantNotice =  true;
+        if(showImportantNotice){
+            return  true;
+        }
+
         if (!settingsValues.mUseContactsDict) {
             return false;
         }

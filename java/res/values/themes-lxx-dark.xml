@@ -30,6 +30,7 @@
         <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.LXX_Dark.Action</item>
         <item name="suggestionStripViewStyle">@style/SuggestionStripView.LXX_Dark</item>
         <item name="suggestionWordStyle">@style/SuggestionWord.LXX_Dark</item>
+        <item name="gkTextStyle">@style/gkTextStyle_lxx_dark</item>
     </style>
     <style
         name="Keyboard.LXX_Dark"
@@ -146,6 +147,11 @@
         <item name="colorAutoCorrect">@color/auto_correct_color_lxx_dark</item>
         <item name="colorSuggested">@color/suggested_word_color_lxx_dark</item>
         <item name="alphaObsoleted">70%</item>
+        <item name="savedGkIcon">@drawable/saved_white</item>
+        <item name="emojiIcon">@drawable/emoji_white</item>
+        <item name="backIcon">@drawable/arrow_left_white</item>
+        <item name="messageIcon">@drawable/message_white</item>
+
     </style>
     <style
         name="SuggestionWord.LXX_Dark"
@@ -154,4 +160,12 @@
         <item name="android:background">@drawable/btn_suggestion_lxx_dark</item>
         <item name="android:textColor">@color/highlight_color_lxx_dark</item>
     </style>
+
+    <style name="gkTextStyle_lxx_dark" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/gk_text_size</item>
+        <item name="android:textColor">@color/auto_correct_color_lxx_dark</item>
+        <item name="android:drawableLeft">@drawable/light_yellow</item>
+        <item name="android:drawableRight">@drawable/light_yellow</item>
+    </style>
+
 </resources>

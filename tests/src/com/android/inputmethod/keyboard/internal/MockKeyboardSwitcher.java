@@ -126,6 +126,11 @@ public class MockKeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     @Override
+    public void setSavedGk() {
+
+    }
+
+    @Override
     public void requestUpdatingShiftState(final int currentAutoCapsState,
             final int currentRecapitalizeState) {
         mState.onUpdateShiftState(currentAutoCapsState, currentRecapitalizeState);

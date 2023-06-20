@@ -29,4 +29,6 @@
     <include
         android:id="@+id/emoji_palettes_view"
         layout="@layout/emoji_palettes_view" />
+
+
 </com.android.inputmethod.latin.InputView>

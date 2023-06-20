@@ -184,17 +184,13 @@ public final class KeyboardLayoutSet {
             keyboardLayoutSetElementId = baseKeyboardLayoutSetElementId;
             break;
         }
-        Log.d(TAG, "getKeyboard: "+keyboardLayoutSetElementId);
 
         ElementParams elementParams = mParams.mKeyboardLayoutSetElementIdToParamsMap.get(
                 keyboardLayoutSetElementId);
 
         if (elementParams == null) {
-            Log.d(TAG, "getKeyboard: elementParams null");
             elementParams = mParams.mKeyboardLayoutSetElementIdToParamsMap.get(
                     KeyboardId.ELEMENT_ALPHABET);
-        }else{
-            Log.d(TAG, "getKeyboard: elementParams not null");
         }
         // Note: The keyboard for each shift state, and mode are represented as an elementName
         // attribute in a keyboard_layout_set XML file.  Also each keyboard layout XML resource is
@@ -206,7 +202,6 @@ public final class KeyboardLayoutSet {
 
         final KeyboardId id = new KeyboardId(keyboardLayoutSetElementId, mParams);
 
-        Log.d(TAG, "getKeyboard: KeyboardId "+id);
         try {
             return getKeyboard(elementParams, id);
         } catch (final RuntimeException e) {
@@ -407,7 +402,6 @@ public final class KeyboardLayoutSet {
         private void parseKeyboardLayoutSet(final Resources res, final int resId)
                 throws XmlPullParserException, IOException {
             final XmlResourceParser parser = res.getXml(resId);
-            Log.d(TAG, "parseKeyboardLayoutSet: "+parser.getName());
 
 
 

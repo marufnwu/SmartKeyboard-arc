@@ -62,8 +62,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
@@ -111,7 +113,9 @@ import com.android.inputmethod.latin.utils.StatsUtils;
 import com.android.inputmethod.latin.utils.StatsUtilsManager;
 import com.android.inputmethod.latin.utils.SubtypeLocaleUtils;
 import com.android.inputmethod.latin.utils.ViewLayoutUtils;
+import com.android.inputmethod.utils.GkView;
 import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.Views.SavedGkViews;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -171,6 +175,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public View mInputView;
     private InsetsUpdater mInsetsUpdater;
     private SuggestionStripView mSuggestionStripView;
+    private GkView mGkView;
 
     public RichInputMethodManager mRichImm;
     @UsedForTesting final KeyboardSwitcher mKeyboardSwitcher;
@@ -190,7 +195,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     private final BroadcastReceiver mDictionaryDumpBroadcastReceiver =
             new DictionaryDumpBroadcastReceiver(this);
-
+    private SavedGkViews savedGkView;
 
 
     final static class HideSoftInputReceiver extends BroadcastReceiver {
@@ -871,6 +876,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mInsetsUpdater = ViewOutlineProviderCompatUtils.setInsetsOutlineProvider(view);
         updateSoftInputWindowLayoutParameters();
         mSuggestionStripView = (SuggestionStripView)view.findViewById(R.id.suggestion_strip_view);
+
+        savedGkView = view.findViewById(R.id.saved_gk_view);
+        mGkView =  view.findViewById(R.id.gk_view);
+        mGkView.setSavedGkView(savedGkView);
+
         if (hasSuggestionStripView()) {
             mSuggestionStripView.setListener(this, view);
         }
@@ -1277,15 +1287,18 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public void onComputeInsets(final InputMethodService.Insets outInsets) {
         super.onComputeInsets(outInsets);
+
         // This method may be called before {@link #setInputView(View)}.
         if (mInputView == null) {
             return;
         }
         final SettingsValues settingsValues = mSettings.getCurrent();
         final View visibleKeyboardView = mKeyboardSwitcher.getVisibleKeyboardView();
+
         if (visibleKeyboardView == null || !hasSuggestionStripView()) {
             return;
         }
+
         final int inputHeight = mInputView.getHeight();
         if (isImeSuppressedByHardwareKeyboard() && !visibleKeyboardView.isShown()) {
             // If there is a hardware keyboard and a visible software keyboard view has been hidden,
@@ -1295,9 +1308,18 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             mInsetsUpdater.setInsets(outInsets);
             return;
         }
-        final int suggestionsHeight = (!mKeyboardSwitcher.isShowingEmojiPalettes()
+        Log.d(TAG, "onComputeInsets: "+visibleKeyboardView.getHeight());
+
+         int suggestionsHeight = (!mKeyboardSwitcher.isShowingEmojiPalettes()
                 && mSuggestionStripView.getVisibility() == View.VISIBLE)
                 ? mSuggestionStripView.getHeight() : 0;
+
+        if(suggestionsHeight>0){
+            suggestionsHeight+=mGkView.getHeight();
+        }
+
+
+
         final int visibleTopY = inputHeight - visibleKeyboardView.getHeight() - suggestionsHeight;
         mSuggestionStripView.setMoreSuggestionsHeight(visibleTopY);
         // Need to set expanded touchable region only if a keyboard view is being shown.
@@ -1656,6 +1678,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 == SuggestedWords.INPUT_STYLE_BEGINNING_OF_SENTENCE_PREDICTION);
         final boolean noSuggestionsToOverrideImportantNotice = noSuggestionsFromDictionaries
                 || isBeginningOfSentencePrediction;
+
+        Log.d(TAG, "setSuggestedWords: "+shouldShowImportantNotice);
+
         if (shouldShowImportantNotice && noSuggestionsToOverrideImportantNotice) {
             if (mSuggestionStripView.maybeShowImportantNoticeTitle()) {
                 return;

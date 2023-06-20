@@ -7,13 +7,17 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.6'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22"
+
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'kotlin-android'
+
 
 
 android {
@@ -86,6 +90,13 @@ android {
         noCompress 'dict'
     }
 
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'BASE_URL', BASE_URL
+        it.buildConfigField 'String', 'USER_NAME', USER_NAME
+        it.buildConfigField 'String', 'USER_PASSWORD', USER_PASSWORD
+    }
+
 }
 
 repositories {
@@ -99,7 +110,9 @@ repositories {
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 
     testImplementation 'junit:junit:4.13.2'
@@ -118,4 +131,28 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
+
+    implementation 'com.airbnb.android:lottie:6.0.0'
+
+    //for network api calling and convert to json format
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
+
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // Room components
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+    implementation 'com.google.android.gms:play-services-ads:22.1.0'
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
+
+
 }

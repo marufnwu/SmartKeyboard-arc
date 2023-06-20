@@ -30,12 +30,18 @@
         android:layout_marginLeft="@dimen/config_suggestions_strip_horizontal_margin"
         android:layout_marginRight="@dimen/config_suggestions_strip_horizontal_margin"
         android:hapticFeedbackEnabled="false"
-        android:soundEffectsEnabled="false" />
+        android:soundEffectsEnabled="false" >
+
+    </LinearLayout>
     <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
          We just need to ignore the system's audio and haptic feedback settings. -->
     <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
          We just need to ignore the system's audio and haptic feedback settings. -->
+
+
+
     <LinearLayout
+        android:gravity="center_vertical"
         android:id="@+id/important_notice_strip"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -44,14 +50,66 @@
         android:layout_marginRight="@dimen/config_suggestions_strip_horizontal_margin"
         android:hapticFeedbackEnabled="false"
         android:soundEffectsEnabled="false" >
-        <TextView
-            android:id="@+id/important_notice_title"
+
+        <ScrollView
+            android:scrollbars="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6sp"
-            android:textSize="16sp"
-            style="?attr/suggestionWordStyle" />
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/emoji_icon"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/saved_gk_icon"
+                    android:layout_marginEnd="@dimen/action_icon_margin"
+                    android:layout_marginStart="@dimen/action_icon_margin"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/message_icon"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/theme_icon"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/flag"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/action_back"
+        android:layout_width="@dimen/config_suggestions_strip_edge_key_width"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/spoken_description_mic"
+        style="?attr/suggestionWordStyle" />
+
+
     <ImageButton
         android:id="@+id/suggestions_strip_voice_key"
         android:layout_width="@dimen/config_suggestions_strip_edge_key_width"
@@ -61,4 +119,5 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/spoken_description_mic"
         style="?attr/suggestionWordStyle" />
+
 </merge>
