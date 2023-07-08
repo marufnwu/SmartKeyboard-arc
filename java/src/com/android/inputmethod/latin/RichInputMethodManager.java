@@ -326,6 +326,16 @@ public class RichInputMethodManager {
     public void onSubtypeChanged(@Nonnull final InputMethodSubtype newSubtype) {
         updateCurrentSubtype(newSubtype);
         updateShortcutIme();
+        if (newSubtype.getExtraValue().contains("bengali_phonetic")){
+            WordComposer.isPhonetic = true;
+
+            Log.d(TAG, "onCurrentInputMethodSubtypeChanged: isPhonetic true");
+        }else{
+            WordComposer.isPhonetic = false;
+
+            Log.d(TAG, "onCurrentInputMethodSubtypeChanged: isPhonetic false");
+        }
+
         if (DEBUG) {
             Log.w(TAG, "onSubtypeChanged: " + mCurrentRichInputMethodSubtype.getNameForLogging());
         }
@@ -506,6 +516,7 @@ public class RichInputMethodManager {
     }
 
     public void refreshSubtypeCaches() {
+        Log.d(TAG, "refreshSubtypeCaches: ");
         mInputMethodInfoCache.clear();
         updateCurrentSubtype(mImmWrapper.mImm.getCurrentInputMethodSubtype());
         updateShortcutIme();
@@ -548,6 +559,7 @@ public class RichInputMethodManager {
     }
 
     private void updateCurrentSubtype(@Nullable final InputMethodSubtype subtype) {
+        Log.d(TAG, "updateCurrentSubtype: ");
         mCurrentRichInputMethodSubtype = RichInputMethodSubtype.getRichInputMethodSubtype(subtype);
     }
 

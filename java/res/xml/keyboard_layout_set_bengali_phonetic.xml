@@ -18,16 +18,17 @@
 */
 -->
 
-<KeyboardLayoutSet
-    xmlns:keybaord="http://schemas.android.com/apk/res-auto">
+<KeyboardLayoutSet xmlns:keybaord="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <Element
+        android:keyLabel="My Keyboard"
         keybaord:elementName="alphabet"
         keybaord:elementKeyboard="@xml/kbd_qwerty"
         keybaord:enableProximityCharsCorrection="true"
         keybaord:supportsSplitLayout="true" />
     <Element
         keybaord:elementName="symbols"
-        keybaord:elementKeyboard="@xml/kbd_symbols" />
+        keybaord:elementKeyboard="@xml/kbd_bengali_symbol" />
     <Element
         keybaord:elementName="symbolsShifted"
         keybaord:elementKeyboard="@xml/kbd_symbols_shift" />

@@ -49,6 +49,7 @@
     <color name="language_on_spacebar_text_color_lxx_light">#B337474F</color>
     <color name="highlight_color_lxx_light">#4DB6AC</color>
     <color name="auto_correct_color_lxx_light">#37474F</color>
+    <color name="auto_correct_color_mj_light">#FFFFFF</color>
     <color name="typed_word_color_lxx_light">#D937474F</color>
     <color name="suggested_word_color_lxx_light">#B337474F</color>
     <color name="gesture_trail_color_lxx_light">#4DB6AC</color>
@@ -84,5 +85,9 @@
     <color name="setup_welcome_video_margin_color">#FFCCCCCC</color>
     <!-- Accent color for the notification. We need to match this to the OS build -->
     <color name="notification_accent_color">#FF607D8B</color>
+
+    <!--Mj Light theme-->
+    <color name="keyboard_background_mj_light">#ECF9FF</color>
+    <color name="key_text_color_mj_light">@android:color/black</color>
 
 </resources>

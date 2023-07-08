@@ -25,11 +25,11 @@
     android:layout_gravity="bottom"
     android:orientation="vertical" >
 
-    <com.android.inputmethod.utils.GkView
+    <com.sikderithub.keyboard.Views.GkView
         android:id="@+id/gk_view"
         android:layout_width="match_parent"
         android:layout_height="60dp">
-    </com.android.inputmethod.utils.GkView>
+    </com.sikderithub.keyboard.Views.GkView>
 
 
 

@@ -70,7 +70,7 @@ public class GkEngine  {
         random = new Random();
 
     }
-    protected CurrentGk getGk(){
+    public CurrentGk getGk(){
         if(cachedGk.size()<1){
             return null;
         }

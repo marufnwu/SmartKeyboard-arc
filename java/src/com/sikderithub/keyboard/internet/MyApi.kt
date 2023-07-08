@@ -5,8 +5,10 @@ import android.util.Log
 
 import com.google.gson.GsonBuilder
 import com.sikderithub.keyboard.BuildConfig
+import com.sikderithub.keyboard.Models.Config
 import com.sikderithub.keyboard.Models.GenericResponse
 import com.sikderithub.keyboard.Models.Gk
+import com.sikderithub.keyboard.Models.Update
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,6 +18,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
@@ -26,6 +29,17 @@ interface MyApi {
     fun getLatestQuestion(
            @Field("id") id:String
     ): Call<GenericResponse<List<Gk>>>
+    @GET("api/config.all_config_data.php")
+    fun getConfig(
+            @Query("version_code") version_code:Int
+    ) : Call<GenericResponse<Config>>
+
+    @GET("api/update.last_update_data.php")
+    fun getLatestUpdate(
+
+    ) : Call<GenericResponse<Update>>
+
+
 
 
     companion object {

@@ -31,6 +31,9 @@ import java.util.Locale;
  * input language that the user has selected.
  */
 public class LanguageSwitcher {
+    public static int AVRO_INDEX=2;
+    public static int ENGLISH_INDEX=0;
+    public static int BANGLA_INDEX=1;
 
     private static final String TAG = "HK/LanguageSwitcher";
     private static final String PREF_INPUT_LANGUAGE = "PREF_INPUT_LANGUAGE";
@@ -73,10 +76,10 @@ public class LanguageSwitcher {
      */
 
     public boolean loadLocales(SharedPreferences sp) {
-        String selectedLanguages = "en_US, bn, bn_BD";
+        String selectedLanguages = "en_US, bn_BD, bn";
         String currentLanguage   = sp.getString(PREF_INPUT_LANGUAGE, null);
 
-        mSelectedLanguageArray = new String[]{"en_US","bn", "bn_BD"};
+        mSelectedLanguageArray = new String[]{"en_US",  "bn_BD", "bn"};
         mSelectedLanguages = selectedLanguages; // Cache it for comparison later
         constructLocales();
         mCurrentIndex = 0;
@@ -115,7 +118,10 @@ public class LanguageSwitcher {
      * no specific locale was selected for input.
      */
     public String getInputLanguage() {
+
         if (getLocaleCount() == 0) return mDefaultInputLanguage;
+
+        Log.d(TAG, "getInputLanguage: "+mCurrentIndex);
 
         return mSelectedLanguageArray[mCurrentIndex];
     }
@@ -135,10 +141,14 @@ public class LanguageSwitcher {
     public Locale getInputLocale() {
         Locale locale;
         if (getLocaleCount() == 0) {
+            Log.d(TAG, "getInputLocale: count 0");
             locale = mDefaultInputLocale;
         } else {
+            Log.d(TAG, "getInputLocale: count "+getLocaleCount()+" index "+mCurrentIndex);
+
             locale = mLocales[mCurrentIndex];
         }
+
         return locale;
     }
 
@@ -191,6 +201,10 @@ public class LanguageSwitcher {
         Log.d(TAG, "next: ");
         mCurrentIndex++;
         if (mCurrentIndex >= mLocales.length) mCurrentIndex = 0; // Wrap around
+    }public void setCurrentLangIndex(int index) {
+        Log.d(TAG, "setCurrentLangIndex: "+index);
+        mCurrentIndex = index;
+        //if (mCurrentIndex >= mLocales.length) mCurrentIndex = 0; // Wrap around
     }
 
     public void prev() {

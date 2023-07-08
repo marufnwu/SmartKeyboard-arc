@@ -222,7 +222,6 @@ public final class KeyboardLayoutSet {
         }
 
         final KeyboardBuilder<KeyboardParams> builder = new KeyboardBuilder<>(mContext, new KeyboardParams(sUniqueKeysCache));
-
         sUniqueKeysCache.setEnabled(id.isAlphabetKeyboard());
         builder.setAllowRedundantMoreKes(elementParams.mAllowRedundantMoreKeys);
         final int keyboardXmlId = elementParams.mKeyboardXmlId;
@@ -463,6 +462,8 @@ public final class KeyboardLayoutSet {
                         R.styleable.KeyboardLayoutSet_Element_elementName, 0);
                 elementParams.mKeyboardXmlId = a.getResourceId(
                         R.styleable.KeyboardLayoutSet_Element_elementKeyboard, 0);
+
+
                 elementParams.mProximityCharsCorrectionEnabled = a.getBoolean(
                         R.styleable.KeyboardLayoutSet_Element_enableProximityCharsCorrection,
                         false);

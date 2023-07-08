@@ -38,7 +38,7 @@ import com.android.inputmethod.latin.utils.RecapitalizeStatus;
  */
 public final class KeyboardState {
     private static final String TAG = KeyboardState.class.getSimpleName();
-    private static final boolean DEBUG_EVENT = false;
+    private static final boolean DEBUG_EVENT = true;
     private static final boolean DEBUG_INTERNAL_ACTION = false;
 
     public interface SwitchActions {
@@ -54,6 +54,9 @@ public final class KeyboardState {
         public void setSymbolsKeyboard();
         public void setSymbolsShiftedKeyboard();
         public void setActionBack();
+        default void setAvro(boolean status) {
+            return;
+        }
 
         /**
          * Request to call back {@link KeyboardState#onUpdateShiftState(int, int)}.
@@ -311,6 +314,7 @@ public final class KeyboardState {
         mRecapitalizeMode = RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE;
         mSwitchState = SWITCH_STATE_ALPHA;
         mSwitchActions.requestUpdatingShiftState(autoCapsFlags, recapitalizeMode);
+
     }
 
     private void setSymbolsKeyboard() {
@@ -694,7 +698,16 @@ public final class KeyboardState {
             actionBack();
         } else if (code == Constants.CODE_ALPHA_FROM_EMOJI) {
             setAlphabetKeyboard(autoCapsFlags, recapitalizeMode);
+        } else if (code == Constants.CODE_ACTION_SWITCH_TO_AVRO) {
+            Log.d(TAG, "onEvent: CODE_ACTION_SWITCH_TO_AVRO");
+            // TODO: 7/4/2023  switch to avro keyborad
+            mSwitchActions.setAvro(true);
+        }else if (code == Constants.CODE_ACTION_SWITCH_TO_ENGLISH) {
+            Log.d(TAG, "onEvent: CODE_ACTION_SWITCH_TO_ENGLISH");
+            mSwitchActions.setAvro(false);
+
         }
+
     }
 
 

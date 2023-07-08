@@ -51,6 +51,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:padding="4dp"
         android:id="@+id/gkHolder"
         android:layout_width="match_parent"

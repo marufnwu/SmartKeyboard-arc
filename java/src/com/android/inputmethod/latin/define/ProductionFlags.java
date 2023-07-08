@@ -27,7 +27,7 @@ public final class ProductionFlags {
      * Include all suggestions from all dictionaries in
      * {@link com.android.inputmethod.latin.SuggestedWords#mRawSuggestions}.
      */
-    public static final boolean INCLUDE_RAW_SUGGESTIONS = false;
+    public static final boolean INCLUDE_RAW_SUGGESTIONS = true;
 
     /**
      * When false, the metrics logging is not yet ready to be enabled.
@@ -42,7 +42,7 @@ public final class ProductionFlags {
     /**
      * When {@code false}, account sign-in in keyboard is not yet ready to be enabled.
      */
-    public static final boolean ENABLE_ACCOUNT_SIGN_IN = false;
+    public static final boolean ENABLE_ACCOUNT_SIGN_IN = true;
 
     /**
      * When {@code true}, user history dictionary sync feature is ready to be enabled.

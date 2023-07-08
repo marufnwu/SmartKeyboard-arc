@@ -42,4 +42,12 @@
         android:fragment="com.android.inputmethod.latin.settings.AdvancedSettingsFragment"
         android:title="@string/settings_screen_advanced"
         android:key="screen_advanced" />
+
+    <PreferenceScreen
+        android:title="@string/settings_screen_tutorial"
+        android:summary="Learn how to write bangla"
+        android:key="screen_tutorial">
+        <intent android:targetPackage="com.sikderithub.keyboard"
+            android:targetClass="com.sikderithub.keyboard.Activity.KeyMapActivity" />
+    </PreferenceScreen>
 </PreferenceScreen>

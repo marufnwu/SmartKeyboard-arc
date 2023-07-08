@@ -39,6 +39,7 @@ import java.util.HashMap;
  * - how key previews should be shown and dismissed.
  */
 public final class KeyPreviewChoreographer {
+    private static final String TAG = "KeyPreviewChoreographer";
     // Free {@link KeyPreviewView} pool that can be used for key preview.
     private final ArrayDeque<KeyPreviewView> mFreeKeyPreviewViews = new ArrayDeque<>();
     // Map from {@link Key} to {@link KeyPreviewView} that is currently being displayed as key
@@ -72,6 +73,7 @@ public final class KeyPreviewChoreographer {
     }
 
     public void dismissKeyPreview(final Key key, final boolean withAnimation) {
+
         if (key == null) {
             return;
         }
@@ -87,6 +89,8 @@ public final class KeyPreviewChoreographer {
                 return;
             }
         }
+
+
         // Dismiss preview without animation.
         mShowingKeyPreviewViews.remove(key);
         if (tag instanceof Animator) {
@@ -95,6 +99,7 @@ public final class KeyPreviewChoreographer {
         keyPreviewView.setTag(null);
         keyPreviewView.setVisibility(View.INVISIBLE);
         mFreeKeyPreviewViews.add(keyPreviewView);
+        Log.d(TAG, "dismissKeyPreview: ");
     }
 
     public void placeAndShowKeyPreview(final Key key, final KeyboardIconsSet iconsSet,

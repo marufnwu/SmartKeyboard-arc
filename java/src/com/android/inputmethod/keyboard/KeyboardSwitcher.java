@@ -23,6 +23,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodSubtype;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,8 @@ import com.android.inputmethod.keyboard.internal.KeyboardTextsSet;
 import com.android.inputmethod.latin.InputView;
 import com.android.inputmethod.latin.LatinIME;
 import com.android.inputmethod.latin.RichInputMethodManager;
+import com.android.inputmethod.latin.RichInputMethodSubtype;
+import com.android.inputmethod.latin.common.Constants;
 import com.sikderithub.keyboard.R;
 
 import com.android.inputmethod.latin.WordComposer;
@@ -48,6 +51,8 @@ import com.android.inputmethod.latin.utils.RecapitalizeStatus;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
 import com.android.inputmethod.utils.LanguageSwitcher;
+
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -121,13 +126,28 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     public void loadKeyboard(final EditorInfo editorInfo, final SettingsValues settingsValues,
             final int currentAutoCapsState, final int currentRecapitalizeState) {
         Log.d(TAG, "loadKeyboard: ");
+
+        RichInputMethodSubtype subtype = mRichImm.getCurrentSubtype();
+
+        Log.d(TAG, "updateSelectedLanguageIndex: "+subtype.getLocale());
+
+        if(subtype.getLocale().toString().equals("bn")){
+            mLatinIME.languageSwitcher.setCurrentLangIndex(LanguageSwitcher.AVRO_INDEX);
+        }else if(subtype.getLocale().toString().equals("en_US")){
+            mLatinIME.languageSwitcher.setCurrentLangIndex(LanguageSwitcher.ENGLISH_INDEX);
+        }else{
+            mLatinIME.languageSwitcher.setCurrentLangIndex(LanguageSwitcher.BANGLA_INDEX);
+        }
+
+        mLatinIME.languageSwitcher.persist();
+
         final KeyboardLayoutSet.Builder builder = new KeyboardLayoutSet.Builder(
                 mThemeContext, editorInfo);
         final Resources res = mThemeContext.getResources();
         final int keyboardWidth = ResourceUtils.getDefaultKeyboardWidth(res);
         final int keyboardHeight = ResourceUtils.getKeyboardHeight(res, settingsValues);
         builder.setKeyboardGeometry(keyboardWidth, keyboardHeight);
-        Log.d(TAG, "loadKeyboard: CurrentSubtupe "+mRichImm.getCurrentSubtype().toString());
+        Log.d(TAG, "loadKeyboard: CurrentSubtupe "+mRichImm.getCurrentSubtype().getLocale());
         builder.setSubtype(mRichImm.getCurrentSubtype());
         builder.setVoiceInputKeyEnabled(settingsValues.mShowsVoiceInputKey);
         builder.setLanguageSwitchKeyEnabled(mLatinIME.shouldShowLanguageSwitchKey());
@@ -137,6 +157,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
         try {
             mState.onLoadKeyboard(currentAutoCapsState, currentRecapitalizeState);
             mKeyboardTextsSet.setLocale(mRichImm.getCurrentSubtypeLocale(), mThemeContext);
+
         } catch (KeyboardLayoutSetException e) {
             Log.w(TAG, "loading keyboard failed: " + e.mKeyboardId, e.getCause());
         }
@@ -292,6 +313,15 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     @Override
     public void setActionBack() {
        setAlphabetKeyboard();
+    }
+
+    @Override
+    public void setAvro(boolean status) {
+        if(status){
+            mLatinIME.mHandler.postSwitchLanguage(mRichImm.findSubtypeByLocaleAndKeyboardLayoutSet("bn", "bengali_phonetic"));
+        }else{
+            mLatinIME.mHandler.postSwitchLanguage(mRichImm.findSubtypeByLocaleAndKeyboardLayoutSet("en_US", "qwerty"));
+        }
     }
 
     public boolean isImeSuppressedByHardwareKeyboard(
@@ -547,6 +577,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
         mCurrentInputView = (InputView)LayoutInflater.from(mThemeContext).inflate(
                 R.layout.input_view, null);
+
+
         mMainKeyboardFrame = mCurrentInputView.findViewById(R.id.main_keyboard_frame);
         mEmojiPalettesView = (EmojiPalettesView)mCurrentInputView.findViewById(
                 R.id.emoji_palettes_view);

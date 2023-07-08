@@ -114,35 +114,41 @@
      subtype.-->
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
         android:settingsActivity="com.android.inputmethod.latin.settings.SettingsActivity"
-        android:isDefault="false"
-        android:supportsSwitchingToNextInputMethod="true">
+        android:isDefault="false">
 
 <!--    <subtype  android:imeSubtypeMode="keyboard" />-->
 
 
-    <subtype android:icon="@drawable/ic_ime_switcher_dark"
-            android:subtypeId="0xc9194f98"
-            android:imeSubtypeMode="keyboard"
-            android:imeSubtypeLocale="en_US"
-            android:imeSubtypeExtraValue="TrySuppressingImeSwitcher,AsciiCapable,SupportTouchPositionCorrection,EmojiCapable"
-            android:isAsciiCapable="true"
-    />
+
 
     <subtype android:icon="@drawable/ic_ime_switcher_dark"
         android:imeSubtypeLocale="bn"
         android:subtypeId="0xb045e755"
         android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="true"
         android:imeSubtypeExtraValue="KeyboardLayoutSet=bengali_phonetic, EmojiCapable"
         android:isAsciiCapable="false"
-        />
+    />
 
-    <subtype android:icon="@drawable/ic_ime_switcher_dark"
+    <subtype
+        android:isAuxiliary="true"
+        android:icon="@drawable/message"
         android:subtypeId="0xa2144b0c"
         android:imeSubtypeLocale="bn_BD"
         android:imeSubtypeMode="keyboard"
         android:imeSubtypeExtraValue="KeyboardLayoutSet=bengali_akkhor, EmojiCapable"
         android:isAsciiCapable="false"
-        />
+    />
+
+    <subtype android:icon="@drawable/ic_ime_switcher_dark"
+        android:label="@string/empty_language_name"
+        android:subtypeId="0xc9194f98"
+        android:imeSubtypeMode="keyboard"
+        android:imeSubtypeLocale="en_US"
+        android:languageTag="en-US"
+        android:imeSubtypeExtraValue="KeyboardLayoutSet=qwerty,TrySuppressingImeSwitcher,AsciiCapable,SupportTouchPositionCorrection,EmojiCapable"
+        android:isAsciiCapable="true"
+    />
 
 
 
@@ -206,14 +212,14 @@
 <!--            android:imeSubtypeExtraValue="KeyboardLayoutSet=bulgarian,EmojiCapable"-->
 <!--            android:isAsciiCapable="false"-->
 <!--    />-->
-<!--    <subtype android:icon="@drawable/ic_ime_switcher_dark"-->
-<!--            android:label="@string/subtype_bulgarian_bds"-->
-<!--            android:subtypeId="0x5f51ba9a"-->
-<!--            android:imeSubtypeLocale="bg"-->
-<!--            android:imeSubtypeMode="keyboard"-->
-<!--            android:imeSubtypeExtraValue="KeyboardLayoutSet=bulgarian_bds,EmojiCapable"-->
-<!--            android:isAsciiCapable="false"-->
-<!--    />-->
+    <subtype android:icon="@drawable/ic_ime_switcher_dark"
+            android:label="@string/subtype_bulgarian_bds"
+            android:subtypeId="0x5f51ba9a"
+            android:imeSubtypeLocale="bg"
+            android:imeSubtypeMode="keyboard"
+            android:imeSubtypeExtraValue="KeyboardLayoutSet=bulgarian_bds,EmojiCapable"
+            android:isAsciiCapable="false"
+    />
 <!--    -->
 <!--    <subtype android:icon="@drawable/ic_ime_switcher_dark"-->
 <!--            android:label="@string/subtype_generic"-->

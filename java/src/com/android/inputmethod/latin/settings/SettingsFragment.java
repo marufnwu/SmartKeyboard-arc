@@ -21,19 +21,21 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.Settings.Secure;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.sikderithub.keyboard.Activity.KeyMapActivity;
 import com.sikderithub.keyboard.R;
 import com.android.inputmethod.latin.define.ProductionFlags;
 import com.android.inputmethod.latin.utils.ApplicationUtils;
 import com.android.inputmethod.latin.utils.FeedbackUtils;
 import com.android.inputmethodcommon.InputMethodSettingsFragment;
 
-public final class SettingsFragment extends InputMethodSettingsFragment {
+public final class SettingsFragment extends PreferenceFragment {
     // We don't care about menu grouping.
     private static final int NO_MENU_GROUP = Menu.NONE;
     // The first menu item id and order.
@@ -55,6 +57,31 @@ public final class SettingsFragment extends InputMethodSettingsFragment {
             final Preference accountsPreference = findPreference(Settings.SCREEN_ACCOUNTS);
             preferenceScreen.removePreference(accountsPreference);
         }
+
+
+        // Find the preference item by its key
+        android.preference.Preference tutorialPreference = findPreference("screen_tutorial");
+
+        // Set a click listener for the preference item
+        tutorialPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Intent intent = new Intent(getActivity(), KeyMapActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+        // Set the change listener for the preference item
+        tutorialPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                // Handle the preference value change
+                // This method will be called when the preference value changes
+                // Return true if the change should be persisted, false otherwise
+                return true;
+            }
+        });
     }
 
     @Override
@@ -98,4 +125,5 @@ public final class SettingsFragment extends InputMethodSettingsFragment {
         }
         return Secure.getInt(activity.getContentResolver(), "user_setup_complete", 0) != 0;
     }
+
 }

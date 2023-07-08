@@ -30,6 +30,15 @@
                 keybaord:keyLabelFlags="hasPopupHint"
                 keybaord:moreKeys="!text/morekeys_punctuation,!text/morekeys_z" />
         </case>
+
+        <case keybaord:keyboardLayoutSet="bengali_phonetic">
+            <Key
+                keybaord:keySpec="।"
+                keybaord:keyHintLabel="!text/keyhintlabel_period"
+                keybaord:keyLabelFlags="hasPopupHint|hasShiftedLetterHint"
+                keybaord:moreKeys="!text/morekeys_period"
+                keybaord:backgroundType="functional" />
+        </case>
         <default>
             <Key
                 keybaord:keySpec="!text/keyspec_period"

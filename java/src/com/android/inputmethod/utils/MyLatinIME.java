@@ -33,12 +33,11 @@ public class MyLatinIME extends LatinIME implements DrawingProxy {
     static final String TAG = MyLatinIME.class.getSimpleName();
     List<InputMethodSubtype> listOfInputMethods = new ArrayList<>();
 
-    LanguageSwitcher languageSwitcher;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        languageSwitcher = LanguageSwitcher.getInstance(this);
 
         languageSwitcher.loadLocales(PreferenceManager.getDefaultSharedPreferences(this));
         int subTypes = mRichImm.getInputMethodInfoOfThisIme().getSubtypeCount();
@@ -47,6 +46,8 @@ public class MyLatinIME extends LatinIME implements DrawingProxy {
             listOfInputMethods.add(subType);
             Log.d(TAG, "onCreate: "+subType.getLocale());
         }
+
+
 
 
 
@@ -85,7 +86,6 @@ public class MyLatinIME extends LatinIME implements DrawingProxy {
         int index = 0;
 
         for (InputMethodSubtype type: listOfInputMethods) {
-            Log.d(TAG, "toogleLanguage: "+type.getLocale());
             if (Objects.equals(type.getLocale(), languageSwitcher.getInputLocale().toString())){
                 index = listOfInputMethods.indexOf(type);
                 break;
@@ -205,4 +205,6 @@ public class MyLatinIME extends LatinIME implements DrawingProxy {
     public void dismissGestureFloatingPreviewTextWithoutDelay() {
 
     }
+
+
 }

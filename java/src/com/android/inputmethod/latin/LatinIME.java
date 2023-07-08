@@ -31,13 +31,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.media.AudioManager;
 import android.os.Build;
@@ -46,7 +40,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.InputType;
-import android.text.TextPaint;
 import android.util.Log;
 import android.util.PrintWriterPrinter;
 import android.util.Printer;
@@ -55,17 +48,12 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
@@ -88,7 +76,6 @@ import com.android.inputmethod.keyboard.KeyboardSwitcher;
 import com.android.inputmethod.keyboard.MainKeyboardView;
 import com.android.inputmethod.latin.Suggest.OnGetSuggestedWordsCallback;
 import com.android.inputmethod.latin.SuggestedWords.SuggestedWordInfo;
-import com.android.inputmethod.latin.common.CodePointUtils;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.common.CoordinateUtils;
 import com.android.inputmethod.latin.common.InputPointers;
@@ -113,7 +100,8 @@ import com.android.inputmethod.latin.utils.StatsUtils;
 import com.android.inputmethod.latin.utils.StatsUtilsManager;
 import com.android.inputmethod.latin.utils.SubtypeLocaleUtils;
 import com.android.inputmethod.latin.utils.ViewLayoutUtils;
-import com.android.inputmethod.utils.GkView;
+import com.android.inputmethod.utils.LanguageSwitcher;
+import com.sikderithub.keyboard.Views.GkView;
 import com.sikderithub.keyboard.R;
 import com.sikderithub.keyboard.Views.SavedGkViews;
 
@@ -122,7 +110,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
@@ -135,6 +122,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         SuggestionStripView.Listener, SuggestionStripViewAccessor,
         DictionaryFacilitator.DictionaryInitializationListener,
         PermissionsManager.PermissionsResultCallback {
+    public LanguageSwitcher languageSwitcher;
     static final String TAG = LatinIME.class.getSimpleName();
     private static final boolean TRACE = false;
 
@@ -174,8 +162,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     // TODO: Move these {@link View}s to {@link KeyboardSwitcher}.
     public View mInputView;
     private InsetsUpdater mInsetsUpdater;
-    private SuggestionStripView mSuggestionStripView;
-    private GkView mGkView;
+    public SuggestionStripView mSuggestionStripView;
+    public GkView mGkView;
 
     public RichInputMethodManager mRichImm;
     @UsedForTesting final KeyboardSwitcher mKeyboardSwitcher;
@@ -264,6 +252,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                     R.integer.config_delay_in_milliseconds_to_update_suggestions);
             mDelayInMillisecondsToUpdateShiftState = res.getInteger(
                     R.integer.config_delay_in_milliseconds_to_update_shift_state);
+
         }
 
         @Override
@@ -634,6 +623,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         //final WindowManager wm = getSystemService(WindowManager.class);
         mDisplayContext = getDisplayContext();
         KeyboardSwitcher.init(this);
+        languageSwitcher = LanguageSwitcher.getInstance(this);
         super.onCreate();
 
 
@@ -920,25 +910,48 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onCurrentInputMethodSubtypeChanged(final InputMethodSubtype subtype) {
         // Note that the calling sequence of onCreate() and onCurrentInputMethodSubtypeChanged()
         // is not guaranteed. It may even be called at the same time on a different thread.
-        Log.d(TAG, "onCurrentInputMethodSubtypeChanged: "+subtype.getExtraValue());
+        Log.d(TAG, "onCurrentInputMethodSubtypeChanged: "+subtype.getLocale());
+        if(subtype.getLocale().equals("bn")){
+            languageSwitcher.setCurrentLangIndex(LanguageSwitcher.AVRO_INDEX);
+        }else if(subtype.getLocale().equals("en_US")){
+            languageSwitcher.setCurrentLangIndex(LanguageSwitcher.ENGLISH_INDEX);
+        }else{
+            languageSwitcher.setCurrentLangIndex(LanguageSwitcher.BANGLA_INDEX);
+        }
+
+        languageSwitcher.persist();
+
+        
+
         InputMethodSubtype oldSubtype = mRichImm.getCurrentSubtype().getRawSubtype();
         StatsUtils.onSubtypeChanged(oldSubtype, subtype);
         mRichImm.onSubtypeChanged(subtype);
         mInputLogic.onSubtypeChanged(SubtypeLocaleUtils.getCombiningRulesExtraValue(subtype),
                 mSettings.getCurrent());
 
-        if (subtype.getExtraValue().contains("bengali_phonetic")){
-            WordComposer.isPhonetic = true;
+        mSuggestionStripView.changeLangSwitchKey(subtype);
 
-            Log.d(TAG, "onCurrentInputMethodSubtypeChanged: isPhonetic true");
-        }else{
-            WordComposer.isPhonetic = false;
-
-            Log.d(TAG, "onCurrentInputMethodSubtypeChanged: isPhonetic false");
-        }
+        //updateSelectedLanguageIndex();
 
 
         loadKeyboard();
+    }
+
+    private void updateSelectedLanguageIndex(){
+        RichInputMethodSubtype subtype = mRichImm.getCurrentSubtype();
+
+        Log.d(TAG, "updateSelectedLanguageIndex: "+subtype.getLocale());
+
+        if(subtype.getLocale().equals("bn")){
+            languageSwitcher.setCurrentLangIndex(LanguageSwitcher.AVRO_INDEX);
+        }else if(subtype.getLocale().equals("en_US")){
+            languageSwitcher.setCurrentLangIndex(LanguageSwitcher.ENGLISH_INDEX);
+        }else{
+            languageSwitcher.setCurrentLangIndex(LanguageSwitcher.BANGLA_INDEX);
+        }
+
+        languageSwitcher.persist();
+
     }
 
     void onStartInputInternal(final EditorInfo editorInfo, final boolean restarting) {
@@ -1308,7 +1321,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             mInsetsUpdater.setInsets(outInsets);
             return;
         }
-        Log.d(TAG, "onComputeInsets: "+visibleKeyboardView.getHeight());
 
          int suggestionsHeight = (!mKeyboardSwitcher.isShowingEmojiPalettes()
                 && mSuggestionStripView.getVisibility() == View.VISIBLE)
@@ -1751,10 +1763,14 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         // the screen. Anything we do right now will delay this, so wait until the next frame
         // before we do the rest, like reopening dictionaries and updating suggestions. So we
         // post a message.
-        Log.d(TAG, "loadKeyboard: called");
         mHandler.postReopenDictionaries();
         loadSettings();
         if (mKeyboardSwitcher.getMainKeyboardView() != null) {
+            Log.d(TAG, "loadKeyboard: called");
+
+            //updateSelectedLanguageIndex();
+            
+            
             // Reload keyboard because the current language has been changed.
             mKeyboardSwitcher.loadKeyboard(getCurrentInputEditorInfo(), mSettings.getCurrent(),
                     getCurrentAutoCapsState(), getCurrentRecapitalizeState());

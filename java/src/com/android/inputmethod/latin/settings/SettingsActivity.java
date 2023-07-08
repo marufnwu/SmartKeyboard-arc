@@ -19,16 +19,22 @@ package com.android.inputmethod.latin.settings;
 import com.android.inputmethod.latin.permissions.PermissionsManager;
 import com.android.inputmethod.latin.utils.FragmentUtils;
 import com.android.inputmethod.latin.utils.StatsUtils;
+import com.sikderithub.keyboard.Activity.KeyMapActivity;
 
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceScreen;
+
+import android.util.Log;
 import android.view.MenuItem;
 
 public final class SettingsActivity extends PreferenceActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
+    private static final String TAG = "SettingsActivity";
     private static final String DEFAULT_FRAGMENT = SettingsFragment.class.getName();
 
     public static final String EXTRA_SHOW_HOME_AS_UP = "show_home_as_up";
@@ -43,6 +49,7 @@ public final class SettingsActivity extends PreferenceActivity
     @Override
     protected void onCreate(final Bundle savedState) {
         super.onCreate(savedState);
+        Log.d(TAG, "onCreate: ");
         final ActionBar actionBar = getActionBar();
         final Intent intent = getIntent();
         if (actionBar != null) {
@@ -53,6 +60,9 @@ public final class SettingsActivity extends PreferenceActivity
         StatsUtils.onSettingsActivity(
                 intent.hasExtra(EXTRA_ENTRY_KEY) ? intent.getStringExtra(EXTRA_ENTRY_KEY)
                         : EXTRA_ENTRY_VALUE_SYSTEM_SETTINGS);
+
+
+
     }
 
     @Override
@@ -79,6 +89,7 @@ public final class SettingsActivity extends PreferenceActivity
     public boolean isValidFragment(final String fragmentName) {
         return FragmentUtils.isValidFragment(fragmentName);
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

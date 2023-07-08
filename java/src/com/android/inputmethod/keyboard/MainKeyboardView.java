@@ -115,7 +115,7 @@ import javax.annotation.Nullable;
  * @attr ref R.styleable#MainKeyboardView_gestureRecognitionSpeedThreshold
  * @attr ref R.styleable#MainKeyboardView_suppressKeyPreviewAfterBatchInputDuration
  */
-public final class MainKeyboardView extends KeyboardView implements DrawingProxy,
+public class MainKeyboardView extends KeyboardView implements DrawingProxy,
         MoreKeysPanel.Controller {
 
     private static final float SPACEBAR_DRAG_THRESHOLD = 0.50f;
@@ -496,7 +496,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         mDrawingPreviewPlacerView.setKeyboardViewGeometry(mOriginCoords, getWidth(), getHeight());
     }
 
-    private void installPreviewPlacerView() {
+    public void installPreviewPlacerView() {
         final View rootView = getRootView();
         if (rootView == null) {
             Log.w(TAG, "Cannot find root view");
@@ -518,6 +518,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     // Implements {@link DrawingProxy#onKeyPressed(Key,boolean)}.
     @Override
     public void onKeyPressed(@Nonnull final Key key, final boolean withPreview) {
+
         key.onPressed();
         invalidateKey(key);
 
@@ -530,6 +531,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     }
 
     private void showKeyPreview(@Nonnull final Key key) {
+
 
         final Keyboard keyboard = getKeyboard();
         if (keyboard == null) {
@@ -555,6 +557,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
         mKeyPreviewChoreographer.placeAndShowKeyPreview(key, keyboard.mIconsSet, getKeyDrawParams(),
                 getWidth(), mOriginCoords, mDrawingPreviewPlacerView, isHardwareAccelerated());
+
 
     }
 
@@ -662,13 +665,14 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     // Implements {@link DrawingProxy#onKeyReleased(Key,boolean)}.
     @Override
     public void onKeyReleased(@Nonnull final Key key, final boolean withAnimation) {
+
         key.onReleased();
         if(mPreviewPopup!=null && mPreviewPopup.isShowing()){
             mPreviewPopup.dismiss();
             return;
         }
 
-        invalidateKey(key);
+
         if (!key.noKeyPreview()) {
             if (withAnimation) {
                 dismissKeyPreview(key);
@@ -676,6 +680,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                 dismissKeyPreviewWithoutDelay(key);
             }
         }
+
+        invalidateKey(key);
+
     }
 
     private void dismissKeyPreview(@Nonnull final Key key) {
@@ -908,6 +915,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                 isSpaceDrag = false;
                 break;
             case MotionEvent.ACTION_UP:
+                Log.d(TAG, "processMotionEvent: "+isSpaceDrag);
+
                 if (isSpaceDrag){
                     int languageDirection = getLanguageChangeDirection();
                     if (languageDirection != 0) {
@@ -935,20 +944,28 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
                     float deltaX = endX - startX;
                     float deltaY = endY - startY;
 
-                    endX+= getContext().getResources().getDimensionPixelOffset(R.dimen.config_accessibility_edge_slop);
 
-                    int diff = (int) (event.getX() - startX);
+
+
+                    int diff = (int) ((event.getX()) - startX);
+
 
                     if (Math.abs(diff - mSpaceDragLastDiff) > 0) {
-                        isSpaceDrag = true;
+
                         if(mPreviewPopup==null || !mPreviewPopup.isShowing()){
                             showKeyPreview(tracker.getKey());
                         }
-
                         updateLocaleDrag(diff);
+                        mSpaceDragLastDiff = diff;
+
+
+                        if(Math.abs(diff)<100){
+                            break;
+                        }
+
+                        isSpaceDrag = true;
                     }
 
-                    mSpaceDragLastDiff = diff;
                 }else {
                     mSpaceDragStartX = (int) startX;
                     isSpaceDrag = false;
@@ -966,7 +983,8 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     }
 
     private int getLanguageChangeDirection() {
-        if (mSpaceKey == null || Math.abs(mSpaceDragLastDiff) < mPreviewPopup.getWidth() * SPACEBAR_DRAG_THRESHOLD) {
+
+        if (mPreviewPopup!=null && mSpaceKey == null || Math.abs(mSpaceDragLastDiff) < mPreviewPopup.getWidth() * SPACEBAR_DRAG_THRESHOLD) {
             return 0; // No change
         }
         return mSpaceDragLastDiff > 0 ? 1 : -1;
@@ -1130,6 +1148,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         paint.setTextSize(mLanguageOnSpacebarTextSize);
         //final String language = layoutLanguageOnSpacebar(paint, keyboard.mId.mSubtype, width);
         final String language = Constant.getLanguageName(LanguageSwitcher.instance.getInputLocale());
+        Log.d(TAG, "drawLanguageOnSpacebar: "+language);
         // Draw language text with shadow
         final float descent = paint.descent();
         final float textHeight = -paint.ascent() + descent;
@@ -1143,6 +1162,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         paint.setColor(mLanguageOnSpacebarTextColor);
         paint.setAlpha(mLanguageOnSpacebarAnimAlpha);
         canvas.drawText(language, width / 2, baseline - descent, paint);
+
         paint.clearShadowLayer();
         paint.setTextScaleX(1.0f);
     }
