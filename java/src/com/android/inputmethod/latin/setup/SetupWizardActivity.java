@@ -70,7 +70,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     private View mWelcomeScreen;
     private View mSetupScreen;
     private Uri mWelcomeVideoUri;
-    private VideoView mWelcomeVideoView;
+//    private VideoView mWelcomeVideoView;
     private ImageView mWelcomeImageView;
     private View mActionStart;
     private View mActionNext;
@@ -209,25 +209,25 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
                 .authority(getPackageName())
                 .path(Integer.toString(R.raw.setup_welcome_video))
                 .build();
-        final VideoView welcomeVideoView = (VideoView)findViewById(R.id.setup_welcome_video);
-        welcomeVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(final MediaPlayer mp) {
-                // Now VideoView has been laid-out and ready to play, remove background of it to
-                // reveal the video.
-                welcomeVideoView.setBackgroundResource(0);
-                mp.setLooping(true);
-            }
-        });
-        welcomeVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(final MediaPlayer mp, final int what, final int extra) {
-                Log.e(TAG, "Playing welcome video causes error: what=" + what + " extra=" + extra);
-                hideWelcomeVideoAndShowWelcomeImage();
-                return true;
-            }
-        });
-        mWelcomeVideoView = welcomeVideoView;
+        //final VideoView welcomeVideoView = (VideoView)findViewById(R.id.setup_welcome_video);
+//        welcomeVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(final MediaPlayer mp) {
+//                // Now VideoView has been laid-out and ready to play, remove background of it to
+//                // reveal the video.
+//                welcomeVideoView.setBackgroundResource(0);
+//                mp.setLooping(true);
+//            }
+//        });
+//        welcomeVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//            @Override
+//            public boolean onError(final MediaPlayer mp, final int what, final int extra) {
+//                Log.e(TAG, "Playing welcome video causes error: what=" + what + " extra=" + extra);
+//                hideWelcomeVideoAndShowWelcomeImage();
+//                return true;
+//            }
+//        });
+//        mWelcomeVideoView = welcomeVideoView;
         mWelcomeImageView = (ImageView)findViewById(R.id.setup_welcome_image);
 
         mActionStart = findViewById(R.id.setup_start_label);
@@ -390,20 +390,20 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     }
 
     void hideWelcomeVideoAndShowWelcomeImage() {
-        mWelcomeVideoView.setVisibility(View.GONE);
+        //mWelcomeVideoView.setVisibility(View.GONE);
         mWelcomeImageView.setImageResource(R.raw.setup_welcome_image);
         mWelcomeImageView.setVisibility(View.VISIBLE);
     }
 
     private void showAndStartWelcomeVideo() {
-        mWelcomeVideoView.setVisibility(View.VISIBLE);
-        mWelcomeVideoView.setVideoURI(mWelcomeVideoUri);
-        mWelcomeVideoView.start();
+//        mWelcomeVideoView.setVisibility(View.VISIBLE);
+//        mWelcomeVideoView.setVideoURI(mWelcomeVideoUri);
+//        mWelcomeVideoView.start();
     }
 
     private void hideAndStopWelcomeVideo() {
-        mWelcomeVideoView.stopPlayback();
-        mWelcomeVideoView.setVisibility(View.GONE);
+//        mWelcomeVideoView.stopPlayback();
+//        mWelcomeVideoView.setVisibility(View.GONE);
     }
 
     @Override

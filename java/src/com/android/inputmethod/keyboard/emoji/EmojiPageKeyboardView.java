@@ -19,6 +19,7 @@ package com.android.inputmethod.keyboard.emoji;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.accessibility.AccessibilityEvent;
@@ -30,6 +31,7 @@ import com.android.inputmethod.keyboard.KeyDetector;
 import com.android.inputmethod.keyboard.Keyboard;
 import com.android.inputmethod.keyboard.KeyboardView;
 import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 /**
  * This is an extended {@link KeyboardView} class that hosts an emoji page keyboard.
@@ -65,6 +67,10 @@ final class EmojiPageKeyboardView extends KeyboardView implements
     public EmojiPageKeyboardView(final Context context, final AttributeSet attrs,
             final int defStyle) {
         super(context, attrs, defStyle);
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+            setBackground(null);
+        }
+        Log.d("EmojiPageKeyboardView", "EmojiPageKeyboardView: ");
         mGestureDetector = new GestureDetector(context, this);
         mGestureDetector.setIsLongpressEnabled(false /* isLongpressEnabled */);
         mHandler = new Handler();

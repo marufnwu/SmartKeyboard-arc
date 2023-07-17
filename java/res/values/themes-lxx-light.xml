@@ -30,7 +30,7 @@
         <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.LXX_Light.Action</item>
         <item name="suggestionStripViewStyle">@style/SuggestionStripView.LXX_Light</item>
         <item name="suggestionWordStyle">@style/SuggestionWord.LXX_Light</item>
-        <item name="gkTextStyle">@style/gkTextStyle.LXX_Light</item>
+        <item name="gkViewStyle">@style/questionTextStyle.LXX_Light</item>
     </style>
     <style
         name="Keyboard.LXX_Light"
@@ -46,7 +46,7 @@
         <item name="android:background">@drawable/keyboard_background_lxx_light</item>
         <item name="keyBackground">@drawable/btn_keyboard_key_lxx_light</item>
         <item name="functionalKeyBackground">@drawable/btn_keyboard_key_functional_lxx_light</item>
-        <item name="spacebarBackground">@drawable/btn_keyboard_spacebar_lxx_light</item>
+        <item name="spacebarBackground">@drawable/space_key_background_lxx_light</item>
         <item name="keyTextColor">@color/key_text_color_lxx_light</item>
         <item name="keyTextInactivatedColor">@color/key_text_inactive_color_lxx_light</item>
         <item name="functionalTextColor">@color/key_functional_text_color_lxx_light</item>
@@ -147,9 +147,10 @@
         <item name="colorAutoCorrect">@color/auto_correct_color_lxx_light</item>
         <item name="colorSuggested">@color/suggested_word_color_lxx_light</item>
         <item name="alphaObsoleted">70%</item>
-        <item name="savedGkIcon">@drawable/bookmark</item>
-        <item name="emojiIcon">@drawable/emoji_yellow</item>
-        <item name="backIcon">@drawable/arrow_left</item>
+        <item name="savedGkIcon">@drawable/bookmark_generic_black</item>
+        <item name="emojiIcon">@drawable/emoji_generic_black</item>
+        <item name="backIcon">@drawable/arrow_left_black</item>
+        <item name="themeIcon">@drawable/gallery_generic_black</item>
         <item name="messageIcon">@drawable/message</item>
         <item name="updateIcon">@drawable/updated</item>
 
@@ -162,11 +163,8 @@
         <item name="android:textColor">@color/highlight_color_lxx_light</item>
     </style>
 
-    <style name="gkTextStyle.LXX_Light" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">@dimen/gk_text_size</item>
-        <item name="android:textColor">@color/auto_correct_color_lxx_light</item>
-        <item name="android:drawableLeft">@drawable/light_for_white</item>
-        <item name="android:drawableRight">@drawable/light_for_white</item>
+    <style name="questionTextStyle.LXX_Light" parent="SuggestionStripView.LXX_Light">
+        <item name="questIonTextColor">@color/auto_correct_color_lxx_light</item>
     </style>
 
 </resources>

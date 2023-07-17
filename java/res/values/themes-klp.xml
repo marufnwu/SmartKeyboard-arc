@@ -31,7 +31,7 @@
         <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.KLP</item>
         <item name="suggestionStripViewStyle">@style/SuggestionStripView.KLP</item>
         <item name="suggestionWordStyle">@style/SuggestionWord.KLP</item>
-        <item name="gkTextStyle">@style/gkTextStyle.KLP</item>
+        <item name="gkViewStyle">@style/questionTextStyle.KLP</item>
     </style>
     <style
         name="Keyboard.KLP"
@@ -47,7 +47,7 @@
         <item name="android:background">@drawable/keyboard_background_holo</item>
         <item name="keyBackground">@drawable/btn_keyboard_key_klp</item>
         <item name="functionalKeyBackground">@drawable/btn_keyboard_key_functional_klp</item>
-        <item name="spacebarBackground">@drawable/btn_keyboard_spacebar_klp</item>
+        <item name="spacebarBackground">@drawable/space_key_background_klp</item>
         <item name="keyTextColor">@color/key_text_color_holo</item>
         <item name="keyTextInactivatedColor">@color/key_text_inactivated_color_holo</item>
         <item name="functionalTextColor">@color/key_text_color_holo</item>
@@ -140,9 +140,10 @@
         <item name="colorAutoCorrect">@color/highlight_color_klp</item>
         <item name="colorSuggested">@color/suggested_word_color_klp</item>
         <item name="alphaObsoleted">70%</item>
-        <item name="savedGkIcon">@drawable/bookmark</item>
-        <item name="emojiIcon">@drawable/emoji_yellow</item>
+        <item name="savedGkIcon">@drawable/bookmark_generic_white</item>
+        <item name="emojiIcon">@drawable/emoji_generic_white</item>
         <item name="backIcon">@drawable/arrow_left_white</item>
+        <item name="themeIcon">@drawable/gallery_generic_white</item>
         <item name="messageIcon">@drawable/message</item>
         <item name="updateIcon">@drawable/updated</item>
 
@@ -157,9 +158,9 @@
     </style>
 
 
-    <style name="gkTextStyle.KLP" parent="@android:style/TextAppearance.Medium">
+    <style name="questionTextStyle.KLP" parent="SuggestionStripView.KLP">
         <item name="android:textSize">@dimen/gk_text_size</item>
-        <item name="android:textColor">@color/highlight_color_klp</item>
+        <item name="questIonTextColor">@color/highlight_color_klp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:drawableLeft">@drawable/light_yellow</item>
         <item name="android:drawableRight">@drawable/light_yellow</item>

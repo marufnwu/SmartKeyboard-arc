@@ -113,6 +113,7 @@
     <style name="MoreKeysKeyboard" />
     <style name="MoreKeysKeyboardView" />
     <style name="SuggestionStripView" />
+    <style name="GkView" />
     <style name="SuggestionWord">
         <item name="android:minWidth">@dimen/config_suggestion_min_width</item>
         <item name="android:textSize">@dimen/config_suggestion_text_size</item>

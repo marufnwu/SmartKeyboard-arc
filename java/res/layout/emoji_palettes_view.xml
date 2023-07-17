@@ -20,12 +20,15 @@
 
 <com.android.inputmethod.keyboard.emoji.EmojiPalettesView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:orientation="vertical"
-    style="?attr/emojiPalettesViewStyle">
+    style="?attr/emojiPalettesViewStyle"
+    app:ignore="NamespaceTypo">
     <LinearLayout
+        android:id="@+id/llTabHostContainer"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
@@ -71,21 +74,19 @@
             android:contentDescription="@string/spoken_description_delete" />
     </LinearLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:layout_margin="4dp"
-        android:id="@+id/adView"
+    <!--  This is your template view -->
+    <com.sikderithub.keyboard.Views.NativeAd.TemplateView
+        android:visibility="gone"
+        android:id="@+id/my_template"
+        app:gnt_template_type="@layout/gnt_small_template_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-    </com.google.android.gms.ads.AdView>
+        android:layout_height="match_parent" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/emoji_keyboard_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <com.android.inputmethod.keyboard.emoji.EmojiCategoryPageIndicatorView
         android:id="@+id/emoji_category_page_id_view"
         android:layout_width="match_parent"

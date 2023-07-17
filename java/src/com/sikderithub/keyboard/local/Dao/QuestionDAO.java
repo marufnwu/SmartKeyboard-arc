@@ -1,5 +1,6 @@
 package com.sikderithub.keyboard.local.Dao;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -11,6 +12,7 @@ import com.android.inputmethod.utils.GkEngine;
 import com.sikderithub.keyboard.Models.Config;
 import com.sikderithub.keyboard.Models.Gk;
 import com.sikderithub.keyboard.Models.NotificationData;
+import com.sikderithub.keyboard.Models.Theme;
 
 import java.util.List;
 
@@ -20,6 +22,10 @@ public interface QuestionDAO {
     List<Gk> getQuestions();
     @Query("SELECT * FROM question_table WHERE isSaved = 1 ORDER BY id ASC LIMIT 20")
     List<Gk> getSavedQuestions();
+
+    @Query("UPDATE question_table SET isSaved=0 WHERE id=:id")
+    void removeSavedGk(int id);
+
 
     @Query("SELECT id FROM question_table ORDER BY id DESC LIMIT 1")
     int getLastQuestionId();
@@ -53,4 +59,18 @@ public interface QuestionDAO {
 
     @Query("DELETE FROM notification_table WHERE id= :id")
     void removeNotification(int id);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long saveCustomTheme(Theme theme);
+
+    @Query("SELECT * FROM theme_table ORDER BY id DESC")
+    List<Theme> getAllCustomTheme();
+
+    @Query("SELECT * FROM theme_table WHERE id=:id LIMIT 1")
+    Theme getSelectedCustomTheme(int id);
+
+    @Query("DELETE FROM theme_table WHERE id=:id")
+    void deleteCustomTheme(int id);
+
+
 }

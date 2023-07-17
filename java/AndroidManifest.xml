@@ -47,9 +47,21 @@
         android:label="@string/english_ime_name"
         android:supportsRtl="true">
         <activity
-            android:theme="@style/Theme.AppCompat.DayNight"
-            android:name=".Activity.KeyMapActivity"
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity
+            android:name=".ImageCropActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity.CreateThemeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight" />
+        <activity
+            android:name=".Activity.KeyMapActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight" />
         <activity
             android:name=".Activity.UpdateActivity"
             android:exported="false"

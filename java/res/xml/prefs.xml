@@ -50,4 +50,13 @@
         <intent android:targetPackage="com.sikderithub.keyboard"
             android:targetClass="com.sikderithub.keyboard.Activity.KeyMapActivity" />
     </PreferenceScreen>
+
+    <PreferenceScreen
+        android:icon="@drawable/photo_keybaord_icon"
+        android:title="@string/settings_screen_photo_keyboard"
+        android:summary="Set keyboard background photo"
+        android:key="screen_custom_theme">
+        <intent android:targetPackage="com.sikderithub.keyboard"
+            android:targetClass="com.sikderithub.keyboard.Activity.ThemeActivity" />
+    </PreferenceScreen>
 </PreferenceScreen>

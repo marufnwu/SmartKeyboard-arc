@@ -25,6 +25,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
 import android.text.TextUtils;
@@ -70,6 +72,7 @@ import com.android.inputmethod.latin.settings.SettingsValues;
 import com.android.inputmethod.latin.suggestions.MoreSuggestionsView.MoreSuggestionsListener;
 import com.android.inputmethod.latin.utils.ImportantNoticeUtils;
 import com.sikderithub.keyboard.Activity.ThemeActivity;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 import java.util.ArrayList;
 
@@ -97,7 +100,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     private final ViewGroup mSuggestionsStrip;
     private final ImageButton mVoiceKey;
     private final ImageView mSettingsKey;
-    private final ImageButton mBackIcon;
+    private final ImageView mBackIcon;
     private final View mImportantNoticeStrip;
     MainKeyboardView mMainKeyboardView;
 
@@ -170,6 +173,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.suggestions_strip, this);
 
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+           setBackgroundColor(CustomThemeHelper.selectedCustomTheme.dominateColor);
+        }
+
         mSuggestionsStrip = (ViewGroup)findViewById(R.id.suggestions_strip);
 
         mRichIME = RichInputMethodManager.getInstance();
@@ -177,7 +184,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
         mVoiceKey = (ImageButton)findViewById(R.id.suggestions_strip_voice_key);
         mSettingsKey = (ImageView) findViewById(R.id.suggestions_strip_settings_key);
-        mBackIcon = (ImageButton)findViewById(R.id.action_back);
+        mBackIcon = (ImageView) findViewById(R.id.action_back);
 
         mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,
@@ -195,20 +202,61 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         
 
         TypedArray ss = context.obtainStyledAttributes(attrs, R.styleable.SuggestionStripView);
-        int savedIconRes = ss.getResourceId(R.styleable.SuggestionStripView_savedGkIcon, 0);
-        savedGkIcon.setImageResource(savedIconRes);
+
+        int textColor = ss.getColor(R.styleable.SuggestionStripView_colorTypedWord, 0);
+
+
+        Drawable savedIconRes = ss.getDrawable(R.styleable.SuggestionStripView_savedGkIcon);
+
 
         final Drawable iconBack = ss.getDrawable(R.styleable.SuggestionStripView_backIcon);
+        Drawable emojiIconRes = ss.getDrawable(R.styleable.SuggestionStripView_emojiIcon);
+        Drawable themeIconRes = ss.getDrawable(R.styleable.SuggestionStripView_themeIcon);
+
+
+        int emojiColor = 0;
+
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+            emojiColor = CustomThemeHelper.selectedCustomTheme.bodyTextColor;
+        }else{
+            emojiColor = textColor;
+        }
+
+//        langSwitch.setColorOn(textColor);
+//        langSwitch.setColorBorder(textColor);
+//        langSwitch.setColorOff(CommonMethod.INSTANCE.getOppositeColor(textColor));
+
+
+        DrawableCompat.setTint(
+                DrawableCompat.wrap(iconBack),
+                emojiColor
+        );DrawableCompat.setTint(
+                DrawableCompat.wrap(emojiIconRes),
+                emojiColor
+        );DrawableCompat.setTint(
+                DrawableCompat.wrap(iconBack),
+                emojiColor
+        );DrawableCompat.setTint(
+                DrawableCompat.wrap(savedIconRes),
+                emojiColor
+        );;DrawableCompat.setTint(
+                DrawableCompat.wrap(themeIconRes),
+                emojiColor
+        );
+
+
+        savedGkIcon.setImageDrawable(savedIconRes);
         mBackIcon.setImageDrawable(iconBack);
 
-        Drawable emojiIconRes = ss.getDrawable(R.styleable.SuggestionStripView_emojiIcon);
         emoji_icon.setImageDrawable(emojiIconRes);
-
         Drawable messgeIconRes = ss.getDrawable(R.styleable.SuggestionStripView_messageIcon);
+
         message_icon.setImageDrawable(messgeIconRes);
 
         Drawable updateIconRes = ss.getDrawable(R.styleable.SuggestionStripView_updateIcon);
         update_icon.setImageDrawable(updateIconRes);
+
+        theme_icon.setImageDrawable(themeIconRes);
 
        
 
@@ -217,6 +265,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mBackIcon.setOnClickListener(this);
         theme_icon.setOnClickListener(this);
         update_icon.setOnClickListener(this);
+
 
         langSwitch.setOnToggledListener(new OnToggledListener() {
             @Override
@@ -242,6 +291,12 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
         for (int pos = 0; pos < SuggestedWords.MAX_SUGGESTIONS; pos++) {
             final TextView word = new TextView(context, null, R.attr.suggestionWordStyle);
+
+
+            if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+                //word.setTextColor(getContext().getColor(R.color.colorAccent));
+            }
+
             word.setContentDescription(getResources().getString(R.string.spoken_empty_suggestion));
             word.setOnClickListener(this);
             word.setOnLongClickListener(this);

@@ -37,6 +37,16 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHodler
     private int selectedThemeId;
     private int columnWidth = 0;
     private Keyboard keybaord;
+    private DefaultThemeSelectListener defaultThemeSelectListener;
+
+
+    public interface DefaultThemeSelectListener{
+        void onSelect(int themeId);
+    }
+
+    public void setDefaultThemeSelectListener(DefaultThemeSelectListener defaultThemeSelectListener) {
+        this.defaultThemeSelectListener = defaultThemeSelectListener;
+    }
 
     public ThemeAdapter(Context context, KeyboardTheme[] keyboardThemes) {
         this.context = context;
@@ -134,10 +144,12 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHodler
                 @Override
                 public void onClick(View v) {
                     selectedThemeId = keyboardThemes[getAdapterPosition()].mThemeId;
-                    notifyDataSetChanged();
-                    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                    KeyboardTheme.saveKeyboardThemeId(selectedThemeId, prefs);
 
+                    if(defaultThemeSelectListener!=null){
+                        defaultThemeSelectListener.onSelect(selectedThemeId);
+                    }
+
+                    notifyDataSetChanged();
                 }
             });
 

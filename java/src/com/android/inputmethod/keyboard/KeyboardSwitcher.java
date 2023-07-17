@@ -16,6 +16,8 @@
 
 package com.android.inputmethod.keyboard;
 
+import static com.android.inputmethod.latin.utils.RecapitalizeStatus.CAPS_MODE_ALL_LOWER;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
@@ -27,6 +29,7 @@ import android.view.inputmethod.InputMethodSubtype;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 
 import com.android.inputmethod.compat.InputMethodServiceCompatUtils;
 import com.android.inputmethod.event.Event;
@@ -51,6 +54,7 @@ import com.android.inputmethod.latin.utils.RecapitalizeStatus;
 import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
 import com.android.inputmethod.utils.LanguageSwitcher;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 import java.util.Locale;
 
@@ -59,6 +63,7 @@ import javax.annotation.Nullable;
 
 public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     private static final String TAG = KeyboardSwitcher.class.getSimpleName();
+    private int lastCustomThemeId = -1;
 
     private InputView mCurrentInputView;
     private View mMainKeyboardFrame;
@@ -103,8 +108,32 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     public void updateKeyboardTheme(@NonNull Context displayContext) {
-        final boolean themeUpdated = updateKeyboardThemeAndContextThemeWrapper(
+        KeyboardTheme mKTheme = KeyboardTheme.getKeyboardTheme(displayContext /* context */);
+        boolean themeUpdated = updateKeyboardThemeAndContextThemeWrapper(
                 displayContext, KeyboardTheme.getKeyboardTheme(displayContext /* context */));
+
+        if(mKTheme.mThemeId==KeyboardTheme.THEME_ID_CUSTOM){
+            CustomThemeHelper.loadSelectedCustomTheme();
+
+            if(CustomThemeHelper.isCustomThemeApplicable(displayContext)){
+                if(lastCustomThemeId!=CustomThemeHelper.themeId){
+                    lastCustomThemeId = CustomThemeHelper.themeId;
+                    themeUpdated = true;
+                }else {
+                    Log.d(TAG, "updateKeyboardTheme: lastCustomThemeId not matched");
+                }
+            }else{
+                //set fallback theme
+                Log.d(TAG, "updateKeyboardTheme: notAppicable custom theme");
+                KeyboardTheme.saveKeyboardThemeId(KeyboardTheme.DEFAULT_THEME_ID, PreferenceManager.getDefaultSharedPreferences(displayContext));
+            }
+
+
+
+        }
+
+        Log.d(TAG, "updateKeyboardTheme: updated "+themeUpdated);
+
         if (themeUpdated && mKeyboardView != null) {
             mLatinIME.setInputView(
                     onCreateInputView(displayContext, mIsHardwareAcceleratedDrawingEnabled));
@@ -124,8 +153,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     public void loadKeyboard(final EditorInfo editorInfo, final SettingsValues settingsValues,
-            final int currentAutoCapsState, final int currentRecapitalizeState) {
-        Log.d(TAG, "loadKeyboard: ");
+            final int currentAutoCapsState,  int currentRecapitalizeState) {
+        Log.d(TAG, "currentAutoCapsState: "+currentAutoCapsState+" "+currentRecapitalizeState);
 
         RichInputMethodSubtype subtype = mRichImm.getCurrentSubtype();
 
@@ -133,11 +162,17 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
         if(subtype.getLocale().toString().equals("bn")){
             mLatinIME.languageSwitcher.setCurrentLangIndex(LanguageSwitcher.AVRO_INDEX);
+            WordComposer.isPhonetic = true;
+            currentRecapitalizeState = CAPS_MODE_ALL_LOWER;
         }else if(subtype.getLocale().toString().equals("en_US")){
             mLatinIME.languageSwitcher.setCurrentLangIndex(LanguageSwitcher.ENGLISH_INDEX);
+            WordComposer.isPhonetic = false;
         }else{
             mLatinIME.languageSwitcher.setCurrentLangIndex(LanguageSwitcher.BANGLA_INDEX);
+            WordComposer.isPhonetic = false;
         }
+
+        mLatinIME.mSuggestionStripView.changeLangSwitchKey(mRichImm.getCurrentSubtype().getRawSubtype());
 
         mLatinIME.languageSwitcher.persist();
 
@@ -553,6 +588,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     }
 
     public MainKeyboardView getMainKeyboardView() {
+
         return mKeyboardView;
     }
 
@@ -577,6 +613,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
         mCurrentInputView = (InputView)LayoutInflater.from(mThemeContext).inflate(
                 R.layout.input_view, null);
+
 
 
         mMainKeyboardFrame = mCurrentInputView.findViewById(R.id.main_keyboard_frame);

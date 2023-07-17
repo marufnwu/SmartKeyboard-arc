@@ -27,11 +27,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -56,6 +59,7 @@ import com.android.inputmethod.keyboard.internal.NonDistinctMultitouchHelper;
 import com.android.inputmethod.keyboard.internal.SlidingKeyInputDrawingPreview;
 import com.android.inputmethod.keyboard.internal.TimerHandler;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
+import com.google.android.material.color.utilities.CorePalette;
 import com.sikderithub.keyboard.R;
 import com.sikderithub.keyboard.R;import com.android.inputmethod.latin.SuggestedWords;
 import com.android.inputmethod.latin.common.Constants;
@@ -66,6 +70,7 @@ import com.android.inputmethod.latin.utils.TypefaceUtils;
 import com.android.inputmethod.utils.Constant;
 import com.android.inputmethod.utils.LanguageSwitcher;
 import com.android.inputmethod.utils.SlidingLocaleDrawable;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 import java.util.WeakHashMap;
 
@@ -207,6 +212,22 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
     private float endY;
     private boolean isSpaceDrag;
 
+    public Drawable mBackground;
+    private CustomThemeHelper customThemeHelper;
+
+    public void changeBackground(Drawable drawable){
+       setBackground(drawable);
+    }
+
+
+    public void changeKeyBackgroundOpacity(int value){
+
+        super.changeKeyBackgroundOpacity(value);
+    }
+
+    public void changeShowKeyBorder(boolean isCheck, int alpha){
+        super.changeShowKeyBorder(isCheck, alpha);
+    }
 
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
@@ -216,11 +237,17 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
 
     public MainKeyboardView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
+        customThemeHelper =new CustomThemeHelper();
+
         final DrawingPreviewPlacerView drawingPreviewPlacerView =
                 new DrawingPreviewPlacerView(context, attrs);
 
+
+
         mainKeyboardViewAttr = context.obtainStyledAttributes(
                 attrs, R.styleable.MainKeyboardView, defStyle, R.style.MainKeyboardView);
+
+
 
         keyPreviewBg = mainKeyboardViewAttr.getResourceId(
                 R.styleable.MainKeyboardView_keyPreviewBackground, 0);
@@ -259,6 +286,7 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
 
         final int backgroundDimAlpha = mainKeyboardViewAttr.getInt(
                 R.styleable.MainKeyboardView_backgroundDimAlpha, 0);
+
         mBackgroundDimAlphaPaint.setColor(Color.BLACK);
         mBackgroundDimAlphaPaint.setAlpha(backgroundDimAlpha);
         mLanguageOnSpacebarTextRatio = mainKeyboardViewAttr.getFraction(
@@ -532,6 +560,7 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
 
     private void showKeyPreview(@Nonnull final Key key) {
 
+        Log.d(TAG, "showKeyPreview: "+key.toString());
 
         final Keyboard keyboard = getKeyboard();
         if (keyboard == null) {
@@ -539,8 +568,13 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
         }
 
         if(key.getCode()==Constants.CODE_SPACE){
+            Log.d(TAG, "showKeyPreview: showSpacePreview");
             showSpacePreview(key);
             return;
+        }else{
+            if (mPreviewPopup!=null && mPreviewPopup.isShowing()) {
+                mPreviewPopup.dismiss();
+            }
         }
 
         final KeyPreviewDrawParams previewParams = mKeyPreviewDrawParams;
@@ -665,11 +699,11 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
     // Implements {@link DrawingProxy#onKeyReleased(Key,boolean)}.
     @Override
     public void onKeyReleased(@Nonnull final Key key, final boolean withAnimation) {
-
+        Log.d(TAG, "onKeyReleased: "+key.toString());
         key.onReleased();
         if(mPreviewPopup!=null && mPreviewPopup.isShowing()){
             mPreviewPopup.dismiss();
-            return;
+            //return;
         }
 
 
@@ -915,16 +949,19 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
                 isSpaceDrag = false;
                 break;
             case MotionEvent.ACTION_UP:
-                Log.d(TAG, "processMotionEvent: "+isSpaceDrag);
 
-                if (isSpaceDrag){
-                    int languageDirection = getLanguageChangeDirection();
-                    if (languageDirection != 0) {
-                        mKeyboardActionListener.onCustomRequest(languageDirection == 1 ? Constants.KEYCODE_NEXT_LANGUAGE : Constants.KEYCODE_PREV_LANGUAGE);
+                if(tracker.getKey()!=null){
+                    if (isSpaceDrag && tracker.getKey().getCode() == Constants.CODE_SPACE){
+                        int languageDirection = getLanguageChangeDirection();
+                        if (languageDirection != 0) {
+                            mKeyboardActionListener.onCustomRequest(languageDirection == 1 ? Constants.KEYCODE_NEXT_LANGUAGE : Constants.KEYCODE_PREV_LANGUAGE);
+                        }
+                        event.setAction(MotionEvent.ACTION_CANCEL);
+                        updateLocaleDrag(Integer.MAX_VALUE);
                     }
-                    event.setAction(MotionEvent.ACTION_CANCEL);
-                    updateLocaleDrag(Integer.MAX_VALUE);
                 }
+
+
 
                 isSpaceDrag =false;
                 break;
@@ -933,21 +970,23 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
                 if (isSpaceDrag){
                     event.setAction(MotionEvent.ACTION_CANCEL);
                 }
-
+                isSpaceDrag  =false;
                 break;
 
             case MotionEvent.ACTION_MOVE:
+
+                endX = event.getX();
+                endY = event.getY();
+                if(startX<=0){
+                    startX = endX;
+                }
+                int diff = (int) (endX - startX);
+                if(tracker.getKey()!=null){
+                    Log.d(TAG, "processMotionEvent: endx "+endX+ " startX "+startX+" diff "+diff+" mSpaceDragLastDiff "+mSpaceDragLastDiff +" key "+tracker.getKey().getCode());
+
+                }
+
                 if(tracker.getKey()!=null && tracker.getKey().getCode()==Constants.CODE_SPACE){
-
-                    endX = event.getX();
-                    endY = event.getY();
-                    float deltaX = endX - startX;
-                    float deltaY = endY - startY;
-
-
-
-
-                    int diff = (int) ((event.getX()) - startX);
 
 
                     if (Math.abs(diff - mSpaceDragLastDiff) > 0) {
@@ -959,20 +998,22 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
                         mSpaceDragLastDiff = diff;
 
 
-                        if(Math.abs(diff)<100){
+                        if(Math.abs(diff)<200){
                             break;
                         }
 
                         isSpaceDrag = true;
                     }
-
                 }else {
-                    mSpaceDragStartX = (int) startX;
+                    startX = 0;
+                    //mSpaceDragLastDiff = 0;
                     isSpaceDrag = false;
                     updateLocaleDrag(0);
                 }
 
                 break;
+            default:
+                isSpaceDrag = false;
         }
 
         tracker.processMotionEvent(event, mKeyDetector);
@@ -984,7 +1025,10 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
 
     private int getLanguageChangeDirection() {
 
-        if (mPreviewPopup!=null && mSpaceKey == null || Math.abs(mSpaceDragLastDiff) < mPreviewPopup.getWidth() * SPACEBAR_DRAG_THRESHOLD) {
+        if(mPreviewPopup==null){
+            return 0;
+        }
+        if (mSpaceKey == null || Math.abs(mSpaceDragLastDiff) < mPreviewPopup.getWidth() * SPACEBAR_DRAG_THRESHOLD) {
             return 0; // No change
         }
         return mSpaceDragLastDiff > 0 ? 1 : -1;

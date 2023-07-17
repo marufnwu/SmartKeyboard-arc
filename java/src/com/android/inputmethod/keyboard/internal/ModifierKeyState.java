@@ -20,7 +20,7 @@ import android.util.Log;
 
 /* package */ class ModifierKeyState {
     protected static final String TAG = ModifierKeyState.class.getSimpleName();
-    protected static final boolean DEBUG = false;
+    protected static final boolean DEBUG = true;
 
     protected static final int RELEASING = 0;
     protected static final int PRESSING = 1;

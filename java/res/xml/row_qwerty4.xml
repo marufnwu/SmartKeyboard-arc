@@ -34,6 +34,7 @@
             keybaord:keyboardLayout="@xml/key_comma" />
 
         <Key
+            keybaord:backgroundType="spacebar"
             keybaord:keyStyle="spaceKeyStyle"
             keybaord:keyWidth="35%p" />
 

@@ -3,6 +3,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        jcenter()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
@@ -100,11 +102,12 @@ android {
 }
 
 repositories {
+    google()
     maven { url "../../../prebuilts/fullsdk-darwin/extras/android/m2repository" }
     maven { url "../../../prebuilts/fullsdk-linux/extras/android/m2repository" }
     mavenCentral()
-    google()
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -156,6 +159,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
 
     implementation 'com.github.angads25:toggle:1.1.0'
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+    implementation 'com.github.yalantis:ucrop:2.2.8'
+
+    implementation 'com.github.kamaravichow:admob-templates-android:1.1.3'
 
 
 }

@@ -33,6 +33,7 @@
             android:padding="1dp"
             android:background="@color/setup_welcome_video_margin_color" >
             <VideoView
+                android:visibility="gone"
                 android:id="@+id/setup_welcome_video"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

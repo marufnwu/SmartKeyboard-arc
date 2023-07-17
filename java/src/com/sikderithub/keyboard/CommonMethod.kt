@@ -8,8 +8,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.Insets
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -24,12 +23,10 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.view.animation.Transformation
 import android.webkit.MimeTypeMap
-import android.widget.ImageView
 import android.widget.Toast
-
+import androidx.annotation.ColorInt
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -411,5 +408,32 @@ object CommonMethod {
             })
     }
 
+    @ColorInt
+    fun getContrastColor(@ColorInt color: Int): Int {
+        // Counting the perceptive luminance - human eye favors green color...
+        val a: Double = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
+        val d: Int
+        d = if (a < 0.5) {
+            0 // bright colors - black font
+        } else {
+            255 // dark colors - white font
+        }
+        return Color.rgb(d, d, d)
+    }
+
+    fun getOppositeColor(color: Int): Int {
+        // Extract the RGB components from the color integer
+        val red = Color.red(color)
+        val green = Color.green(color)
+        val blue = Color.blue(color)
+
+        // Calculate the complementary color by subtracting each component from 255
+        val oppositeRed = 255 - red
+        val oppositeGreen = 255 - green
+        val oppositeBlue = 255 - blue
+
+        // Combine the RGB components into a single color integer
+        return Color.rgb(oppositeRed, oppositeGreen, oppositeBlue)
+    }
 
 }

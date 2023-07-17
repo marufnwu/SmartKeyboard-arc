@@ -22,7 +22,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -48,11 +52,20 @@ import com.android.inputmethod.keyboard.internal.KeyVisualAttributes;
 import com.android.inputmethod.keyboard.internal.KeyboardIconsSet;
 import com.android.inputmethod.latin.AudioAndHapticFeedbackManager;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.android.gms.ads.nativead.NativeAdView;
+import com.sikderithub.keyboard.Models.Theme;
 import com.sikderithub.keyboard.R;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.utils.ResourceUtils;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
+import com.sikderithub.keyboard.Views.NativeAd.TemplateView;
 
 /**
  * View class to implement Emoji palettes.
@@ -95,7 +108,9 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     private final EmojiCategory mEmojiCategory;
     private AdView mAdView;
+    private TemplateView mNativeAdView;
     private AdRequest adRequest;
+    private LinearLayout llTabHostContainer;
 
     public EmojiPalettesView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.emojiPalettesViewStyle);
@@ -103,6 +118,18 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     public EmojiPalettesView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
+
+
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+            Drawable bgDrawable = CustomThemeHelper.getKeyboardBackgroundDrawable(context,CustomThemeHelper.selectedCustomTheme);
+            Theme theme = CustomThemeHelper.selectedCustomTheme;
+            if (bgDrawable!=null && theme!=null){
+                Log.d("bgDrawable", "KeyboardView: not null");
+                //mKeyBackground = bgDrawable;
+                this.setBackground(bgDrawable);
+            }
+        }
+
         final TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs,
                 R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
         final int keyBackgroundId = keyboardViewAttr.getResourceId(
@@ -130,10 +157,18 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
                 R.styleable.EmojiPalettesView_categoryIndicatorDrawable, 0);
         mCategoryIndicatorBackgroundResId = emojiPalettesViewAttr.getResourceId(
                 R.styleable.EmojiPalettesView_categoryIndicatorBackground, 0);
+
+
         mCategoryPageIndicatorColor = emojiPalettesViewAttr.getColor(
                 R.styleable.EmojiPalettesView_categoryPageIndicatorColor, 0);
+
+
+
         mCategoryPageIndicatorBackground = emojiPalettesViewAttr.getColor(
                 R.styleable.EmojiPalettesView_categoryPageIndicatorBackground, 0);
+
+
+
         emojiPalettesViewAttr.recycle();
         mDeleteKeyOnTouchListener = new DeleteKeyOnTouchListener();
         adRequest = new AdRequest.Builder().build();
@@ -144,12 +179,15 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         final Resources res = getContext().getResources();
         // The main keyboard expands to the entire this {@link KeyboardView}.
+
+        Log.d(TAG, "onMeasure: "+mNativeAdView.getHeight());
+
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
         final int height = ResourceUtils.getDefaultKeyboardHeight(res)
                 + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
                 + getPaddingTop() + getPaddingBottom()
-                +mAdView.getHeight();
+               +mNativeAdView.getHeight();
         setMeasuredDimension(width, height);
     }
 
@@ -161,8 +199,22 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
                 R.layout.emoji_keyboard_tab_icon, null);
         // TODO: Replace background color with its own setting rather than using the
         //       category page indicator background as a workaround.
-        iconView.setBackgroundColor(mCategoryPageIndicatorBackground);
-        iconView.setImageResource(mEmojiCategory.getCategoryTabIcon(categoryId));
+
+
+        if(!CustomThemeHelper.isCustomThemeApplicable(getContext())){
+            iconView.setBackgroundColor(mCategoryPageIndicatorBackground);
+        }
+
+        int tabIconResId = mEmojiCategory.getCategoryTabIcon(categoryId);
+        Drawable tabIcon = getContext().getResources().getDrawable(tabIconResId);
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+            DrawableCompat.setTint(
+                    DrawableCompat.wrap(tabIcon),
+                    CustomThemeHelper.selectedCustomTheme.bodyTextColor
+            );
+        }
+
+        iconView.setImageDrawable(tabIcon);
         iconView.setContentDescription(mEmojiCategory.getAccessibilityDescription(categoryId));
         tspec.setIndicator(iconView);
         host.addTab(tspec);
@@ -170,7 +222,14 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     @Override
     protected void onFinishInflate() {
-        mTabHost = (TabHost)findViewById(R.id.emoji_category_tabhost);
+        super.onFinishInflate();
+        mTabHost = (TabHost) findViewById(R.id.emoji_category_tabhost);
+        llTabHostContainer = (LinearLayout) findViewById(R.id.llTabHostContainer);
+
+        if (CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme != null) {
+            llTabHostContainer.setBackgroundColor(CustomThemeHelper.selectedCustomTheme.dominateColor);
+        }
+
         mTabHost.setup();
         for (final EmojiCategory.CategoryProperties properties
                 : mEmojiCategory.getShownCategories()) {
@@ -189,7 +248,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
         mEmojiPalettesAdapter = new EmojiPalettesAdapter(mEmojiCategory, this);
 
-        mEmojiPager = (ViewPager)findViewById(R.id.emoji_keyboard_pager);
+        mEmojiPager = (ViewPager) findViewById(R.id.emoji_keyboard_pager);
+
         mEmojiPager.setAdapter(mEmojiPalettesAdapter);
         mEmojiPager.setOnPageChangeListener(this);
         mEmojiPager.setOffscreenPageLimit(0);
@@ -197,18 +257,18 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mEmojiLayoutParams.setPagerProperties(mEmojiPager);
 
         mEmojiCategoryPageIndicatorView =
-                (EmojiCategoryPageIndicatorView)findViewById(R.id.emoji_category_page_id_view);
+                (EmojiCategoryPageIndicatorView) findViewById(R.id.emoji_category_page_id_view);
         mEmojiCategoryPageIndicatorView.setColors(
                 mCategoryPageIndicatorColor, mCategoryPageIndicatorBackground);
         mEmojiLayoutParams.setCategoryPageIdViewProperties(mEmojiCategoryPageIndicatorView);
 
         setCurrentCategoryId(mEmojiCategory.getRecentTabId(), true /* force */);
 
-        final LinearLayout actionBar = (LinearLayout)findViewById(R.id.emoji_action_bar);
+        final LinearLayout actionBar = (LinearLayout) findViewById(R.id.emoji_action_bar);
         mEmojiLayoutParams.setActionBarProperties(actionBar);
 
         // deleteKey depends only on OnTouchListener.
-        mDeleteKey = (ImageButton)findViewById(R.id.emoji_keyboard_delete);
+        mDeleteKey = (ImageButton) findViewById(R.id.emoji_keyboard_delete);
         mDeleteKey.setBackgroundResource(mFunctionalKeyBackgroundId);
         mDeleteKey.setTag(Constants.CODE_DELETE);
         mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);
@@ -220,12 +280,12 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         // if the event is canceled by moving off the finger from the view.
         // The text on alphabet keys are set at
         // {@link #startEmojiPalettes(String,int,float,Typeface)}.
-        mAlphabetKeyLeft = (TextView)findViewById(R.id.emoji_keyboard_alphabet_left);
+        mAlphabetKeyLeft = (TextView) findViewById(R.id.emoji_keyboard_alphabet_left);
         mAlphabetKeyLeft.setBackgroundResource(mFunctionalKeyBackgroundId);
         mAlphabetKeyLeft.setTag(Constants.CODE_ALPHA_FROM_EMOJI);
         mAlphabetKeyLeft.setOnTouchListener(this);
         mAlphabetKeyLeft.setOnClickListener(this);
-        mAlphabetKeyRight = (TextView)findViewById(R.id.emoji_keyboard_alphabet_right);
+        mAlphabetKeyRight = (TextView) findViewById(R.id.emoji_keyboard_alphabet_right);
         mAlphabetKeyRight.setBackgroundResource(mFunctionalKeyBackgroundId);
         mAlphabetKeyRight.setTag(Constants.CODE_ALPHA_FROM_EMOJI);
         mAlphabetKeyRight.setOnTouchListener(this);
@@ -237,9 +297,33 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mSpacebar.setOnClickListener(this);
         mEmojiLayoutParams.setKeyProperties(mSpacebar);
         mSpacebarIcon = findViewById(R.id.emoji_keyboard_space_icon);
-        mAdView = findViewById(R.id.adView);
+        //mAdView = findViewById(R.id.adView);
 
-        loadBannerAd();
+        mNativeAdView = findViewById(R.id.my_template);
+        loadNativeAd();
+        //loadBannerAd();
+    }
+
+    private void loadNativeAd() {
+        AdLoader adLoader = new AdLoader.Builder(getContext(), "ca-app-pub-3940256099942544/2247696110")
+                .forNativeAd(nativeAd -> {
+//                        NativeTemplateStyle styles = new
+//                                NativeTemplateStyle.Builder().withMainBackgroundColor(background).build();
+//                        mNativeAdView.setStyles(styles);
+                    mNativeAdView.setNativeAd(nativeAd);
+                    mNativeAdView.setVisibility(VISIBLE);
+                    requestLayout();
+                }).withAdListener(new AdListener() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        super.onAdFailedToLoad(loadAdError);
+                        mNativeAdView.setVisibility(GONE);
+                        measure(0, 0);
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
     }
 
     private void loadBannerAd() {

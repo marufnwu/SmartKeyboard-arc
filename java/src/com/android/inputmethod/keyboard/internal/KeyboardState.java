@@ -20,6 +20,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.inputmethod.event.Event;
+import com.android.inputmethod.latin.WordComposer;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.utils.CapsModeUtils;
 import com.android.inputmethod.latin.utils.RecapitalizeStatus;
@@ -39,7 +40,7 @@ import com.android.inputmethod.latin.utils.RecapitalizeStatus;
 public final class KeyboardState {
     private static final String TAG = KeyboardState.class.getSimpleName();
     private static final boolean DEBUG_EVENT = true;
-    private static final boolean DEBUG_INTERNAL_ACTION = false;
+    private static final boolean DEBUG_INTERNAL_ACTION = true;
 
     public interface SwitchActions {
         public static final boolean DEBUG_ACTION = true;
@@ -215,6 +216,9 @@ public final class KeyboardState {
         }
         switch (shiftMode) {
         case AUTOMATIC_SHIFT:
+            if(WordComposer.isPhonetic){
+                break;
+            }
             mAlphabetShiftState.setAutomaticShifted();
             if (shiftMode != prevShiftMode) {
                 mSwitchActions.setAlphabetAutomaticShiftedKeyboard();
@@ -486,7 +490,9 @@ public final class KeyboardState {
     }
 
     private void updateAlphabetShiftState(final int autoCapsFlags, final int recapitalizeMode) {
+
         if (!mIsAlphabetMode) return;
+
         if (RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE != recapitalizeMode) {
             // We are recapitalizing. Match the keyboard to the current recapitalize state.
             updateShiftStateForRecapitalize(recapitalizeMode);
@@ -502,6 +508,8 @@ public final class KeyboardState {
                 // Only when shift key is releasing, automatic temporary upper case will be set.
                 setShifted(AUTOMATIC_SHIFT);
             } else {
+                Log.d(TAG, "updateAlphabetShiftState: "+recapitalizeMode);
+
                 setShifted(mShiftKeyState.isChording() ? MANUAL_SHIFT : UNSHIFT);
             }
         }

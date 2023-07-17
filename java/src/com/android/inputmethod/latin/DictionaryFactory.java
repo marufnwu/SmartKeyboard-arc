@@ -19,6 +19,7 @@ package com.android.inputmethod.latin;
 import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.net.Uri;
 import android.util.Log;
 
 import com.android.inputmethod.latin.utils.DictionaryInfoUtils;
@@ -87,8 +88,10 @@ public final class DictionaryFactory {
             // Warn the dictionary provider if the dictionary came from there.
             final ContentProviderClient providerClient;
             try {
+                Uri uri = BinaryDictionaryFileDumper.getProviderUriBuilder("").build();
+                Log.d(TAG, "killDictionary: ");
                 providerClient = context.getContentResolver().acquireContentProviderClient(
-                        BinaryDictionaryFileDumper.getProviderUriBuilder("").build());
+                        uri);
             } catch (final SecurityException e) {
                 Log.e(TAG, "No permission to communicate with the dictionary provider", e);
                 return;
@@ -112,6 +115,7 @@ public final class DictionaryFactory {
             // Then again, this is expected to only ever happen in case of human mistake. If
             // the wrong file is on the server, the following is still doing the right thing.
             // If it's a file left over from the last version however, it's not great.
+            Log.d(TAG, "killDictionary: called");
             BinaryDictionaryFileDumper.reportBrokenFileToDictionaryProvider(
                     providerClient,
                     context.getString(R.string.dictionary_pack_client_id),

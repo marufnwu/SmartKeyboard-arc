@@ -206,6 +206,7 @@ public final class Constants {
     public static final int CODE_TAB = '\t';
     public static final int CODE_SPACE = ' ';
     public static final int CODE_PERIOD = '.';
+    public static final int CODE_PERIOD_BENGALI = '।';
     public static final int CODE_COMMA = ',';
     public static final int CODE_DASH = '-';
     public static final int CODE_SINGLE_QUOTE = '\'';

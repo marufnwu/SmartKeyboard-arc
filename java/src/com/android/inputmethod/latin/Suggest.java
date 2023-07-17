@@ -124,7 +124,6 @@ public final class Suggest {
         final ArrayList<SuggestedWordInfo> suggestionsContainer = new ArrayList<>(results);
 
 
-        Log.d(TAG, "getTransformedSuggestedWordInfoList: "+suggestionsContainer.size());
 
         final int suggestionsCount = suggestionsContainer.size();
         if (isOnlyFirstCharCapitalized || shouldMakeSuggestionsAllUpperCase
@@ -132,6 +131,9 @@ public final class Suggest {
             for (int i = 0; i < suggestionsCount; ++i) {
                 final SuggestedWordInfo wordInfo = suggestionsContainer.get(i);
                 final Locale wordLocale = wordInfo.mSourceDict.mLocale;
+
+                Log.d(TAG, "getTransformedSuggestedWordInfoList: "+wordLocale);
+
                 final SuggestedWordInfo transformedWordInfo = getTransformedSuggestedWordInfo(
                         wordInfo, null == wordLocale ? defaultLocale : wordLocale,
                         shouldMakeSuggestionsAllUpperCase, isOnlyFirstCharCapitalized,
@@ -191,7 +193,6 @@ public final class Suggest {
         for (final SuggestedWordInfo info : suggestionsContainer) {
             // Search for the best dictionary, defined as the first one with the highest match
             // quality we can find.
-            Log.d(TAG, "getSuggestedWordsForNonBatchInput: "+info.mWord);
 
             if (!foundInDictionary && typedWordString.equals(info.mWord)) {
                 // Use this source if the old match had lower quality than this match
@@ -274,8 +275,10 @@ public final class Suggest {
                 SuggestedWordInfo.NOT_AN_INDEX /* indexOfTouchPointOfSecondWord */,
                 SuggestedWordInfo.NOT_A_CONFIDENCE /* autoCommitFirstWordConfidence */);
         if (!TextUtils.isEmpty(typedWordString)) {
+
             suggestionsContainer.add(0, typedWordInfo);
         }
+
 
         final ArrayList<SuggestedWordInfo> suggestionsList;
         if (DBG && !suggestionsContainer.isEmpty()) {

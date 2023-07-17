@@ -1,7 +1,12 @@
 package com.sikderithub.keyboard.Views;
 
+
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -16,11 +21,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatRadioButton;
 
 import com.android.inputmethod.utils.GkEngine;
 import com.google.android.gms.ads.AdListener;
@@ -29,8 +37,10 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.gson.Gson;
+import com.sikderithub.keyboard.Models.Theme;
 import com.sikderithub.keyboard.MyApp;
 import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 public class GkView extends RelativeLayout implements View.OnTouchListener{
     private boolean isAdLoaded = false;
@@ -54,12 +64,13 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
     private TextView nonOptionGkText;
     private TextView optionGkText;
-    private TextView option1;
-    private TextView option2;
+    private RadioButton option1;
+    private RadioButton  option2;
     private GkEngine gkEngine;
     private ImageView addBookMark;
 
     private SavedGkViews savedGkViews;
+    private RadioGroup optionRadioGroup;
 
 
 
@@ -87,13 +98,20 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
     PopupWindow popupWindow;
     AdView bannerAd;
     public GkView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.suggestionStripViewStyle);
+        this(context, attrs, R.attr.gkViewStyle);
     }
 
     @SuppressLint("MissingInflatedId")
     public GkView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+            Drawable bgDrawable = CustomThemeHelper.getKeyboardBackgroundDrawable(context,CustomThemeHelper.selectedCustomTheme);
+            Theme theme = CustomThemeHelper.selectedCustomTheme;
+            if (bgDrawable!=null && theme!=null){
+                this.setBackground(bgDrawable);
+            }
+        }
         gkViewTouchListener  = new GkViewTouchListener() {
             @Override
             public void onTouchStart() {
@@ -109,6 +127,48 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.gk_view, this);
 
+
+        mGkHolder= findViewById(R.id.gkHolder);
+        mNonOptionalGkHolder = findViewById(R.id.nonOptionalGkHolder);
+        mOptionalGkHolder = findViewById(R.id.optionalGkHolder);
+
+        nonOptionGkText = findViewById(R.id.nonOptionGkText);
+        optionGkText = findViewById(R.id.optionGkText);
+        addBookMark = findViewById(R.id.imgSaveGk);
+
+
+        option1 = findViewById(R.id.txtOption1);
+        option2 = findViewById(R.id.option2);
+        optionRadioGroup = findViewById(R.id.optionGroup);
+
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+            setBackgroundColor(CustomThemeHelper.selectedCustomTheme.dominateColor);
+            optionGkText.setTextColor(CustomThemeHelper.selectedCustomTheme.bodyTextColor);
+            nonOptionGkText.setTextColor(CustomThemeHelper.selectedCustomTheme.bodyTextColor);
+            option1.setTextColor(CustomThemeHelper.selectedCustomTheme.bodyTextColor);
+            option2.setTextColor(CustomThemeHelper.selectedCustomTheme.bodyTextColor);
+
+            option1.setButtonTintList(ColorStateList.valueOf(CustomThemeHelper.selectedCustomTheme.bodyTextColor));
+            option2.setButtonTintList(ColorStateList.valueOf(CustomThemeHelper.selectedCustomTheme.bodyTextColor));
+
+        }else{
+            TypedArray typedArray = context.obtainStyledAttributes(
+                    attrs, R.styleable.GkView, defStyleAttr, R.style.GkView);
+
+            Log.d(TAG, "size typed: "+typedArray.getIndexCount());
+
+
+            int txtColor = typedArray.getColor(R.styleable.GkView_questIonTextColor, 0);
+            Log.d(TAG, "GkView: "+txtColor);
+            optionGkText.setTextColor(txtColor);
+            nonOptionGkText.setTextColor(txtColor);
+            option1.setTextColor(txtColor);
+            option2.setTextColor(txtColor);
+
+            option2.setButtonTintList(ColorStateList.valueOf(txtColor));
+            option1.setButtonTintList(ColorStateList.valueOf(txtColor));
+        }
+
         View popupView = inflater.inflate(R.layout.dialog_ans_result, null);
 
         lottieCorrect =  popupView.findViewById(R.id.lottie_correct);
@@ -117,6 +177,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
         popupWindow = new PopupWindow(popupView, width, height, true);
 
         mAdView = findViewById(R.id.adView);
@@ -140,17 +201,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
             }
         });
 
-        mGkHolder= findViewById(R.id.gkHolder);
-        mNonOptionalGkHolder = findViewById(R.id.nonOptionalGkHolder);
-        mOptionalGkHolder = findViewById(R.id.optionalGkHolder);
 
-        nonOptionGkText = findViewById(R.id.nonOptionGkText);
-        optionGkText = findViewById(R.id.optionGkText);
-        addBookMark = findViewById(R.id.imgSaveGk);
-
-
-        option1 = findViewById(R.id.txtOption1);
-        option2 = findViewById(R.id.option2);
 
         countDownTimer = new CountDownTimer( ((long) MyApp.getConfig().content_interval * 60 * 1000) , ((long) MyApp.getConfig().content_interval * 60 * 1000)) {
             @Override
@@ -326,7 +377,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         if(MyApp.getConfig().show_gk==1){
 
             if(!showGk()){
-                delayAndShowContent(2000);
+                showAd();
             }
 
         }else{
@@ -341,6 +392,12 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
     }
 
     private boolean showAd() {
+
+        if(MyApp.getConfig().show_gk_view!=1 && MyApp.getConfig().gk_view_ad_status!=1 && MyApp.getConfig().gk_view_ad_type!=1){
+            Log.d(TAG, "showAd: ");
+            delayAndShowContent(3000);
+            return false;
+        }
 
         if(!isAdLoaded){
             Log.d(TAG, "showContent: ad not laoded");
@@ -375,6 +432,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         currentGk = gk;
 
         if(gk.gk.has_option==1){
+            optionRadioGroup.clearCheck();
             currContent = CURR_CONTENT.MULTIPLE_OPTION_GK;
             mNonOptionalGkHolder.setVisibility(GONE);
             mOptionalGkHolder.setVisibility(VISIBLE);
@@ -450,6 +508,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         GkEngine.getGkFromLocal();
         pause = false;
         showContent();
+
     }
 
 }

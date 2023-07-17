@@ -457,9 +457,12 @@ public final class StringUtils {
                 // evaluate normally.
                 break;
             }
+
+
             if (Constants.CODE_PERIOD == codePoint) {
                 hasPeriod = true;
             }
+
             if (Constants.CODE_SLASH == codePoint) {
                 hasSlash = true;
                 if (2 == ++slashCount) {

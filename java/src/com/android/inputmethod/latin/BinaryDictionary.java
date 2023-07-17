@@ -270,9 +270,16 @@ public final class BinaryDictionary extends Dictionary {
             final SettingsValuesForSuggestion settingsValuesForSuggestion,
             final int sessionId, final float weightForLocale,
             final float[] inOutWeightOfLangModelVsSpatialModel) {
+
+
+
         if (!isValidDictionary()) {
+
+
             return null;
         }
+
+
         final DicTraverseSession session = getTraverseSession(sessionId);
         Arrays.fill(session.mInputCodePoints, Constants.NOT_A_CODE);
         ngramContext.outputToArray(session.mPrevWordCodePointArrays,
@@ -290,6 +297,8 @@ public final class BinaryDictionary extends Dictionary {
         } else {
             inputSize = inputPointers.getPointerSize();
         }
+
+
         session.mNativeSuggestOptions.setUseFullEditDistance(mUseFullEditDistance);
         session.mNativeSuggestOptions.setIsGesture(isGesture);
         session.mNativeSuggestOptions.setBlockOffensiveWords(
@@ -317,8 +326,12 @@ public final class BinaryDictionary extends Dictionary {
             inOutWeightOfLangModelVsSpatialModel[0] =
                     session.mInputOutputWeightOfLangModelVsSpatialModel[0];
         }
+
+
         final int count = session.mOutputSuggestionCount[0];
         final ArrayList<SuggestedWordInfo> suggestions = new ArrayList<>();
+        Log.d(TAG, "getSuggestions: "+session.mOutputCodePoints[1]);
+
         for (int j = 0; j < count; ++j) {
             final int start = j * DICTIONARY_MAX_WORD_LENGTH;
             int len = 0;
@@ -327,6 +340,7 @@ public final class BinaryDictionary extends Dictionary {
                 ++len;
             }
             if (len > 0) {
+
                 suggestions.add(new SuggestedWordInfo(
                         new String(session.mOutputCodePoints, start, len),
                         "" /* prevWordsContext */,
@@ -337,6 +351,8 @@ public final class BinaryDictionary extends Dictionary {
                         session.mOutputAutoCommitFirstWordConfidence[0]));
             }
         }
+
+
         return suggestions;
     }
 

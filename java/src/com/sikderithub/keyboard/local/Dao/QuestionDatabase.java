@@ -15,12 +15,13 @@ import com.android.inputmethod.utils.GkEngine;
 import com.sikderithub.keyboard.Models.Config;
 import com.sikderithub.keyboard.Models.Gk;
 import com.sikderithub.keyboard.Models.NotificationData;
+import com.sikderithub.keyboard.Models.Theme;
 import com.sikderithub.keyboard.Models.Update;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Gk.class, Config.class, Update.class, NotificationData.class}, version = 2, exportSchema = false)
+@Database(entities = {Gk.class, Config.class, Update.class, NotificationData.class, Theme.class}, version = 1, exportSchema = false)
 public abstract class QuestionDatabase extends RoomDatabase {
     public abstract QuestionDAO questionDAO();
     private static volatile QuestionDatabase INSTANCE;

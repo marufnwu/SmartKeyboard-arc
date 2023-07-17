@@ -58,6 +58,8 @@ public class SlidingLocaleDrawable extends Drawable {
         mTextPaint.setAlpha(OPACITY_FULLY_OPAQUE);
         mTextPaint.setAntiAlias(true);
         mMiddleX = (mWidth - mBackground.getIntrinsicWidth()) / 2;
+
+
         mLeftDrawable =
                 context.getDrawable(R.drawable.btn_keyboard_key_functional_ics);
         mRightDrawable =
@@ -67,6 +69,7 @@ public class SlidingLocaleDrawable extends Drawable {
     }
 
     public void setDiff(int diff) {
+
         if (diff == Integer.MAX_VALUE) {
             mHitThreshold = false;
             mCurrentLanguage = null;

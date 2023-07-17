@@ -208,4 +208,22 @@ public class MyApp extends Application {
         });
    }
 
+   public static void removeSavedGk(int id){
+        QuestionDatabase.databaseWriteExecutor.execute(()->{
+            QuestionDatabase.getDatabase(getInstance())
+                    .questionDAO()
+                    .removeNotification(id);
+        });
+
+
+   }
+
+   public static void deleteCustomTheme(int id){
+        QuestionDatabase.databaseWriteExecutor.execute(()->{
+            QuestionDatabase.getDatabase(getInstance())
+                    .questionDAO()
+                    .deleteCustomTheme(id);
+        });
+   }
+
 }

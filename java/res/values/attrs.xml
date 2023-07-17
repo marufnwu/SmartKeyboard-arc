@@ -40,12 +40,13 @@
         <attr name="suggestionStripViewStyle" format="reference" />
         <!-- Suggestion word style -->
         <attr name="suggestionWordStyle" format="reference" />
+        <attr name="gkViewStyle" format="reference"/>
 
 
     </declare-styleable>
 
     <declare-styleable name="GkView">
-        <attr name="gkTextStyle" format="reference"/>
+        <attr name="questIonTextColor" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="KeyboardView">
@@ -186,6 +187,8 @@
         <attr name="gestureRecognitionSpeedThreshold" format="fraction" />
         <!-- Suppress showing key preview duration after batch input in millisecond -->
         <attr name="suppressKeyPreviewAfterBatchInputDuration" format="integer" />
+        <attr name="spaceBarLeftIcon" format="reference"/>
+        <attr name="spaceBarRightIcon" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="MoreKeysKeyboardView">
@@ -240,6 +243,7 @@
         <attr name="backIcon" format="reference"/>
         <attr name="messageIcon" format="reference"/>
         <attr name="updateIcon" format="reference"/>
+        <attr name="themeIcon" format="reference"/>
 
     </declare-styleable>
 
@@ -252,6 +256,7 @@
             <enum name="LXXLight" value="3" />
             <enum name="LXXDark" value="4" />
             <enum name="MJLight" value="5" />
+            <enum name="Custom" value="6" />
         </attr>
         <!-- Touch position correction -->
         <attr name="touchPositionCorrectionData" format="reference" />
@@ -496,6 +501,7 @@
             <enum name="KLP" value="2" />
             <enum name="LXXLight" value="3" />
             <enum name="LXXDark" value="4" />
+            <enum name="MjLight" value="5" />
         </attr>
         <!-- This should be aligned with
              {@link com.android.inputmethod.keyboard.KeyboardId#MODE_TEXT} etc. -->

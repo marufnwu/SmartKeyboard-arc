@@ -2,6 +2,7 @@ package com.sikderithub.keyboard.Views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sikderithub.keyboard.Adapter.SavedGkAdapter;
 import com.sikderithub.keyboard.Models.Gk;
+import com.sikderithub.keyboard.Models.Theme;
 import com.sikderithub.keyboard.MyApp;
 import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 import com.sikderithub.keyboard.local.Dao.QuestionDatabase;
 
 import java.util.ArrayList;
@@ -41,9 +44,17 @@ public class SavedGkViews extends LinearLayout {
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.saved_gk_layout, this);
 
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
+            Drawable bgDrawable = CustomThemeHelper.getKeyboardBackgroundDrawable(context,CustomThemeHelper.selectedCustomTheme);
+            Theme theme = CustomThemeHelper.selectedCustomTheme;
+            if (bgDrawable!=null && theme!=null){
+                this.setBackground(bgDrawable);
+            }
+        }
+
         recyclerSavedGk = findViewById(R.id.recyclerSavedGk);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerSavedGk.setLayoutManager(layoutManager);
 
 

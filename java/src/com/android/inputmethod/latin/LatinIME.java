@@ -19,6 +19,7 @@ package com.android.inputmethod.latin;
 import static com.android.inputmethod.latin.common.Constants.ImeOption.FORCE_ASCII;
 import static com.android.inputmethod.latin.common.Constants.ImeOption.NO_MICROPHONE;
 import static com.android.inputmethod.latin.common.Constants.ImeOption.NO_MICROPHONE_COMPAT;
+import static com.android.inputmethod.latin.utils.RecapitalizeStatus.CAPS_MODE_ALL_LOWER;
 
 import android.Manifest.permission;
 import android.app.ActivityOptions;
@@ -101,6 +102,7 @@ import com.android.inputmethod.latin.utils.StatsUtilsManager;
 import com.android.inputmethod.latin.utils.SubtypeLocaleUtils;
 import com.android.inputmethod.latin.utils.ViewLayoutUtils;
 import com.android.inputmethod.utils.LanguageSwitcher;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 import com.sikderithub.keyboard.Views.GkView;
 import com.sikderithub.keyboard.R;
 import com.sikderithub.keyboard.Views.SavedGkViews;
@@ -257,7 +259,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         @Override
         public void handleMessage(final Message msg) {
-            Log.d(TAG, "handleMessage: "+msg.arg1);
             final LatinIME latinIme = getOwnerInstance();
             if (latinIme == null) {
                 return;
@@ -270,6 +271,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                         latinIme.mSettings.getCurrent(), msg.arg1 /* inputStyle */);
                 break;
             case MSG_UPDATE_SHIFT_STATE:
+                Log.d(TAG, "handleMessage: "+latinIme.getCurrentRecapitalizeState());
                 switcher.requestUpdatingShiftState(latinIme.getCurrentAutoCapsState(),
                         latinIme.getCurrentRecapitalizeState());
                 break;
@@ -283,13 +285,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 }
                 break;
             case MSG_RESUME_SUGGESTIONS:
-                Log.d(TAG, "handleMessage: MSG_RESUME_SUGGESTIONS");
                 latinIme.mInputLogic.restartSuggestionsOnWordTouchedByCursor(
                         latinIme.mSettings.getCurrent(), false /* forStartInput */,
                         latinIme.mKeyboardSwitcher.getCurrentKeyboardScriptId());
                 break;
             case MSG_RESUME_SUGGESTIONS_FOR_START_INPUT:
-                Log.d(TAG, "handleMessage: MSG_RESUME_SUGGESTIONS_FOR_START_INPUT");
                 latinIme.mInputLogic.restartSuggestionsOnWordTouchedByCursor(
                         latinIme.mSettings.getCurrent(), true /* forStartInput */,
                         latinIme.mKeyboardSwitcher.getCurrentKeyboardScriptId());
@@ -632,6 +632,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         // TODO: Resolve mutual dependencies of {@link #loadSettings()} and
         // {@link #resetDictionaryFacilitatorIfNecessary()}.
+        CustomThemeHelper.loadSelectedCustomTheme();
         loadSettings();
         resetDictionaryFacilitatorIfNecessary();
 
@@ -816,6 +817,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onInitializeInterface() {
+        Log.d(TAG, "onInitializeInterface: ");
         mDisplayContext = getDisplayContext();
         mKeyboardSwitcher.updateKeyboardTheme(mDisplayContext);
     }
@@ -891,6 +893,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
         mHandler.onStartInputView(editorInfo, restarting);
         mStatsUtilsManager.onStartInputView();
+        if(mGkView!=null){
+            mGkView.onStartInputView(editorInfo, restarting);
+        }
     }
 
     @Override
@@ -979,6 +984,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @SuppressWarnings("deprecation")
     void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
         super.onStartInputView(editorInfo, restarting);
+
+        Log.d(TAG, "onStartInputViewInternal: ");
 
         mDictionaryFacilitator.onStartInput();
         // Switch to the null consumer to handle cases leading to early exit below, for which we
@@ -1124,8 +1131,17 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             // we need to re-evaluate the shift state, but not the whole layout which would be
             // disruptive.
             // Space state must be updated before calling updateShiftState
+            Log.d(TAG, "onStartInputViewInternal: "+getCurrentRecapitalizeState());
+
+
+
+            int capSate = getCurrentRecapitalizeState();
+            if(WordComposer.isPhonetic){
+                 capSate = CAPS_MODE_ALL_LOWER;
+            }
+
             switcher.requestUpdatingShiftState(getCurrentAutoCapsState(),
-                    getCurrentRecapitalizeState());
+                    capSate);
         }
         // This will set the punctuation suggestions if next word suggestion is off;
         // otherwise it will clear the suggestion strip.

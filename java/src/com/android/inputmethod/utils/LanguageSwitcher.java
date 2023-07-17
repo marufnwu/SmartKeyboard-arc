@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.inputmethod.latin.LatinIME;
+import com.android.inputmethod.latin.WordComposer;
 
 import java.util.Locale;
 
@@ -201,9 +202,12 @@ public class LanguageSwitcher {
         Log.d(TAG, "next: ");
         mCurrentIndex++;
         if (mCurrentIndex >= mLocales.length) mCurrentIndex = 0; // Wrap around
-    }public void setCurrentLangIndex(int index) {
+    }
+
+    public void setCurrentLangIndex(int index) {
         Log.d(TAG, "setCurrentLangIndex: "+index);
         mCurrentIndex = index;
+
         //if (mCurrentIndex >= mLocales.length) mCurrentIndex = 0; // Wrap around
     }
 

@@ -22,10 +22,6 @@ public class NotificationService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
 
-        String msg = new Gson().toJson(message);
-        Log.d(TAG, "onMessageReceived: "+msg);
-        Log.d(TAG, "onMessageReceived: "+message.getMessageType());
-
         if (message.getData().size() > 0) {
 
             NotificationData nData  = new NotificationData();

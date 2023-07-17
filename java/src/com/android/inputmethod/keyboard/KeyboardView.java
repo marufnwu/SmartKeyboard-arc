@@ -31,13 +31,18 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+
+import androidx.constraintlayout.motion.widget.KeyAttributes;
 
 import com.android.inputmethod.keyboard.internal.KeyDrawParams;
 import com.android.inputmethod.keyboard.internal.KeyVisualAttributes;
+import com.sikderithub.keyboard.Models.Theme;
 import com.sikderithub.keyboard.R;
 import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.utils.TypefaceUtils;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 import java.util.HashSet;
 
@@ -90,7 +95,7 @@ public class KeyboardView extends View {
     private final float mKeyShiftedLetterHintPadding;
     private final float mKeyTextShadowRadius;
     private final float mVerticalCorrection;
-    private final Drawable mKeyBackground;
+    private Drawable mKeyBackground;
     private final Drawable mFunctionalKeyBackground;
     private final Drawable mSpacebarBackground;
     private final float mSpacebarIconWidthRatio;
@@ -127,15 +132,71 @@ public class KeyboardView extends View {
         this(context, attrs, R.attr.keyboardViewStyle);
     }
 
+    public void changeKeyBackgroundOpacity(int value){
+        if(mKeyBackground!=null){
+            mKeyBackground.setAlpha(value);
+            mKeyBackground.invalidateSelf();
+            invalidateAllKeys();
+        }
+
+    }
+
+    public void changeShowKeyBorder(boolean isCheck, int value){
+        if (isCheck){
+            mKeyBackground.setAlpha(value);
+        }else {
+            mKeyBackground.setAlpha(0);
+        }
+        invalidateAllKeys();
+    }
+
+
+
     public KeyboardView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
+
         final TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs,
                 R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
+
+        keyboardViewAttr.getResourceId(R.styleable.KeyboardView_keyBackground, 0);
+
         mKeyBackground = keyboardViewAttr.getDrawable(R.styleable.KeyboardView_keyBackground);
-        mKeyBackground.getPadding(mKeyBackgroundPadding);
         final Drawable functionalKeyBackground = keyboardViewAttr.getDrawable(
                 R.styleable.KeyboardView_functionalKeyBackground);
+
+        if(CustomThemeHelper.isCustomThemeApplicable(getContext() ) && CustomThemeHelper.selectedCustomTheme!=null){
+            Drawable bgDrawable = CustomThemeHelper.getKeyboardBackgroundDrawable(context,  CustomThemeHelper.selectedCustomTheme);
+            Theme theme = CustomThemeHelper.selectedCustomTheme;
+            if (bgDrawable!=null && theme!=null){
+                Log.d("bgDrawable", "KeyboardView: not null");
+                //mKeyBackground = bgDrawable;
+                if(getClass()!= MoreKeysKeyboardView.class){
+                    this.setBackground(bgDrawable);
+                }
+
+                if(theme.showKeyBorder){
+                    mKeyBackground.setAlpha(theme.keyOpacity);
+                    functionalKeyBackground.setAlpha(theme.keyOpacity);
+                }else{
+                    mKeyBackground.setAlpha(0);
+                    functionalKeyBackground.setAlpha(0);
+                }
+            }else {
+
+
+            }
+
+        }else{
+
+        }
+
+
+        mKeyBackground.getPadding(mKeyBackgroundPadding);
+
+
+
+
         mFunctionalKeyBackground = (functionalKeyBackground != null) ? functionalKeyBackground
                 : mKeyBackground;
         final Drawable spacebarBackground = keyboardViewAttr.getDrawable(

@@ -48,6 +48,7 @@
     <!-- Settings screen title for advanced settings [CHAR LIMIT=33] -->
     <string name="settings_screen_advanced">Advanced</string>
     <string name="settings_screen_tutorial" translatable="false">Tutorial</string>
+    <string name="settings_screen_photo_keyboard" translatable="false">Photo Keyboard</string>
     <!-- Settings screen title for keyboard theme settings [CHAR LIMIT=33] -->
     <string name="settings_screen_theme">Theme</string>
 

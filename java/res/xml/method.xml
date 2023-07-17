@@ -122,6 +122,8 @@
 
 
     <subtype android:icon="@drawable/ic_ime_switcher_dark"
+
+        android:label="@string/empty_language_name"
         android:imeSubtypeLocale="bn"
         android:subtypeId="0xb045e755"
         android:imeSubtypeMode="keyboard"
@@ -131,6 +133,7 @@
     />
 
     <subtype
+        android:label="@string/empty_language_name"
         android:isAuxiliary="true"
         android:icon="@drawable/message"
         android:subtypeId="0xa2144b0c"
@@ -212,14 +215,14 @@
 <!--            android:imeSubtypeExtraValue="KeyboardLayoutSet=bulgarian,EmojiCapable"-->
 <!--            android:isAsciiCapable="false"-->
 <!--    />-->
-    <subtype android:icon="@drawable/ic_ime_switcher_dark"
-            android:label="@string/subtype_bulgarian_bds"
-            android:subtypeId="0x5f51ba9a"
-            android:imeSubtypeLocale="bg"
-            android:imeSubtypeMode="keyboard"
-            android:imeSubtypeExtraValue="KeyboardLayoutSet=bulgarian_bds,EmojiCapable"
-            android:isAsciiCapable="false"
-    />
+<!--    <subtype android:icon="@drawable/ic_ime_switcher_dark"-->
+<!--            android:label="@string/subtype_bulgarian_bds"-->
+<!--            android:subtypeId="0x5f51ba9a"-->
+<!--            android:imeSubtypeLocale="bg"-->
+<!--            android:imeSubtypeMode="keyboard"-->
+<!--            android:imeSubtypeExtraValue="KeyboardLayoutSet=bulgarian_bds,EmojiCapable"-->
+<!--            android:isAsciiCapable="false"-->
+<!--    />-->
 <!--    -->
 <!--    <subtype android:icon="@drawable/ic_ime_switcher_dark"-->
 <!--            android:label="@string/subtype_generic"-->

@@ -9,6 +9,7 @@ import com.android.inputmethod.utils.GkEngine;
 import com.android.inputmethod.utils.MyLatinIME;
 import com.google.gson.Gson;
 import com.sikderithub.keyboard.Activity.UpdateActivity;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -46,13 +47,14 @@ public class SikderKeyboard extends MyLatinIME {
 
     @Override
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
-
         Log.d(TAG, "onStartInput: ");
         super.onStartInput(editorInfo, restarting);
     }
 
     @Override
     public void onStartInputView(EditorInfo editorInfo, boolean restarting) {
+
+
         MyApp.getConfigFromServer();
         MyApp.getLatestQuestion();
         Log.d(TAG, "onStartInputView: "+new Gson().toJson(MyApp.getUpdateInfo()));
@@ -65,8 +67,9 @@ public class SikderKeyboard extends MyLatinIME {
                 startActivity(new Intent(this, UpdateActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         }
-        super.mGkView.onStartInputView(editorInfo, restarting);
         super.onStartInputView(editorInfo, restarting);
+
+
     }
 
     @Override

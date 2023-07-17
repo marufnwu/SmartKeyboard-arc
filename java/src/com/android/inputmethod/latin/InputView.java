@@ -18,7 +18,9 @@ package com.android.inputmethod.latin;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -28,6 +30,7 @@ import com.android.inputmethod.keyboard.MainKeyboardView;
 import com.android.inputmethod.latin.suggestions.MoreSuggestionsView;
 import com.android.inputmethod.latin.suggestions.SuggestionStripView;
 import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
 public final class InputView extends FrameLayout {
     private final Rect mInputViewRect = new Rect();
@@ -38,6 +41,7 @@ public final class InputView extends FrameLayout {
 
     public InputView(final Context context, final AttributeSet attrs) {
         super(context, attrs, 0);
+
     }
 
 

@@ -149,7 +149,7 @@ public class Key implements Comparable<Key> {
     private static final String MORE_KEYS_NO_PANEL_AUTO_MORE_KEY = "!noPanelAutoMoreKey!";
 
     /** Background type that represents different key background visual than normal one. */
-    private final int mBackgroundType;
+    private  int mBackgroundType;
     public static final int BACKGROUND_TYPE_EMPTY = 0;
     public static final int BACKGROUND_TYPE_NORMAL = 1;
     public static final int BACKGROUND_TYPE_FUNCTIONAL = 2;
@@ -282,6 +282,8 @@ public class Key implements Comparable<Key> {
 
         mBackgroundType = style.getInt(keyAttr,
                 R.styleable.Keyboard_Key_backgroundType, row.getDefaultBackgroundType());
+
+
 
         final int baseWidth = params.mBaseWidth;
         final int visualInsetsLeft = Math.round(keyAttr.getFraction(

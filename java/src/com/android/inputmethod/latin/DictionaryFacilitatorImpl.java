@@ -618,28 +618,44 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
             NgramContext ngramContext, @Nonnull final Keyboard keyboard,
             SettingsValuesForSuggestion settingsValuesForSuggestion, int sessionId,
             int inputStyle) {
+
+        Log.d(TAG, "getSuggestionResults: "+composedData.mTypedWord);
+
+
         long proximityInfoHandle = keyboard.getProximityInfo().getNativeProximityInfo();
+
         final SuggestionResults suggestionResults = new SuggestionResults(
                 SuggestedWords.MAX_SUGGESTIONS, ngramContext.isBeginningOfSentenceContext(),
                 false /* firstSuggestionExceedsConfidenceThreshold */);
+
         final float[] weightOfLangModelVsSpatialModel =
                 new float[] { Dictionary.NOT_A_WEIGHT_OF_LANG_MODEL_VS_SPATIAL_MODEL };
+
+
         for (final String dictType : ALL_DICTIONARY_TYPES) {
             final Dictionary dictionary = mDictionaryGroup.getDict(dictType);
-            if (null == dictionary) continue;
+
+            if (null == dictionary){
+                continue;
+            }
 
 
             final float weightForLocale = composedData.mIsBatchMode
                     ? mDictionaryGroup.mWeightForGesturingInLocale
                     : mDictionaryGroup.mWeightForTypingInLocale;
 
-            Log.d(TAG, "getSuggestionResults: "+composedData.mTypedWord);
+            Log.d(TAG, "getSuggestionResults: dicType "+dictType);
+
 
             final ArrayList<SuggestedWordInfo> dictionarySuggestions =
                     dictionary.getSuggestions(composedData, ngramContext,
                             proximityInfoHandle, settingsValuesForSuggestion, sessionId,
                             weightForLocale, weightOfLangModelVsSpatialModel);
+
+
             if (null == dictionarySuggestions) continue;
+            Log.d(TAG, "getSuggestionResults: dicType "+dictType);
+
             suggestionResults.addAll(dictionarySuggestions);
             if (null != suggestionResults.mRawSuggestions) {
                 suggestionResults.mRawSuggestions.addAll(dictionarySuggestions);

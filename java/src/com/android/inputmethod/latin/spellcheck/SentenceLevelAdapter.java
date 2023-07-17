@@ -96,7 +96,7 @@ public class SentenceLevelAdapter {
                 if (mSpacingAndPunctuations.isWordSeparator(codePoint)) {
                     // If it's a period, we want to stop here only if it's followed by another
                     // word separator. In all other cases we stop here.
-                    if (Constants.CODE_PERIOD == codePoint) {
+                    if (Constants.CODE_PERIOD == codePoint ) {
                         final int indexOfNextCodePoint =
                                 index + Character.charCount(Constants.CODE_PERIOD);
                         if (indexOfNextCodePoint < length

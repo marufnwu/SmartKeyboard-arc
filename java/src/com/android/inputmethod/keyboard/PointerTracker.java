@@ -748,10 +748,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private void onDownEventInternal(final int x, final int y, final long eventTime) {
         Key key = onDownKey(x, y, eventTime);
 
-        if (key.getCode()==Constants.CODE_SPACE){
-
-        }
-
         // Key selection by dragging finger is allowed when 1) key selection by dragging finger is
         // enabled by configuration, 2) this pointer starts dragging from modifier key, or 3) this
         // pointer's KeyDetector always allows key selection by dragging finger, such as

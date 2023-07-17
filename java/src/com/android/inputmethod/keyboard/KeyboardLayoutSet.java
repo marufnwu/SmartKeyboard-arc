@@ -311,6 +311,7 @@ public final class KeyboardLayoutSet {
             mParams.mSubtype = keyboardSubtype;
             mParams.mKeyboardLayoutSetName = KEYBOARD_LAYOUT_SET_RESOURCE_PREFIX
                     + keyboardSubtype.getKeyboardLayoutSetName();
+            Log.d(TAG, "setSubtype: "+keyboardSubtype.getLocale());
             return this;
         }
 
