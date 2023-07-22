@@ -1317,6 +1317,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onComputeInsets(final InputMethodService.Insets outInsets) {
         super.onComputeInsets(outInsets);
 
+        Log.d(TAG, "onComputeInsets: ");
+
         // This method may be called before {@link #setInputView(View)}.
         if (mInputView == null) {
             return;
@@ -1342,8 +1344,15 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 && mSuggestionStripView.getVisibility() == View.VISIBLE)
                 ? mSuggestionStripView.getHeight() : 0;
 
+
+        int gkViewHeight = 0;
+
+        if(mGkView.isShown()){
+            gkViewHeight = mGkView.getHeight();
+        }
+
         if(suggestionsHeight>0){
-            suggestionsHeight+=mGkView.getHeight();
+            suggestionsHeight+=gkViewHeight;
         }
 
 

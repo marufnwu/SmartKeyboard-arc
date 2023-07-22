@@ -36,8 +36,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         compileSdk 33
-        versionCode 2
-        versionName "1.2"
+        versionCode 3
+        versionName "1.3"
 
         applicationId 'com.sikderithub.keyboard'
         testApplicationId 'com.android.inputmethod.latin.tests'
@@ -73,7 +73,7 @@ android {
         main {
             res.srcDirs = ['java/res']
             java.srcDirs = ['common/src', 'java/src']
-            jniLibs.srcDirs = ['java/jni']
+            //jniLibs.srcDirs = ['java/jni']
             manifest.srcFile 'java/AndroidManifest.xml'
         }
 
@@ -90,6 +90,16 @@ android {
 
     aaptOptions {
         noCompress 'dict'
+    }
+
+    externalNativeBuild {
+//        ndkBuild {
+//            path 'native/jni/Android.mk'
+//        }
+        cmake {
+            // Provides a relative path to your CMake build script.
+            path "native/jni/CMakeLists.txt"
+        }
     }
 
 

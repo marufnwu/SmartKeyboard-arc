@@ -249,16 +249,21 @@ object CommonMethod {
             val appId = uri.getQueryParameter("id")
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse("market://details?id=$appId")
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         } else if (linkHost == "www.youtube.com") {
             try {
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.setPackage("com.google.android.youtube")
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
                 context.startActivity(intent)
             }catch (e : Exception){
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
                 context.startActivity(intent)
             }
         }

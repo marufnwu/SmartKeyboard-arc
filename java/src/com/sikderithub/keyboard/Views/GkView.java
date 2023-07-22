@@ -15,8 +15,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.WindowMetrics;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,12 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatRadioButton;
 
 import com.android.inputmethod.utils.GkEngine;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.gson.Gson;
@@ -76,6 +72,9 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
     private boolean pause = false;
     private int isWindowVisible;
+
+    private int contentReloadCount = 0;
+    private int contentReloadThreshold = 3;
 
     private enum CURR_CONTENT{
         AD,
@@ -348,8 +347,11 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
     protected void showContent(){
 
         if(pause || MyApp.getConfig().show_gk_view==0){
+            this.setVisibility(GONE);
+            invalidate();
             return;
         }
+
 
         Log.d(TAG, "showContent: called "+new Gson().toJson(MyApp.getConfig()));
         if(MyApp.getConfig().gk_view_ad_status==1 ){
@@ -381,7 +383,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
             }
 
         }else{
-            Log.d(TAG, "showContent: gk view hidden");
+            Log.d(TAG, "showContent: gk  hidden");
             showAd();
         }
 
@@ -393,11 +395,28 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
     private boolean showAd() {
 
-        if(MyApp.getConfig().show_gk_view!=1 && MyApp.getConfig().gk_view_ad_status!=1 && MyApp.getConfig().gk_view_ad_type!=1){
-            Log.d(TAG, "showAd: ");
-            delayAndShowContent(3000);
+        if(MyApp.getConfig().show_gk_view==0 ){
+            //gk view is hidden from server
             return false;
         }
+
+        if(MyApp.getConfig().gk_view_ad_status==0 || MyApp.getConfig().gk_view_ad_type!=1){
+            Log.d(TAG, "showAd: admob ad status is off");
+
+            if(contentReloadCount <= contentReloadThreshold){
+                delayAndShowContent(3000);
+                contentReloadCount +=1;
+                return false;
+            }
+
+            this.setVisibility(GONE);
+            invalidate();
+            return false;
+        }
+
+
+
+
 
         if(!isAdLoaded){
             Log.d(TAG, "showContent: ad not laoded");
@@ -494,8 +513,15 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         }
         Log.d(TAG, "onWindowVisibilityChanged: "+new Gson().toJson(MyApp.getConfig()));
         if(MyApp.getConfig().show_gk_view==1){
-            this.setVisibility(VISIBLE);
-            requestLayout();
+
+            if(contentReloadCount<=contentReloadThreshold){
+                this.setVisibility(VISIBLE);
+                requestLayout();
+            }else{
+                this.setVisibility(GONE);
+                requestLayout();
+            }
+
         }else{
             this.setVisibility(GONE);
             requestLayout();
