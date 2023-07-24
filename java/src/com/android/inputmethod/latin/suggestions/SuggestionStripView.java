@@ -326,11 +326,13 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final TypedArray keyboardAttr = context.obtainStyledAttributes(attrs,
                 R.styleable.Keyboard, defStyle, R.style.SuggestionStripView);
         final Drawable iconVoice = keyboardAttr.getDrawable(R.styleable.Keyboard_iconShortcutKey);
-
+        mVoiceKey.setImageDrawable(iconVoice);
 
         keyboardAttr.recycle();
-        //mVoiceKey.setOnClickListener(this);
+        mVoiceKey.setOnClickListener(this);
         mSettingsKey.setOnClickListener(this::onClick);
+
+
     }
 
     /**
@@ -346,8 +348,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final int visibility = shouldBeVisible ? VISIBLE : (isFullscreenMode ? GONE : INVISIBLE);
         setVisibility(visibility);
         final SettingsValues currentSettingsValues = Settings.getInstance().getCurrent();
-        //mVoiceKey.setVisibility(currentSettingsValues.mShowsVoiceInputKey ? VISIBLE : INVISIBLE);
-        mVoiceKey.setVisibility(GONE);
+        mVoiceKey.setVisibility(currentSettingsValues.mShowsVoiceInputKey ? VISIBLE : INVISIBLE);
+        //mVoiceKey.setVisibility(GONE);
 
 
     }

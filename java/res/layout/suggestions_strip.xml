@@ -170,8 +170,7 @@
         style="?attr/suggestionWordStyle" />
 
     <ImageView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+       android:layout_toLeftOf="@id/suggestions_strip_voice_key"
         android:layout_centerVertical="true"
         android:layout_weight="1"
         android:id="@+id/suggestions_strip_settings_key"
@@ -180,6 +179,8 @@
         android:src="@drawable/setting"
         android:layout_width="@dimen/action_icon_size"
         android:layout_height="@dimen/action_icon_size"/>
+
+
 
 
 

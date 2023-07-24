@@ -79,7 +79,7 @@ public final class InputAttributes {
                 Log.w(TAG, String.format("Unexpected input class: inputType=0x%08x"
                         + " imeOptions=0x%08x", inputType, editorInfo.imeOptions));
             }
-            mShouldShowSuggestions = false;
+            mShouldShowSuggestions = true;
             mInputTypeNoAutoCorrect = false;
             mApplicationSpecifiedCompletionOn = false;
             mShouldInsertSpacesAutomatically = false;
@@ -105,7 +105,7 @@ public final class InputAttributes {
                 || InputTypeUtils.isEmailVariation(variation)
                 || InputType.TYPE_TEXT_VARIATION_URI == variation
                 || InputType.TYPE_TEXT_VARIATION_FILTER == variation
-                || flagNoSuggestions
+//                || flagNoSuggestions
                 || flagAutoComplete;
         mShouldShowSuggestions = !shouldSuppressSuggestions;
 

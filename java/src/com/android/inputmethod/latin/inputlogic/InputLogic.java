@@ -1519,7 +1519,6 @@ public final class InputLogic {
         long startTimeMillis = 0;
         if (DebugFlags.DEBUG_ENABLED) {
             startTimeMillis = System.currentTimeMillis();
-            Log.d(TAG, "performUpdateSuggestionStripSync()");
         }
         // Check if we have a suggestion engine attached.
         if (!settingsValues.needsToLookupSuggestions()) {
@@ -1528,7 +1527,9 @@ public final class InputLogic {
                         + "requested!");
             }
             // Clear the suggestions strip.
+            Log.d(TAG, "performUpdateSuggestionStripSync: ");
             mSuggestionStripViewAccessor.showSuggestionStrip(SuggestedWords.getEmptyInstance());
+
             return;
         }
 

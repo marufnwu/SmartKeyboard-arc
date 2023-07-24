@@ -259,6 +259,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         @Override
         public void handleMessage(final Message msg) {
+            Log.d(TAG, "handleMessage: "+msg.what);
             final LatinIME latinIme = getOwnerInstance();
             if (latinIme == null) {
                 return;
@@ -1767,6 +1768,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 mKeyboardSwitcher.getCurrentKeyboardScriptId(),
                 mHandler);
         updateStateAfterInputTransaction(completeInputTransaction);
+
+
     }
 
     // This will show either an empty suggestion strip (if prediction is enabled) or

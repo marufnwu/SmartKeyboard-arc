@@ -1,6 +1,7 @@
 package com.sikderithub.keyboard;
 
 import android.content.Intent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
