@@ -75,12 +75,11 @@
     </LinearLayout>
 
     <!--  This is your template view -->
-    <com.sikderithub.keyboard.Views.NativeAd.TemplateView
-        android:visibility="gone"
-        android:id="@+id/my_template"
-        app:gnt_template_type="@layout/gnt_small_template_view"
+    <com.sikderithub.keyboard.Views.GkView
+        android:id="@+id/gk_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="55dp">
+    </com.sikderithub.keyboard.Views.GkView>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/emoji_keyboard_pager"

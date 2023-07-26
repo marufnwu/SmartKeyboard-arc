@@ -27,6 +27,7 @@ import com.android.inputmethod.keyboard.Key;
 import com.android.inputmethod.keyboard.Keyboard;
 import com.android.inputmethod.keyboard.KeyboardView;
 import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.Views.GkView;
 
 final class EmojiPalettesAdapter extends PagerAdapter {
     private static final String TAG = EmojiPalettesAdapter.class.getSimpleName();
@@ -117,11 +118,24 @@ final class EmojiPalettesAdapter extends PagerAdapter {
                 mEmojiCategory.getKeyboardFromPagePosition(position);
         final LayoutInflater inflater = LayoutInflater.from(container.getContext());
 
-        final EmojiPageKeyboardView keyboardView = (EmojiPageKeyboardView)inflater.inflate(
+        final View view = inflater.inflate(
                 R.layout.emoji_keyboard_page, container, false /* attachToRoot */);
 
+        EmojiPageKeyboardView keyboardView = view.findViewById(R.id.emoji_keyboard_page);
+
+        if (position==0){
+            //GkView gkView = view.findViewById(R.id.gkView);
+            //gkView.startGkView(true);
+            //gkView.setVisibility(View.VISIBLE);
+        }
         keyboardView.setKeyboard(keyboard);
         keyboardView.setOnKeyEventListener(mListener);
+
+
+        if(keyboardView.getParent()!=null){
+           ((ViewGroup) keyboardView.getParent()).removeView(keyboardView);
+        }
+
         container.addView(keyboardView);
         mActiveKeyboardViews.put(position, keyboardView);
         return keyboardView;

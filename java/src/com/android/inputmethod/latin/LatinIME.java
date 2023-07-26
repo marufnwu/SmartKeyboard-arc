@@ -165,7 +165,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public View mInputView;
     private InsetsUpdater mInsetsUpdater;
     public SuggestionStripView mSuggestionStripView;
-    public GkView mGkView;
+    //public GkView mGkView;
 
     public RichInputMethodManager mRichImm;
     @UsedForTesting final KeyboardSwitcher mKeyboardSwitcher;
@@ -871,8 +871,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mSuggestionStripView = (SuggestionStripView)view.findViewById(R.id.suggestion_strip_view);
 
         savedGkView = view.findViewById(R.id.saved_gk_view);
-        mGkView =  view.findViewById(R.id.gk_view);
-        mGkView.setSavedGkView(savedGkView);
+        //mGkView =  view.findViewById(R.id.gk_view);
+        //mGkView.setSavedGkView(savedGkView);
 
         if (hasSuggestionStripView()) {
             mSuggestionStripView.setListener(this, view);
@@ -894,9 +894,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
         mHandler.onStartInputView(editorInfo, restarting);
         mStatsUtilsManager.onStartInputView();
-        if(mGkView!=null){
-            mGkView.onStartInputView(editorInfo, restarting);
-        }
+//        if(mGkView!=null){
+//            mGkView.onStartInputView(editorInfo, restarting);
+//        }
     }
 
     @Override
@@ -1348,9 +1348,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
         int gkViewHeight = 0;
 
-        if(mGkView.isShown()){
-            gkViewHeight = mGkView.getHeight();
-        }
+//        if(mGkView.isShown()){
+//            gkViewHeight = mGkView.getHeight();
+//        }
 
         if(suggestionsHeight>0){
             suggestionsHeight+=gkViewHeight;

@@ -70,7 +70,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
 
 
-    private boolean pause = false;
+    private boolean pause = true;
     private int isWindowVisible;
 
     private int contentReloadCount = 0;
@@ -267,9 +267,9 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
     }
 
     private void addBookMark() {
-        if(currentGk!=null && currentGk.gk!=null){
+        if(currentGk!=null && currentGk.gk!=null ){
             GkEngine.addToSavedGk(currentGk);
-            savedGkViews.addNewToList(currentGk.gk);
+            SavedGkViews.addNewToList(currentGk.gk);
         }
 
         Toast.makeText(getContext(), "Gk Saved", Toast.LENGTH_SHORT).show();
@@ -438,12 +438,14 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
     protected boolean showGk(){
 
         GkEngine.CurrentGk gk  = gkEngine.getGk();
-        Log.d(TAG, "showContent: caleld");
+        Log.d(TAG, "showContent: called");
 
         if(gk==null){
             Log.d(TAG, "showContent: gk is null");
             return false;
         }
+        Log.d(TAG, "showContent: gk is showing");
+
         gkShowed++;
         mAdView.setVisibility(GONE);
         mGkHolder.setVisibility(VISIBLE);
@@ -529,11 +531,14 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         }
     }
 
-
-    public void onStartInputView(EditorInfo editorInfo, boolean restarting){
+    public void startGkView(boolean restarting){
         GkEngine.getGkFromLocal();
         pause = false;
         showContent();
+    }
+
+    public void stopGkView(){
+        pause = true;
 
     }
 

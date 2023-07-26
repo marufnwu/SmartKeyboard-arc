@@ -81,9 +81,9 @@ public class SavedGkViews extends LinearLayout {
 
     }
 
-    public void addNewToList(Gk gk){
+    public static void addNewToList(Gk gk){
         cachedGk.add(0, gk);
-        adapter.notifyItemChanged(0);
+        //adapter.notifyItemChanged(0);
     }
 
 
@@ -95,5 +95,11 @@ public class SavedGkViews extends LinearLayout {
 
             Log.d(TAG, "getSavedGkList: "+cachedGk.size());
         });
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        adapter.notifyDataSetChanged();
     }
 }
