@@ -19,36 +19,36 @@
 -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="KeyboardTheme.MJ_Light" parent="KeyboardIcons.Holo">
-        <item name="inputViewStyle">@style/InputView.MJ</item>
-        <item name="keyboardStyle">@style/Keyboard.MJ_Light</item>
-        <item name="keyboardViewStyle">@style/KeyboardView.MJ_Light</item>
-        <item name="mainKeyboardViewStyle">@style/MainKeyboardView.MJ_Light</item>
-        <item name="emojiPalettesViewStyle">@style/EmojiPalettesView.MJ_Light</item>
-        <item name="moreKeysKeyboardStyle">@style/MoreKeysKeyboard.MJ_Light</item>
-        <item name="moreKeysKeyboardViewStyle">@style/MoreKeysKeyboardView.MJ_Light</item>
-        <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.MJ_Light.Action</item>
-        <item name="suggestionStripViewStyle">@style/SuggestionStripView.MJ_Light</item>
-        <item name="suggestionWordStyle">@style/SuggestionWord.MJ_Light</item>
-        <item name="gkViewStyle">@style/questionTextStyle.MJ_Light</item>
+    <style name="KeyboardTheme.CUSTOM" parent="KeyboardIcons.Holo">
+        <item name="inputViewStyle">@style/InputView.LXX</item>
+        <item name="keyboardStyle">@style/Keyboard.Custom</item>
+        <item name="keyboardViewStyle">@style/KeyboardView.Custom</item>
+        <item name="mainKeyboardViewStyle">@style/MainKeyboardView.Custom</item>
+        <item name="emojiPalettesViewStyle">@style/EmojiPalettesView.Custom</item>
+        <item name="moreKeysKeyboardStyle">@style/MoreKeysKeyboard.Custom</item>
+        <item name="moreKeysKeyboardViewStyle">@style/MoreKeysKeyboardView.Custom</item>
+        <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.Custom.Action</item>
+        <item name="suggestionStripViewStyle">@style/SuggestionStripView.Custom</item>
+        <item name="suggestionWordStyle">@style/SuggestionWord.Custom</item>
+        <item name="gkViewStyle">@style/questionTextStyle.Custom</item>
     </style>
     <style
-        name="Keyboard.MJ_Light"
+        name="Keyboard.Custom"
         parent="Keyboard"
-    >
+        >
         <!-- This should be aligned with KeyboardTheme.THEME_ID_* -->
-        <item name="themeId">MJLight</item>
+        <item name="themeId">Custom</item>
     </style>
     <style
-        name="KeyboardView.MJ_Light"
+        name="KeyboardView.Custom"
         parent="KeyboardView.MJ">
         <item name="android:background">@color/keyboard_background_mj_light</item>
         <item name="keyBackground">@drawable/btn_keyboard_key_custom</item>
-        <item name="functionalKeyBackground">@drawable/btn_keyboard_key_functional_mj_light</item>
-        <item name="spacebarBackground">@drawable/space_key_background_mj_light</item>
-        <item name="keyTextColor">@color/key_text_color_mj_light</item>
+        <item name="functionalKeyBackground">@drawable/btn_keyboard_key_custom</item>
+        <item name="spacebarBackground">@drawable/space_key_background_custom</item>
+        <item name="keyTextColor">@android:color/white</item>
         <item name="keyTextInactivatedColor">@color/key_text_inactivated_color_holo</item>
-        <item name="functionalTextColor">@color/key_text_color_mj_light</item>
+        <item name="functionalTextColor">@android:color/white</item>
         <item name="keyHintLetterColor">@color/key_hint_letter_color_holo</item>
         <item name="keyHintLabelColor">@color/key_hint_label_color_holo</item>
         <item name="keyShiftedLetterHintInactivatedColor">@color/key_shifted_letter_hint_inactivated_color_holo</item>
@@ -56,9 +56,9 @@
         <item name="keyPreviewTextColor">@color/key_text_color_holo</item>
     </style>
     <style
-        name="MainKeyboardView.MJ_Light"
-        parent="KeyboardView.MJ_Light"
-    >
+        name="MainKeyboardView.Custom"
+        parent="KeyboardView.Custom"
+        >
 
         <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_ics</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height_holo</item>
@@ -69,9 +69,9 @@
         <item name="gestureFloatingPreviewColor">@color/gesture_floating_preview_color_holo</item>
         <item name="gestureTrailColor">@color/highlight_color_ics</item>
         <item name="slidingKeyInputPreviewColor">@color/highlight_translucent_color_ics</item>
-        <item name="languageOnSpacebarTextColor">@android:color/black</item>
-        <item name="languageOnSpacebarTextShadowRadius">1.0</item>
-        <item name="languageOnSpacebarTextShadowColor">@color/spacebar_text_shadow_color_holo</item>
+        <item name="languageOnSpacebarTextColor">@android:color/white</item>
+        <item name="languageOnSpacebarTextShadowRadius">0</item>
+        <item name="languageOnSpacebarTextShadowColor">@android:color/white</item>
         <item name="spaceBarLeftIcon">@drawable/baseline_arrow_left_black</item>
     </style>
     <!-- Though {@link com.android.inputmethod.keyboard.emoji.EmojiPalettesView} doesn't extend
@@ -79,9 +79,9 @@
          delete button, need themed {@link com.android.inputmethod.keyboard.KeyboardView}
          attributes. -->
     <style
-        name="EmojiPalettesView.MJ_Light"
+        name="EmojiPalettesView.Custom"
         parent="MainKeyboardView.MJ_Light"
-    >
+        >
         <item name="categoryIndicatorEnabled">false</item>
         <item name="categoryPageIndicatorColor">@color/highlight_color_lxx_light</item>
         <item name="categoryPageIndicatorBackground">@color/emoji_tab_page_indicator_background_lxx_light</item>
@@ -104,18 +104,18 @@
         <item name="iconEmojiCategory16Tab">@drawable/ic_emoji_people_lxx_light</item>
     </style>
     <style
-        name="MoreKeysKeyboard.MJ_Light"
+        name="MoreKeysKeyboard.Custom"
         parent="Keyboard.MJ_Light"
-    >
+        >
         <item name="keyboardTopPadding">0%p</item>
         <item name="keyboardBottomPadding">0%p</item>
         <item name="horizontalGap">0%p</item>
         <item name="touchPositionCorrectionData">@null</item>
     </style>
     <style
-        name="MoreKeysKeyboardView.MJ_Light"
+        name="MoreKeysKeyboardView.Custom"
         parent="KeyboardView.MJ_Light"
-    >
+        >
         <item name="android:background">@drawable/keyboard_popup_panel_background_lxx_light</item>
         <item name="keyBackground">@drawable/btn_keyboard_key_popup_lxx_light</item>
         <item name="divider">@drawable/more_keys_divider</item>
@@ -123,18 +123,18 @@
         <item name="verticalCorrection">@dimen/config_more_keys_keyboard_vertical_correction_holo</item>
     </style>
     <style
-        name="MoreKeysKeyboardView.MJ_Light.Action"
+        name="MoreKeysKeyboardView.Custom.Action"
         parent="MoreKeysKeyboardView.MJ_Light"
-    >
+        >
         <item name="android:background">@android:color/transparent</item>
         <item name="keyBackground">@drawable/btn_keyboard_key_popup_action_lxx_light</item>
         <item name="divider">@null</item>
         <item name="keyLabelFlags">keepBackgroundAspectRatio</item>
     </style>
     <style
-        name="SuggestionStripView.MJ_Light"
+        name="SuggestionStripView.Custom"
         parent="KeyboardView.MJ_Light"
-    >
+        >
         <item name="suggestionsCountInStrip">@integer/config_suggestions_count_in_strip</item>
         <item name="centerSuggestionPercentile">@fraction/config_center_suggestion_percentile</item>
         <item name="maxMoreSuggestionsRow">@integer/config_max_more_suggestions_row</item>
@@ -155,14 +155,14 @@
         <item name="themeIcon">@drawable/gallery_generic_black</item>
     </style>
     <style
-        name="SuggestionWord.MJ_Light"
+        name="SuggestionWord.Custom"
         parent="SuggestionWord"
-    >
+        >
         <item name="android:background">@drawable/btn_suggestion_lxx_light</item>
         <item name="android:textColor">@color/highlight_color_lxx_light</item>
     </style>
 
-    <style name="questionTextStyle.MJ_Light" parent="SuggestionStripView.MJ_Light">
+    <style name="questionTextStyle.Custom" parent="SuggestionStripView.MJ_Light">
         <item name="questIonTextColor">@android:color/black</item>
     </style>
 

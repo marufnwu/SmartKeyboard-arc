@@ -140,7 +140,7 @@ public class CreateThemeActivity extends AppCompatActivity {
 
 
 
-        ArrayAdapter<String> overlayAdapter  = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, overlayTypes);
+        ArrayAdapter<String> overlayAdapter  = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, overlayTypes);
         spOverlay.setAdapter(overlayAdapter);
         spOverlay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

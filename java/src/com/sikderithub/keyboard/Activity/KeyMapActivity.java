@@ -30,8 +30,7 @@ public class KeyMapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_key_map);
 
 
-
-        recyKeyCat  =findViewById(R.id.recyKeyCat);
+        recyKeyCat  = findViewById(R.id.recyKeyCat);
         recyKeyCat.setHasFixedSize(true);
         recyKeyCat.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -39,8 +38,6 @@ public class KeyMapActivity extends AppCompatActivity {
 
         adapter = new KeyMapCatAdapter(phoneticBangla.getPhoneticKeyMapInList(), this);
         recyKeyCat.setAdapter(adapter);
-
-
 
     }
 

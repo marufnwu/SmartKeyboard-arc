@@ -39,8 +39,6 @@
 
     <!-- Normal keys. -->
     <item android:state_pressed="true"
-        android:drawable="@drawable/btn_keyboard_key_pressed_ics_light" />
-
-
-    <item android:drawable="@drawable/key_background_mj_light" />
+        android:drawable="@drawable/key_background_custom" />
+    <item android:drawable="@drawable/key_background_custom" />
 </selector>

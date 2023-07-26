@@ -159,9 +159,18 @@ public class KeyboardView extends View {
         final TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs,
                 R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
 
-        keyboardViewAttr.getResourceId(R.styleable.KeyboardView_keyBackground, 0);
+        int keyId =  keyboardViewAttr.getResourceId(R.styleable.KeyboardView_keyBackground, 0);
 
         mKeyBackground = keyboardViewAttr.getDrawable(R.styleable.KeyboardView_keyBackground);
+
+        if(mKeyBackground!=null){
+            Log.d("mKeyBackground", "KeyboardView: not null "+keyId);
+        }else{
+            Log.d("mKeyBackground", "KeyboardView: null");
+        }
+
+
+
         final Drawable functionalKeyBackground = keyboardViewAttr.getDrawable(
                 R.styleable.KeyboardView_functionalKeyBackground);
 

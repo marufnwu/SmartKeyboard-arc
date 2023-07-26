@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "548465047771",
+    "project_id": "smart-keyboard-3dca1",
+    "storage_bucket": "smart-keyboard-3dca1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548465047771:android:66a709e8a68affc8eaf4fe",
+        "android_client_info": {
+          "package_name": "com.sikderithub.keyboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548465047771-j54k6ellu796h6em1m5jtam16fkfe3pb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNSS0eo6rl-Tl8LYJ2UWo8ukb2bw3rrsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548465047771-j54k6ellu796h6em1m5jtam16fkfe3pb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548465047771:android:7474a6d7fdbb7be8eaf4fe",
+        "android_client_info": {
+          "package_name": "com.sikderithub.myadminapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548465047771-j54k6ellu796h6em1m5jtam16fkfe3pb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNSS0eo6rl-Tl8LYJ2UWo8ukb2bw3rrsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548465047771-j54k6ellu796h6em1m5jtam16fkfe3pb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
