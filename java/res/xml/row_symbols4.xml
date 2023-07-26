@@ -23,8 +23,10 @@
         keybaord:keySpec="!text/keyspec_comma" />
     <Key
         keybaord:keySpec="_" />
-    <include
-        keybaord:keyboardLayout="@xml/key_space_symbols" />
+    <Key
+        keybaord:backgroundType="spacebar"
+        keybaord:keyStyle="spaceKeyStyle"
+        keybaord:keyWidth="35%p" />
     <Key
         keybaord:keySpec="/" />
     <!-- U+2026: "…" HORIZONTAL ELLIPSIS -->

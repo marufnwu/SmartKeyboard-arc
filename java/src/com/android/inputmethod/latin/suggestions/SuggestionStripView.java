@@ -16,19 +16,29 @@
 
 package com.android.inputmethod.latin.suggestions;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -56,6 +66,8 @@ import com.android.inputmethod.keyboard.MainKeyboardView;
 import com.android.inputmethod.keyboard.MoreKeysPanel;
 import com.android.inputmethod.latin.AudioAndHapticFeedbackManager;
 import com.android.inputmethod.latin.RichInputMethodManager;
+import com.android.inputmethod.latin.permissions.PermissionsManager;
+import com.android.inputmethod.utils.LanguageSwitcher;
 import com.github.angads25.toggle.interfaces.OnToggledListener;
 import com.github.angads25.toggle.model.ToggleableView;
 import com.github.angads25.toggle.widget.LabeledSwitch;
@@ -77,13 +89,18 @@ import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 import java.util.ArrayList;
 
 public final class SuggestionStripView extends RelativeLayout implements OnClickListener,
-        OnLongClickListener{
+        OnLongClickListener, PermissionsManager.PermissionsResultCallback {
     private static final String TAG = "SuggestionStripView";
     private final ImageView update_icon;
     private final ImageView message_icon;
     private final RichInputMethodManager mRichIME;
     private final RelativeLayout tutorial_layout;
     private final Animation xlargeAnim;
+    private final View mVoiceStrip;
+    private TextView txtVoiceRecordingStatus;
+    private final SpeechRecognizer speechRecognizer;
+    private boolean isVoiceRecording = false;
+    private int RECORD_AUDIO_PERMISSION_CODE = 100001;
 
 
     public interface Listener {
@@ -120,16 +137,20 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     private final StripVisibilityGroup mStripVisibilityGroup;
     private LabeledSwitch langSwitch;
 
+
+
     private static class StripVisibilityGroup {
         private final View mSuggestionStripView;
         private final View mSuggestionsStrip;
         private final View mImportantNoticeStrip;
+        private final View mVoceRecordingStrip;
 
         public StripVisibilityGroup(final View suggestionStripView,
-                final ViewGroup suggestionsStrip, final View importantNoticeStrip) {
+                final ViewGroup suggestionsStrip, final View importantNoticeStrip, final View voceRecordingStrip) {
             mSuggestionStripView = suggestionStripView;
             mSuggestionsStrip = suggestionsStrip;
             mImportantNoticeStrip = importantNoticeStrip;
+            mVoceRecordingStrip = voceRecordingStrip;
             showSuggestionsStrip();
         }
 
@@ -139,16 +160,25 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             ViewCompat.setLayoutDirection(mSuggestionStripView, layoutDirection);
             ViewCompat.setLayoutDirection(mSuggestionsStrip, layoutDirection);
             ViewCompat.setLayoutDirection(mImportantNoticeStrip, layoutDirection);
+            ViewCompat.setLayoutDirection(mVoceRecordingStrip, layoutDirection);
         }
 
         public void showSuggestionsStrip() {
             mSuggestionsStrip.setVisibility(VISIBLE);
             mImportantNoticeStrip.setVisibility(INVISIBLE);
+            mVoceRecordingStrip.setVisibility(INVISIBLE);
         }
 
         public void showImportantNoticeStrip() {
             mSuggestionsStrip.setVisibility(INVISIBLE);
             mImportantNoticeStrip.setVisibility(VISIBLE);
+            mVoceRecordingStrip.setVisibility(INVISIBLE);
+        }
+
+         public void showVoiceRecordingStrip() {
+            mSuggestionsStrip.setVisibility(INVISIBLE);
+            mImportantNoticeStrip.setVisibility(INVISIBLE);
+            mVoceRecordingStrip.setVisibility(VISIBLE);
         }
 
         public boolean isShowingImportantNoticeStrip() {
@@ -156,11 +186,15 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }
     }
 
+
+
     /**
      * Construct a {@link SuggestionStripView} for showing suggestions to be picked by the user.
      * @param context
      * @param attrs
      */
+
+
     public SuggestionStripView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.suggestionStripViewStyle);
     }
@@ -176,9 +210,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         if(CustomThemeHelper.isCustomThemeApplicable(getContext()) && CustomThemeHelper.selectedCustomTheme!=null){
            setBackgroundColor(CustomThemeHelper.selectedCustomTheme.dominateColor);
         }
+        speechRecognizer =  SpeechRecognizer.createSpeechRecognizer(context);
+        speechRecognizer.setRecognitionListener(recognitionListener);
 
         mSuggestionsStrip = (ViewGroup)findViewById(R.id.suggestions_strip);
-
         mRichIME = RichInputMethodManager.getInstance();
 
 
@@ -187,8 +222,12 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mBackIcon = (ImageView) findViewById(R.id.action_back);
 
         mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
+        txtVoiceRecordingStatus = findViewById(R.id.txtVoiceRecordingStatus);
+        mVoiceStrip = findViewById(R.id.voice_strip);
+
+
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,
-                mImportantNoticeStrip);
+                mImportantNoticeStrip, mVoiceStrip);
 
         ImageView savedGkIcon = (ImageView) findViewById(R.id.saved_gk_icon);
         ImageView emoji_icon = (ImageView) findViewById(R.id.emoji_icon);
@@ -221,6 +260,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }else{
             emojiColor = textColor;
         }
+
+        txtVoiceRecordingStatus.setTextColor(textColor);
 
 //        langSwitch.setColorOn(textColor);
 //        langSwitch.setColorBorder(textColor);
@@ -615,9 +656,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             return;
         }
         if (view == mVoiceKey) {
-            mListener.onCodeInput(Constants.CODE_SHORTCUT,
-                    Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
-                    false /* isKeyRepeat */);
+//            mListener.onCodeInput(Constants.CODE_SHORTCUT,
+//                    Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
+//                    false /* isKeyRepeat */);
+            voiceKeyClick();
             return;
         }
 
@@ -666,6 +708,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             mListener.pickSuggestionManually(wordInfo);
         }
     }
+
 
     @Override
     protected void onDetachedFromWindow() {
@@ -744,6 +787,200 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     public void changeLangSwitchKey(InputMethodSubtype richInputMethodSubtype){
         langSwitch.setOn(richInputMethodSubtype.getExtraValue().contains("bengali_phonetic") || richInputMethodSubtype.getExtraValue().contains("bengali_akkhor"));
     }
+
+    private enum VoiceRecordingStatus{
+        LISTENING,
+        READY_TO_LISTEN,
+        PERMISSION_NEEDED
+    }
+
+    private void voiceKeyClick() {
+        mStripVisibilityGroup.showVoiceRecordingStrip();
+        if(isRecordAudioPermissionGranted()){
+            startListening();
+        }else{
+            setVoiceRecordingStatus(VoiceRecordingStatus.PERMISSION_NEEDED);
+            requestRecordAudioPermission();
+        }
+    }
+
+
+    private void startListening() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+
+        String lang = LanguageSwitcher.instance.getInputLanguage();
+
+        lang = lang.replace("_", "-");
+
+
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, lang);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, lang);
+        // intent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, Locale("bn-BD"));
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+
+
+
+        // Make sure you have initialized the SpeechRecognizer before calling startListening()
+        if (speechRecognizer != null && !isVoiceRecording) {
+            speechRecognizer.startListening(intent);
+        }
+
+
+    }
+
+    private void setVoiceRecordingStatus(VoiceRecordingStatus voiceRecordingStatus){
+        String statusText = "";
+        switch (voiceRecordingStatus){
+            case LISTENING:
+                statusText = "Listening...";
+                break;
+            case READY_TO_LISTEN:
+                statusText = "Speak Now";
+                break;
+            case PERMISSION_NEEDED:
+                statusText = "Record Voice Permission missing";
+                break;
+            default:
+
+        }
+        txtVoiceRecordingStatus.setText(statusText);
+    }
+
+    private Boolean isRecordAudioPermissionGranted() {
+        return ContextCompat.checkSelfPermission(
+                getContext(),
+                android.Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestRecordAudioPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+
+                PermissionsManager.get(getContext()).requestPermissions(
+                        this /* PermissionsResultCallback */,
+                        null /* activity */, Manifest.permission.RECORD_AUDIO);
+
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(boolean allGranted) {
+        if(allGranted){
+            startListening();
+        }else{
+
+        }
+    }
+
+
+    private RecognitionListener recognitionListener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle bundle) {
+            isVoiceRecording =true;
+            setVoiceRecordingStatus(VoiceRecordingStatus.READY_TO_LISTEN);
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+            setVoiceRecordingStatus(VoiceRecordingStatus.LISTENING);
+        }
+
+        @Override
+        public void onRmsChanged(float v) {
+
+        }
+
+        @Override
+        public void onBufferReceived(byte[] bytes) {
+
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+            isVoiceRecording =false;
+            mStripVisibilityGroup.showImportantNoticeStrip();
+        }
+
+        @Override
+        public void onError(int error) {
+            isVoiceRecording =false;
+
+            String errorMessage;
+            switch (error) {
+                case SpeechRecognizer.ERROR_AUDIO:
+                    errorMessage = "Audio error: Microphone not working or unavailable.";
+                    break;
+                case SpeechRecognizer.ERROR_CLIENT:
+                    errorMessage = "Client error: Invalid parameters or incorrect usage of SpeechRecognizer API.";
+                    break;
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                    errorMessage = "Insufficient permissions: RECORD_AUDIO permission not granted.";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK:
+                    errorMessage = "Network error: No internet connection or network issues.";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                    errorMessage = "Network timeout: Slow network response or server issues.";
+                    break;
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                    errorMessage = "No match: No recognition results found.";
+                    break;
+                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                    errorMessage = "Recognizer busy: Unable to process the request due to another ongoing process.";
+                    break;
+                case SpeechRecognizer.ERROR_SERVER:
+                    errorMessage = "Server error: Speech recognition server issues.";
+                    break;
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                    errorMessage = "Speech timeout: No speech input detected within the allowed time.";
+                    break;
+                default:
+                    errorMessage = "Unknown error occurred.";
+                    break;
+            }
+
+            txtVoiceRecordingStatus.setText(errorMessage);
+
+            new Handler().postDelayed(() -> {
+                mStripVisibilityGroup.showImportantNoticeStrip();
+            }, 1000);
+
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            ArrayList<String> resultList = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            if (resultList != null && !resultList.isEmpty()) {
+                String recognizedText = resultList.get(0);
+                // Do something with the recognizedText.
+
+                Log.d("SpeechToText", "onResults: " + recognizedText);
+
+                mListener.pickSuggestionManually(new SuggestedWordInfo(recognizedText, "", 0, 0, null, 0, 0));
+            }
+        }
+
+        @Override
+        public void onPartialResults(Bundle results) {
+            ArrayList<String> resultList = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            if (resultList != null && !resultList.isEmpty()) {
+                String recognizedText = resultList.get(0);
+                // Do something with the recognizedText.
+
+                Log.d("SpeechToText", "onResults: " + recognizedText);
+            }
+        }
+
+        @Override
+        public void onEvent(int i, Bundle bundle) {
+
+        }
+    };
+
 
 
 }
