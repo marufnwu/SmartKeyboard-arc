@@ -18,7 +18,6 @@ package com.android.inputmethod.latin.suggestions;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -797,7 +796,11 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     private void voiceKeyClick() {
         mStripVisibilityGroup.showVoiceRecordingStrip();
         if(isRecordAudioPermissionGranted()){
-            startListening();
+            if(!isVoiceRecording){
+                startListening();
+            }else {
+                speechRecognizer.stopListening();
+            }
         }else{
             setVoiceRecordingStatus(VoiceRecordingStatus.PERMISSION_NEEDED);
             requestRecordAudioPermission();
@@ -819,6 +822,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, lang);
         // intent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, Locale("bn-BD"));
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        //intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 3000);
+        //intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 5000);
 
 
 
@@ -971,7 +976,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
                 String recognizedText = resultList.get(0);
                 // Do something with the recognizedText.
 
-                Log.d("SpeechToText", "onResults: " + recognizedText);
+                Log.d("SpeechToText", "onPartialResults: " + recognizedText);
             }
         }
 

@@ -25,7 +25,6 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodSubtype;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -41,7 +40,6 @@ import com.android.inputmethod.latin.InputView;
 import com.android.inputmethod.latin.LatinIME;
 import com.android.inputmethod.latin.RichInputMethodManager;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
-import com.android.inputmethod.latin.common.Constants;
 import com.sikderithub.keyboard.R;
 
 import com.android.inputmethod.latin.WordComposer;
@@ -56,10 +54,7 @@ import com.android.inputmethod.latin.utils.ScriptUtils;
 import com.android.inputmethod.utils.LanguageSwitcher;
 import com.sikderithub.keyboard.Utils.CustomThemeHelper;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
     private static final String TAG = KeyboardSwitcher.class.getSimpleName();

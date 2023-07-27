@@ -28,13 +28,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
@@ -47,9 +45,6 @@ import com.android.inputmethod.keyboard.Key;
 import com.android.inputmethod.keyboard.KeyDetector;
 import com.android.inputmethod.keyboard.Keyboard;
 import com.android.inputmethod.keyboard.KeyboardActionListener;
-import com.android.inputmethod.keyboard.KeyboardView;
-import com.android.inputmethod.keyboard.MoreKeysKeyboard;
-import com.android.inputmethod.keyboard.MoreKeysKeyboardView;
 import com.android.inputmethod.keyboard.MoreKeysPanel;
 import com.android.inputmethod.keyboard.PointerTracker;
 import com.android.inputmethod.keyboard.internal.DrawingPreviewPlacerView;
@@ -60,15 +55,11 @@ import com.android.inputmethod.keyboard.internal.KeyDrawParams;
 import com.android.inputmethod.keyboard.internal.KeyPreviewChoreographer;
 import com.android.inputmethod.keyboard.internal.KeyPreviewDrawParams;
 import com.android.inputmethod.keyboard.internal.KeyPreviewView;
-import com.android.inputmethod.keyboard.internal.MoreKeySpec;
 import com.android.inputmethod.keyboard.internal.NonDistinctMultitouchHelper;
 import com.android.inputmethod.keyboard.internal.SlidingKeyInputDrawingPreview;
-import com.android.inputmethod.keyboard.internal.TimerHandler;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
 
-import com.android.inputmethod.latin.SuggestedWords;
 import com.android.inputmethod.latin.common.Constants;
-import com.android.inputmethod.latin.common.CoordinateUtils;
 import com.android.inputmethod.latin.settings.DebugSettings;
 import com.android.inputmethod.latin.utils.LanguageOnSpacebarUtils;
 import com.android.inputmethod.latin.utils.TypefaceUtils;
@@ -79,7 +70,6 @@ import com.android.inputmethod.utils.SlidingLocaleDrawable;
 import java.util.WeakHashMap;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * A view that is responsible for detecting key presses and touch movements.

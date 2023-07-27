@@ -24,7 +24,7 @@ public class PhoneticBangla {
             "B", "M", "Z", "^"};
     public String dchar[] = {"rr", "ng", "Tw", "Tm", "Ty", "DD", "Dy", "NT",
             "nc", "jj", "jy", "jr", "jw", "cy", "gg", "kt", "hh", "HH", "SH",
-            "tT", "hl", "hr", "hy", "hm", "hw", "sp", "sn", "st", "sT", "hn",
+            "tT", "hl", "hr", "hy", "hm", "hw", "sp", "sn", "st", "sT", "kh", "hn",
             "hN", "sl", "sr", "sy", "sm", "sw", "sf", "Sl", "Sr", "Sy", "Sm",
             "Sw", "Sn", "St", "sk", "lg", "lk", "zy", "ml", "Sc", "ll", "ly",
             "lm", "lv", "lw", "lb", "lp", "lD", "lT", "bl", "br", "by", "bb",
@@ -33,11 +33,11 @@ public class PhoneticBangla {
             "pp", "pn", "pt", "pT", "ns", "ny", "nm", "dr", "dy", "dm", "dv",
             "dw", "nd", "nt", "nD", "nT", "Ny", "Nm", "Nw", "Nn", "dd", "dg",
             "tr", "ty", "tm", "tw", "tn", "tt", "TT", "nj", "ee", "oo", "OI",
-            "OU", "kh", "gh", "Ng", "ch", "jh", "NG", "Th", "Dh", "th", "dh",
+            "OU", "gh", "Ng", "ch", "jh", "NG", "Th", "Dh", "th", "dh",
             "ph", "bh", "sh", "Sh", "Rh", "kk", "kT", "kw", "km", "ky", "kr",
             "kl", "kx", "ks", "gN", "dn", "gn", "gw", "gm", "gy", "gr", "gl",
             "cc", "Kh", "Gh", "Ch", "Jh", "Ph", "Bh", "cr", "ND", "Dr", "Cr",
-            "nk", "Tr", "Dz", "vw"
+            "nk", "Tr", "Dz", "vw", "cw", "qq", "ry"
     };
     public String tchar[] = {"spr", "NTh", "Dhr", "NDh", "NDy", "Dhy", "NGc",
             "jjh", "jjw", "ghn", "ktr", "kTr", "nTr", "ngo", "sth", "sty",
@@ -50,7 +50,7 @@ public class PhoneticBangla {
             "dgh", "thr", "thy", "thw", "tmy", "tth", "ttw", "NGj", "nch",
             "kkh", "kxw", "kxm", "kxy", "khy", "khr", "gdh", "gny",
             "ghy", "ghr", "Ngk", "nky", "Ngg", "Ngm", "cch", "nDr",
-            "NDr", "dvr", "chr", "gru", "grU", "lTr", "cNG", "jNG"};
+            "NDr", "dvr", "chr", "gru", "grU", "lTr", "cNG", "jNG", "sky", "skZ"};
     String qchar[] = {"hrri", "sthy", "Shkr", "Shph", "Shpr", "ShTh", "ShTr",
             "ShTy", "rrkhy", "rrky", "rrkh", "shch", "mbhr", "ndhr", "ndhy",
             "NGch", "kkhw", "kkhN", "kkhm", "kkhy", "Ngky", "Ngkx", "Ngkh",
@@ -194,6 +194,9 @@ public class PhoneticBangla {
         jbr = new HashMap<String, String>();
 
         jbr.put("rrgr", "র্গ্র");
+        jbr.put("ry", "র\u200D্য");
+
+
         jbr.put("spr", "স্প্র‌");
         jbr.put("rr", "র্");
         jbr.put("kk", "ক্ক");
@@ -450,6 +453,8 @@ public class PhoneticBangla {
         jbr.put("Shw", "ষ্ব");
         jbr.put("Shm", "ষ্ম");
         jbr.put("sk", "স্ক");
+        jbr.put("sky", "স্ক্য");
+        jbr.put("skZ", "স্ক্য");
         jbr.put("sht", "শ্ত");
         jbr.put("St", "শ্ত");
         jbr.put("shn", "শ্ন");
@@ -510,6 +515,8 @@ public class PhoneticBangla {
         jbr.put("chr", "ছ্র");
         jbr.put("dbhr", "দ্ভ্র");
         jbr.put("vw", "ভ্ব");
+        jbr.put("cw", "চ্ব");
+        jbr.put("qq", "ঁ");
 
     }
 
@@ -556,7 +563,10 @@ public class PhoneticBangla {
         ps = chng3(s.toString(), "X");
         s = ps;
 
-        Log.d(TAG, "afterChangeX: "+s);
+        //Log.d(TAG, "afterChangeX: "+s);
+
+        ps = chng2(s.toString(), "rri");
+        s = ps;
 
         //x
         // 5 char er gulan
@@ -569,7 +579,7 @@ public class PhoneticBangla {
         // 4 char er gulan
         for (int i = 0; i < qchar.length; i++) {
             String value = jbr.get(qchar[i]);
-            if(value==null)
+            if (value == null)
                 continue;
 
             ps = chng(s.toString(), qchar[i], value);
@@ -577,24 +587,20 @@ public class PhoneticBangla {
         }
         // 4 char er gulan
 
+
         // 3char er gulan
         for (int i = 0; i < tchar.length; i++) {
             String value = jbr.get(tchar[i]);
-            if(value==null)
+            if (value == null)
                 continue;
             ps = chng(s.toString(), tchar[i], value);
             s = ps;
         }
 
-        ps = chng2(s.toString(), "rri");
-        s = ps;
         // 3char er gulan
 
         // 2char er gulan
         for (int i = 0; i < dchar.length; i++) {
-
-
-
             if (srb.containsKey(dchar[i])) {
                 ps = chng2(s.toString(), dchar[i]);
                 s = ps;
@@ -607,6 +613,9 @@ public class PhoneticBangla {
             }
 
         }
+
+        //Log.d(TAG, "phonetic: "+s);
+
         // 2char er gulan
 
         // single char
@@ -654,7 +663,8 @@ public class PhoneticBangla {
                     /*if (("" + txt.charAt(i-1)).compareToIgnoreCase("k") == 0){
                         sx.append(txt.charAt(i));
                     }
-                    else*/ if (isAlphabet(txt.charAt(i - 1)))
+                    else*/
+                    if (isAlphabet(txt.charAt(i - 1)))
                         sx.append("ক্স");
                     else
                         sx.append("এক্স");
@@ -666,11 +676,11 @@ public class PhoneticBangla {
     }
 
 
-    @SuppressLint("SuspiciousIndentation")
     public StringBuilder chng2(String txt, String ch) {
 
         StringBuilder sx = new StringBuilder();
         sx.append(txt);
+
         if (ch.compareToIgnoreCase("a") == 0) {
             StringBuilder asx = new StringBuilder();
             for (int i = 0; i < txt.length(); i++) {
@@ -694,6 +704,10 @@ public class PhoneticBangla {
                             || jbr.containsKey("" + txt.charAt(i - 1)) || jbr
                             .containsValue("" + txt.charAt(i - 1))))
                         asx.append("া");
+                    else if (("" + txt.charAt(i)).compareToIgnoreCase("y") == 0 && (bbr.containsValue("" + txt.charAt(i - 1)) || bbr.containsKey("" + txt.charAt(i - 1))
+                            || jbr.containsKey("" + txt.charAt(i - 1)) || jbr
+                            .containsValue("" + txt.charAt(i - 1))))
+                        asx.append("্য");
                     else
                         asx.append(txt.charAt(i));
                 }

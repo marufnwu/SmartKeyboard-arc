@@ -2,8 +2,6 @@ package com.android.inputmethod.utils;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +25,6 @@ import com.android.inputmethod.latin.common.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class MyLatinIME extends LatinIME implements DrawingProxy {
     static final String TAG = MyLatinIME.class.getSimpleName();

@@ -59,8 +59,6 @@ import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.nativead.NativeAd;
-import com.google.android.gms.ads.nativead.NativeAdView;
 import com.sikderithub.keyboard.Models.Theme;
 import com.sikderithub.keyboard.MyApp;
 import com.sikderithub.keyboard.R;

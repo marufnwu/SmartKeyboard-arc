@@ -24,13 +24,13 @@ apply plugin: 'kotlin-android'
 
 android {
     // Required if using classes in android.test.runner
-    useLibrary 'android.test.runner'
+    //useLibrary 'android.test.runner'
 
     // Required if using classes in android.test.base
-    useLibrary 'android.test.base'
+    //useLibrary 'android.test.base'
 
     // Required if using classes in android.test.mock
-    useLibrary 'android.test.mock'
+    //useLibrary 'android.test.mock'
     namespace 'com.sikderithub.keyboard'
     defaultConfig {
         minSdkVersion 21
@@ -127,15 +127,16 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference:1.2.0'
+    //implementation 'org.testng:testng:6.9.6'
 
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation "org.mockito:mockito-core:1.9.5"
-    androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
-    androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-
-    androidTestImplementation 'androidx.test:runner:1.4.0'
+    implementation 'junit:junit:4.13.2'
+//    androidTestImplementation "org.mockito:mockito-core:1.9.5"
+//    androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
+//    androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//
+//    androidTestImplementation 'androidx.test:runner:1.4.0'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:32.1.0')

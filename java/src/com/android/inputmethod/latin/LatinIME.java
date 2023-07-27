@@ -103,7 +103,6 @@ import com.android.inputmethod.latin.utils.SubtypeLocaleUtils;
 import com.android.inputmethod.latin.utils.ViewLayoutUtils;
 import com.android.inputmethod.utils.LanguageSwitcher;
 import com.sikderithub.keyboard.Utils.CustomThemeHelper;
-import com.sikderithub.keyboard.Views.GkView;
 import com.sikderithub.keyboard.R;
 import com.sikderithub.keyboard.Views.SavedGkViews;
 

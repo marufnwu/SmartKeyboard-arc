@@ -33,7 +33,7 @@ import com.android.inputmethod.latin.DictionaryFacilitatorLruCache;
 import com.android.inputmethod.latin.NgramContext;
 import com.android.inputmethod.latin.RichInputMethodSubtype;
 import com.sikderithub.keyboard.R;
-import com.sikderithub.keyboard.R;import com.android.inputmethod.latin.SuggestedWords;
+import com.android.inputmethod.latin.SuggestedWords;
 import com.android.inputmethod.latin.common.ComposedData;
 import com.android.inputmethod.latin.settings.SettingsValuesForSuggestion;
 import com.android.inputmethod.latin.utils.AdditionalSubtypeUtils;
