@@ -50,7 +50,7 @@ public class PhoneticBangla {
             "dgh", "thr", "thy", "thw", "tmy", "tth", "ttw", "NGj", "nch",
             "kkh", "kxw", "kxm", "kxy", "khy", "khr", "gdh", "gny",
             "ghy", "ghr", "Ngk", "nky", "Ngg", "Ngm", "cch", "nDr",
-            "NDr", "dvr", "chr", "gru", "grU", "lTr", "cNG", "jNG", "sky", "skZ"};
+            "NDr", "dvr", "chr", "gru", "grU", "lTr", "cNG", "jNG", "sky", "skZ", "str"};
     String qchar[] = {"hrri", "sthy", "Shkr", "Shph", "Shpr", "ShTh", "ShTr",
             "ShTy", "rrkhy", "rrky", "rrkh", "shch", "mbhr", "ndhr", "ndhy",
             "NGch", "kkhw", "kkhN", "kkhm", "kkhy", "Ngky", "Ngkx", "Ngkh",
@@ -490,6 +490,7 @@ public class PhoneticBangla {
         jbr.put("sTr", "স্ট্র");
         jbr.put("skh", "স্খ");
         jbr.put("st", "স্ত");
+        jbr.put("str", "স্ত্র");
         jbr.put("stw", "স্ত্ব");
         jbr.put("sty", "স্ত্য");
         jbr.put("stZ", "স্ত্য");
@@ -631,6 +632,8 @@ public class PhoneticBangla {
         }
         // single char
 
+        Log.d(TAG, "phonetic: "+s);
+
 
         // o re replace krtesi
         ps = chng(s.toString(), "o", "");
@@ -705,9 +708,16 @@ public class PhoneticBangla {
                             .containsValue("" + txt.charAt(i - 1))))
                         asx.append("া");
                     else if (("" + txt.charAt(i)).compareToIgnoreCase("y") == 0 && (bbr.containsValue("" + txt.charAt(i - 1)) || bbr.containsKey("" + txt.charAt(i - 1))
-                            || jbr.containsKey("" + txt.charAt(i - 1)) || jbr
-                            .containsValue("" + txt.charAt(i - 1))))
+                            || jbr.containsKey("" + txt.charAt(i - 1)) || jbr.containsValue("" + txt.charAt(i - 1)))
+                            && (!srb.containsValue(""+txt.charAt(i-1)) && !srb.containsValue(bbr.get(String.valueOf(txt.charAt(i-1)))))
+                            ){
+                        Log.d(TAG, "chng2: "+srb.containsValue(""+txt.charAt(i-1)));
+                        Log.d(TAG, "chng2: "+txt.charAt(i-1));
+                        Log.d(TAG, "chng2: "+bbr.get(String.valueOf(txt.charAt(i-1))));
                         asx.append("্য");
+                    }
+
+
                     else
                         asx.append(txt.charAt(i));
                 }
