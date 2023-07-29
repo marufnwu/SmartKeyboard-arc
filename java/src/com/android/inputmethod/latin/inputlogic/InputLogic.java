@@ -292,7 +292,7 @@ public final class InputLogic {
             final SuggestedWordInfo suggestionInfo, final int keyboardShiftState,
             final int currentKeyboardScriptId, final LatinIME.UIHandler handler) {
         final SuggestedWords suggestedWords = mSuggestedWords;
-        final String suggestion = suggestionInfo.mWord;
+        String suggestion = suggestionInfo.mWord;
         // If this is a punctuation picked from the suggestion strip, pass it to onCodeInput
         if (suggestion.length() == 1 && suggestedWords.isPunctuationSuggestions()) {
             // We still want to log a suggestion click.
@@ -337,13 +337,16 @@ public final class InputLogic {
             return inputTransaction;
         }
 
+
+        suggestion+=Constants.STRING_SPACE;
         commitChosenWord(settingsValues, suggestion, LastComposedWord.COMMIT_TYPE_MANUAL_PICK,
                 LastComposedWord.NOT_A_SEPARATOR);
+
         mConnection.endBatchEdit();
         // Don't allow cancellation of manual pick
         mLastComposedWord.deactivate();
         // Space state must be updated before calling updateShiftState
-        mSpaceState = SpaceState.PHANTOM;
+        mSpaceState = SpaceState.NONE;
         inputTransaction.requireShiftUpdate(InputTransaction.SHIFT_UPDATE_NOW);
 
         // If we're not showing the "Touch again to save", then update the suggestion strip.
@@ -979,7 +982,7 @@ public final class InputLogic {
             }
         }
 
-        final boolean swapWeakSpace = tryStripSpaceAndReturnWhetherShouldSwapInstead(event,
+        final boolean swapWeakSpace =tryStripSpaceAndReturnWhetherShouldSwapInstead(event,
                 inputTransaction);
 
         final boolean isInsideDoubleQuoteOrAfterDigit = Constants.CODE_DOUBLE_QUOTE == codePoint
@@ -999,6 +1002,7 @@ public final class InputLogic {
         } else {
             needsPrecedingSpace = settingsValues.isUsuallyPrecededBySpace(codePoint);
         }
+
 
         if (needsPrecedingSpace) {
             insertAutomaticSpaceIfOptionsAndTextAllow(settingsValues);
