@@ -50,7 +50,8 @@ public class PhoneticBangla {
             "dgh", "thr", "thy", "thw", "tmy", "tth", "ttw", "NGj", "nch",
             "kkh", "kxw", "kxm", "kxy", "khy", "khr", "gdh", "gny",
             "ghy", "ghr", "Ngk", "nky", "Ngg", "Ngm", "cch", "nDr",
-            "NDr", "dvr", "chr", "gru", "grU", "lTr", "cNG", "jNG", "sky", "skZ", "str"};
+            "NDr", "dvr", "chr", "gru", "grU", "lTr", "cNG", "jNG",
+            "sky", "skZ", "str", "ttm"};
     String qchar[] = {"hrri", "sthy", "Shkr", "Shph", "Shpr", "ShTh", "ShTr",
             "ShTy", "rrkhy", "rrky", "rrkh", "shch", "mbhr", "ndhr", "ndhy",
             "NGch", "kkhw", "kkhN", "kkhm", "kkhy", "Ngky", "Ngkx", "Ngkh",
@@ -301,12 +302,14 @@ public class PhoneticBangla {
         jbr.put("nj", "ঞ্জ");
         jbr.put("NGj", "ঞ্জ");
         jbr.put("TT", "ট্ট");
-        jbr.put("tt", "ত্ত");
         jbr.put("ttw", "ত্ত্ব");
         jbr.put("tth", "ত্থ");
         jbr.put("tn", "ত্ন");
         jbr.put("tw", "ত্ব");
         jbr.put("tm", "ত্ম");
+        jbr.put("tt", "ত্ত");
+        jbr.put("ttm", "ত্তম");
+
 
         jbr.put("tmy", "ত্ম্য");
         jbr.put("tmZ", "ত্ম্য");
@@ -711,6 +714,7 @@ public class PhoneticBangla {
                         asx.append("া");
                     else if (("" + txt.charAt(i)).compareToIgnoreCase("y") == 0 && (bbr.containsValue("" + txt.charAt(i - 1)) || bbr.containsKey("" + txt.charAt(i - 1))
                             || jbr.containsKey("" + txt.charAt(i - 1)) || jbr.containsValue("" + txt.charAt(i - 1)))
+                            && !("" + txt.charAt(i - 1)).equals("ঁ")
                             && (!srb.containsValue(""+txt.charAt(i-1)) && !srb.containsValue(bbr.get(String.valueOf(txt.charAt(i-1)))))
                             ){
                         Log.d(TAG, "chng2: "+srb.containsValue(""+txt.charAt(i-1)));
