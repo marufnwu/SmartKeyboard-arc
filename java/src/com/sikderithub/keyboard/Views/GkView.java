@@ -539,7 +539,6 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
     public void stopGkView(){
         pause = true;
-
     }
 
 }

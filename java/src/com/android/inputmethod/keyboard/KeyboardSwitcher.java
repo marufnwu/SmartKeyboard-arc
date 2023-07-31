@@ -53,6 +53,7 @@ import com.android.inputmethod.latin.utils.ResourceUtils;
 import com.android.inputmethod.latin.utils.ScriptUtils;
 import com.android.inputmethod.utils.LanguageSwitcher;
 import com.sikderithub.keyboard.Utils.CustomThemeHelper;
+import com.sikderithub.keyboard.Views.TopView;
 
 import javax.annotation.Nonnull;
 
@@ -79,6 +80,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
     private static final KeyboardSwitcher sInstance = new KeyboardSwitcher();
     private LinearLayout mSavedGkView;
+    private TopView mTopView;
 
 
     public static KeyboardSwitcher getInstance() {
@@ -91,6 +93,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
     public static void init(final LatinIME latinIme) {
         sInstance.initInternal(latinIme);
+        CustomThemeHelper.loadSelectedCustomTheme();
     }
 
     private void initInternal(final LatinIME latinIme) {
@@ -616,6 +619,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
                 R.id.emoji_palettes_view);
         
         mSavedGkView = mMainKeyboardFrame.findViewById(R.id.saved_gk_view);
+        mTopView = mMainKeyboardFrame.findViewById(R.id.topView);
 
         mKeyboardView = (MainKeyboardView) mCurrentInputView.findViewById(R.id.keyboard_view);
         mKeyboardView.setHardwareAcceleratedDrawingEnabled(isHardwareAcceleratedDrawingEnabled);

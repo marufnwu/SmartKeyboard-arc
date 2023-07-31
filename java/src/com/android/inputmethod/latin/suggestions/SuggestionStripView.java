@@ -199,8 +199,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public SuggestionStripView(final Context context, final AttributeSet attrs,
-                               final int defStyle) {
+    public SuggestionStripView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
         final LayoutInflater inflater = LayoutInflater.from(context);

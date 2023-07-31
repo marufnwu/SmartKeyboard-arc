@@ -55,7 +55,7 @@ public class PhoneticBangla {
     String qchar[] = {"hrri", "sthy", "Shkr", "Shph", "Shpr", "ShTh", "ShTr",
             "ShTy", "rrkhy", "rrky", "rrkh", "shch", "mbhr", "ndhr", "ndhy",
             "NGch", "kkhw", "kkhN", "kkhm", "kkhy", "Ngky", "Ngkx", "Ngkh",
-            "Nggy", "Nggh", "cchw", "cchr", "dbhr", "rrgr", "NGjh", "rrgg"};
+            "Nggy", "Nggh", "cchw", "cchr", "dbhr", "rrgr", "NGjh", "rrgg", "rrgh"};
     String fchar[] = {"ShThy", "Ngkkh", "Ngghy", "Ngghr"};
 
     public PhoneticBangla() {
@@ -436,6 +436,7 @@ public class PhoneticBangla {
         jbr.put("rrk", "র্ক");
         jbr.put("rrkh", "র্খ");
         jbr.put("rrg", "র্গ");
+        jbr.put("rrgh", "র্ঘ");
         jbr.put("rrgg", "র্জ্ঞ");
         jbr.put("rrky", "র্ক্য");
         jbr.put("rrkZ", "র্ক্য");

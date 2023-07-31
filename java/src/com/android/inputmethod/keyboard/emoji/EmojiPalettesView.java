@@ -321,6 +321,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         //mNativeAdView = findViewById(R.id.my_template);
         //loadNativeAd();
         //loadBannerAd();
+
+        updateGkView();
     }
 
     private void loadNativeAd() {
@@ -365,7 +367,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         final int categoryId = mEmojiCategory.getCategoryId(tabId);
         setCurrentCategoryId(categoryId, false /* force */);
         updateEmojiCategoryPageIdView();
-        updateGkView();
+        //updateGkView();
     }
 
     @Override
@@ -377,7 +379,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mEmojiCategory.setCurrentCategoryPageId(newPos.second /* categoryPageId */);
         updateEmojiCategoryPageIdView();
         mCurrentPagerPosition = position;
-        updateGkView();
+        //updateGkView();
 
     }
 
@@ -526,6 +528,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mEmojiPalettesAdapter.releaseCurrentKey(true /* withKeyRegistering */);
         mEmojiPalettesAdapter.flushPendingRecentKeys();
         mEmojiPager.setAdapter(null);
+        gkView.stopGkView();
     }
 
     public void setKeyboardActionListener(final KeyboardActionListener listener) {

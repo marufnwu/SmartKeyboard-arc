@@ -89,5 +89,6 @@
     <!--Mj Light theme-->
     <color name="keyboard_background_mj_light">#ECF9FF</color>
     <color name="key_text_color_mj_light">@android:color/black</color>
+    <color name="mj_light_key_color">#A2DCF6</color>
 
 </resources>
