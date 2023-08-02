@@ -18,7 +18,7 @@
 */
 -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="KeyboardIcons" />
     <style name="InputView" />
     <!-- Default theme values -->
@@ -35,6 +35,7 @@
         <item name="maxMoreKeysColumn">@integer/config_max_more_keys_column</item>
     </style>
     <style name="KeyboardView">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- This keyBackground is needed to run unit tests based on {@link InputTestBase}. -->
         <!-- TODO: Apply default {@link KeyboardTheme} to {@link InputTestBase} and remove this. -->
         <item name="keyBackground">@drawable/btn_keyboard_key_klp</item>

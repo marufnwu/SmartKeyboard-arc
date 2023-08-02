@@ -3,7 +3,7 @@
     <com.sikderithub.keyboard.Views.NativeAd.TemplateView
         android:id="@+id/templateView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/native_ad_gk_view_size"
     />
 
     <ImageView

@@ -631,7 +631,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
             if(mCurrentPagerPosition==0){
                 gkView.startGkView(true);
 
-                gkView.setVisibility(VISIBLE);
+                //gkView.setVisibility(VISIBLE);
                 updateViewSize();
                 return;
             }

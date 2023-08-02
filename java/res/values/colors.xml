@@ -87,8 +87,8 @@
     <color name="notification_accent_color">#FF607D8B</color>
 
     <!--Mj Light theme-->
-    <color name="keyboard_background_mj_light">#ECF9FF</color>
-    <color name="key_text_color_mj_light">@android:color/black</color>
-    <color name="mj_light_key_color">#A2DCF6</color>
+    <color name="keyboard_background_mj_light">#000000</color>
+    <color name="key_text_color_mj_light">@android:color/white</color>
+    <color name="mj_light_key_color">#000000</color>
 
 </resources>

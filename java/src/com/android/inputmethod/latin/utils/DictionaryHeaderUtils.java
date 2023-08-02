@@ -26,6 +26,9 @@ public class DictionaryHeaderUtils {
     public static int getContentVersion(AssetFileAddress fileAddress) {
         final DictionaryHeader header = DictionaryInfoUtils.getDictionaryFileHeaderOrNull(
                 new File(fileAddress.mFilename), fileAddress.mOffset, fileAddress.mLength);
+        if(header==null){
+            return 0;
+        }
         return Integer.parseInt(header.mVersionString);
     }
 }

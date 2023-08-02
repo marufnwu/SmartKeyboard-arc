@@ -43,7 +43,7 @@
         name="KeyboardView.MJ_Light"
         parent="KeyboardView.MJ">
         <item name="android:background">@color/keyboard_background_mj_light</item>
-        <item name="keyBackground">@drawable/btn_keyboard_key_custom</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_mj_light</item>
         <item name="functionalKeyBackground">@drawable/btn_keyboard_key_functional_mj_light</item>
         <item name="spacebarBackground">@drawable/space_key_background_mj_light</item>
         <item name="keyTextColor">@color/key_text_color_mj_light</item>
@@ -60,7 +60,7 @@
         parent="KeyboardView.MJ_Light"
     >
 
-        <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_ics</item>
+        <item name="keyPreviewBackground">@drawable/keyboard_key_feedback_background_klp</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height_holo</item>
         <item name="keyPreviewOffset">@dimen/config_key_preview_offset_holo</item>
         <item name="keyPreviewShowUpAnimator">@anim/key_preview_show_up_holo</item>
@@ -69,7 +69,7 @@
         <item name="gestureFloatingPreviewColor">@color/gesture_floating_preview_color_holo</item>
         <item name="gestureTrailColor">@color/highlight_color_ics</item>
         <item name="slidingKeyInputPreviewColor">@color/highlight_translucent_color_ics</item>
-        <item name="languageOnSpacebarTextColor">@android:color/black</item>
+        <item name="languageOnSpacebarTextColor">@android:color/white</item>
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
         <item name="languageOnSpacebarTextShadowColor">@color/spacebar_text_shadow_color_holo</item>
         <item name="spaceBarLeftIcon">@drawable/baseline_arrow_left_black</item>
@@ -83,25 +83,25 @@
         parent="MainKeyboardView.MJ_Light"
     >
         <item name="categoryIndicatorEnabled">false</item>
-        <item name="categoryPageIndicatorColor">@color/highlight_color_lxx_light</item>
-        <item name="categoryPageIndicatorBackground">@color/emoji_tab_page_indicator_background_lxx_light</item>
-        <item name="iconEmojiRecentsTab">@drawable/ic_emoji_recents_lxx_light</item>
-        <item name="iconEmojiCategory1Tab">@drawable/ic_emoji_people_lxx_light</item>
-        <item name="iconEmojiCategory2Tab">@drawable/ic_emoji_objects_lxx_light</item>
-        <item name="iconEmojiCategory3Tab">@drawable/ic_emoji_nature_lxx_light</item>
-        <item name="iconEmojiCategory4Tab">@drawable/ic_emoji_places_lxx_light</item>
-        <item name="iconEmojiCategory5Tab">@drawable/ic_emoji_symbols_lxx_light</item>
-        <item name="iconEmojiCategory6Tab">@drawable/ic_emoji_emoticons_lxx_light</item>
-        <item name="iconEmojiCategory7Tab">@drawable/ic_emoji_flag_lxx_light</item>
-        <item name="iconEmojiCategory8Tab">@drawable/ic_emoji_people_lxx_light</item>
-        <item name="iconEmojiCategory9Tab">@drawable/ic_emoji_nature_lxx_light</item>
-        <item name="iconEmojiCategory10Tab">@drawable/ic_emoji_food_lxx_light</item>
-        <item name="iconEmojiCategory11Tab">@drawable/ic_emoji_places_lxx_light</item>
-        <item name="iconEmojiCategory12Tab">@drawable/ic_emoji_activity_lxx_light</item>
-        <item name="iconEmojiCategory13Tab">@drawable/ic_emoji_objects_lxx_light</item>
-        <item name="iconEmojiCategory14Tab">@drawable/ic_emoji_symbols_lxx_light</item>
-        <item name="iconEmojiCategory15Tab">@drawable/ic_emoji_flag_lxx_light</item>
-        <item name="iconEmojiCategory16Tab">@drawable/ic_emoji_people_lxx_light</item>
+        <item name="categoryPageIndicatorColor">@color/highlight_color_lxx_dark</item>
+        <item name="categoryPageIndicatorBackground">@color/gnt_black</item>
+        <item name="iconEmojiRecentsTab">@drawable/ic_emoji_recents_lxx_dark</item>
+        <item name="iconEmojiCategory1Tab">@drawable/ic_emoji_people_lxx_dark</item>
+        <item name="iconEmojiCategory2Tab">@drawable/ic_emoji_objects_lxx_dark</item>
+        <item name="iconEmojiCategory3Tab">@drawable/ic_emoji_nature_lxx_dark</item>
+        <item name="iconEmojiCategory4Tab">@drawable/ic_emoji_places_lxx_dark</item>
+        <item name="iconEmojiCategory5Tab">@drawable/ic_emoji_symbols_lxx_dark</item>
+        <item name="iconEmojiCategory6Tab">@drawable/ic_emoji_emoticons_lxx_dark</item>
+        <item name="iconEmojiCategory7Tab">@drawable/ic_emoji_flag_lxx_dark</item>
+        <item name="iconEmojiCategory8Tab">@drawable/ic_emoji_people_lxx_dark</item>
+        <item name="iconEmojiCategory9Tab">@drawable/ic_emoji_nature_lxx_dark</item>
+        <item name="iconEmojiCategory10Tab">@drawable/ic_emoji_food_lxx_dark</item>
+        <item name="iconEmojiCategory11Tab">@drawable/ic_emoji_places_lxx_dark</item>
+        <item name="iconEmojiCategory12Tab">@drawable/ic_emoji_activity_lxx_dark</item>
+        <item name="iconEmojiCategory13Tab">@drawable/ic_emoji_objects_lxx_dark</item>
+        <item name="iconEmojiCategory14Tab">@drawable/ic_emoji_symbols_lxx_dark</item>
+        <item name="iconEmojiCategory15Tab">@drawable/ic_emoji_flag_lxx_dark</item>
+        <item name="iconEmojiCategory16Tab">@drawable/ic_emoji_people_lxx_dark</item>
     </style>
     <style
         name="MoreKeysKeyboard.MJ_Light"
@@ -116,8 +116,8 @@
         name="MoreKeysKeyboardView.MJ_Light"
         parent="KeyboardView.MJ_Light"
     >
-        <item name="android:background">@drawable/keyboard_popup_panel_background_lxx_light</item>
-        <item name="keyBackground">@drawable/btn_keyboard_key_popup_lxx_light</item>
+        <item name="android:background">@drawable/keyboard_popup_panel_background_klp</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_popup_lxx_dark</item>
         <item name="divider">@drawable/more_keys_divider</item>
         <item name="keyTypeface">normal</item>
         <item name="verticalCorrection">@dimen/config_more_keys_keyboard_vertical_correction_holo</item>
@@ -127,7 +127,7 @@
         parent="MoreKeysKeyboardView.MJ_Light"
     >
         <item name="android:background">@android:color/transparent</item>
-        <item name="keyBackground">@drawable/btn_keyboard_key_popup_action_lxx_light</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_popup_action_lxx_dark</item>
         <item name="divider">@null</item>
         <item name="keyLabelFlags">keepBackgroundAspectRatio</item>
     </style>
@@ -158,12 +158,12 @@
         name="SuggestionWord.MJ_Light"
         parent="SuggestionWord"
     >
-        <item name="android:background">@drawable/btn_suggestion_lxx_light</item>
-        <item name="android:textColor">@color/highlight_color_lxx_light</item>
+        <item name="android:background">@drawable/btn_suggestion_lxx_dark</item>
+        <item name="android:textColor">@color/highlight_color_lxx_dark</item>
     </style>
 
     <style name="questionTextStyle.MJ_Light" parent="SuggestionStripView.MJ_Light">
-        <item name="questIonTextColor">@android:color/black</item>
+        <item name="questIonTextColor">@android:color/white</item>
     </style>
 
 </resources>

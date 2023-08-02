@@ -36,17 +36,18 @@ object CommonMethod {
 
     var ytChannel: String? = null
     var fbPage: String? = null
-    var accountAge : String? = null
+    var accountAge: String? = null
 
 
-
-    fun disableScreenCapture(activity: Activity){
-        activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE)
+    fun disableScreenCapture(activity: Activity) {
+        activity.window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
     }
 
 
-    fun getCurrentTimeUsingFormat(format: String,locale: Locale): String {
+    fun getCurrentTimeUsingFormat(format: String, locale: Locale): String {
         val dateFormat: SimpleDateFormat = SimpleDateFormat(format, locale)
         return dateFormat.format(Date()).toString()
     }
@@ -68,10 +69,11 @@ object CommonMethod {
             null
         }
     }
+
     fun getHoursDifBetweenToTime(startTime: Long, endTime: Long): Long {
         val date1 = startTime.toLong()
         val date2 = endTime.toLong()
-        val difference = date1-date2
+        val difference = date1 - date2
         val d = TimeUnit.MILLISECONDS.toHours(difference)
         Log.d("c", d.toString())
         return d
@@ -80,7 +82,7 @@ object CommonMethod {
     fun getMinDifBetweenToTime(startTime: Long, endTime: Long): Long {
         val date1 = startTime.toLong()
         val date2 = endTime.toLong()
-        val difference = date1-date2
+        val difference = date1 - date2
         val d = TimeUnit.MILLISECONDS.toMinutes(difference)
         Log.d("c", d.toString())
         return d
@@ -89,7 +91,7 @@ object CommonMethod {
     fun getSecDifBetweenToTime(startTime: Long, endTime: Long): Long {
         val date1 = startTime.toLong()
         val date2 = endTime.toLong()
-        val difference = date1-date2
+        val difference = date1 - date2
         val d = TimeUnit.MILLISECONDS.toSeconds(difference)
         return d
     }
@@ -108,40 +110,51 @@ object CommonMethod {
     }
 
     fun getMimeTypeFromUrl(url: String): String? {
-        var type: String?=null
-        val typeExtension: String=MimeTypeMap.getFileExtensionFromUrl(url)
+        var type: String? = null
+        val typeExtension: String = MimeTypeMap.getFileExtensionFromUrl(url)
         if (!typeExtension.isNullOrEmpty()) {
-            type=MimeTypeMap.getSingleton().getMimeTypeFromExtension(typeExtension)
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(typeExtension)
         }
         return type
     }
 
 
     fun openAppLink(context: Context) {
-        val appPackageName: String=context.applicationContext.packageName
+        val appPackageName: String = context.applicationContext.packageName
         try {
-            val appIntent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val appIntent: Intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("market://details?id=$appPackageName")
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             appIntent.setPackage("com.android.vending")
             context.startActivity(appIntent)
         } catch (e: ActivityNotFoundException) {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
         }
     }
 
     fun shareAppLink(context: Context) {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=${context.applicationContext.packageName}")
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "https://play.google.com/store/apps/details?id=${context.applicationContext.packageName}"
+            )
             type = "text/plain"
         }
         val shareIntent = Intent.createChooser(sendIntent, null)
         context.startActivity(shareIntent)
     }
 
-    fun openConsoleLink(context: Context,consoleId: String) {
+    fun openConsoleLink(context: Context, consoleId: String) {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_VIEW
-            data=Uri.parse("https://play.google.com/store/apps/developer?id=$consoleId")
+            data = Uri.parse("https://play.google.com/store/apps/developer?id=$consoleId")
         }
         val shareIntent = Intent.createChooser(sendIntent, null)
         context.startActivity(shareIntent)
@@ -149,27 +162,31 @@ object CommonMethod {
 
 
     fun openVideo(context: Context, videoId: String) {
-        val appIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse("vnd.youtube:$videoId"))
+        val appIntent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
         try {
             context.startActivity(appIntent)
         } catch (e: Exception) {
-            val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse("http://www.youtube.com/watch?v=$videoId"))
-            context.startActivity(Intent.createChooser(webIntent,"Choose one:"))
+            val webIntent: Intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$videoId"))
+            context.startActivity(Intent.createChooser(webIntent, "Choose one:"))
         }
     }
 
     fun haveInternet(connectivityManager: ConnectivityManager?): Boolean {
         return when {
-            connectivityManager==null -> {
+            connectivityManager == null -> {
                 false
             }
+
             Build.VERSION.SDK_INT >= 23 -> {
                 val network = connectivityManager.activeNetwork
-                val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+                val capabilities =
+                    connectivityManager.getNetworkCapabilities(network) ?: return false
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || capabilities.hasTransport(
                     NetworkCapabilities.TRANSPORT_WIFI
                 )
             }
+
             else -> {
                 (connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isAvailable
                         && connectivityManager.activeNetworkInfo!!.isConnected)
@@ -205,16 +222,20 @@ object CommonMethod {
 
 
     fun dpToPix(dp: Float, context: Context): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,context.resources.displayMetrics).toInt()
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            context.resources.displayMetrics
+        ).toInt()
     }
 
     fun subStringFromString(value: String, length: Int): String {
-        return value.substring(0,value.length-length)
+        return value.substring(0, value.length - length)
     }
 
 
-    fun openWhatsapp(ctx:Context, whatsAppBtn:View, mobile:String){
-       whatsAppBtn.setOnClickListener {
+    fun openWhatsapp(ctx: Context, whatsAppBtn: View, mobile: String) {
+        whatsAppBtn.setOnClickListener {
             try {
                 val msg = ""
                 ctx.startActivity(
@@ -233,9 +254,9 @@ object CommonMethod {
         }
     }
 
-    fun openLink(context: Context, url:String?){
+    fun openLink(context: Context, url: String?) {
 
-        if(url==null){
+        if (url == null) {
             return
         }
 
@@ -245,39 +266,42 @@ object CommonMethod {
         if (linkHost == null) {
             return
         }
-        if (linkHost == "play.google.com") {
-            val appId = uri.getQueryParameter("id")
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("market://details?id=$appId")
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
-        } else if (linkHost == "www.youtube.com") {
-            try {
+        try {
+            if (linkHost == "play.google.com") {
+                val appId = uri.getQueryParameter("id")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage("com.android.vending");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            } else if (linkHost == "www.youtube.com") {
+
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.setPackage("com.google.android.youtube")
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
                 context.startActivity(intent)
-            }catch (e : Exception){
+
+            } else if (url.startsWith("http://") || url.startsWith(
+                    "https://"
+                )
+            ) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
                 context.startActivity(intent)
             }
-        }
-        else if (url != null && (url.startsWith("http://") || url.startsWith(
-                "https://"
-            ))
-        ) {
+
+        } catch (e: Exception) {
+            e.printStackTrace()
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
             context.startActivity(intent)
         }
     }
 
-    fun keepScreenOn(ctx: Context){
+    fun keepScreenOn(ctx: Context) {
         (ctx as Activity).window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -293,20 +317,20 @@ object CommonMethod {
         return false
     }
 
-    fun openMediaPlayerApp(ctx:Context){
-        val intent =  Intent(android.content.Intent.ACTION_VIEW);
+    fun openMediaPlayerApp(ctx: Context) {
+        val intent = Intent(android.content.Intent.ACTION_VIEW);
 
         intent.data = Uri.parse("https://play.google.com/store/apps/details?id=com.lmp.video");
 
         ctx.startActivity(intent);
     }
 
-    fun getLotteryMiddle(number:String): String{
-        return number.toCharArray(number.length-4, (number.length-4)+2).joinToString("")
+    fun getLotteryMiddle(number: String): String {
+        return number.toCharArray(number.length - 4, (number.length - 4) + 2).joinToString("")
     }
 
-    fun  getLast2digit(number:String) : String{
-        return number.toCharArray(number.length-2, (number.length)).joinToString("")
+    fun getLast2digit(number: String): String {
+        return number.toCharArray(number.length - 2, (number.length)).joinToString("")
     }
 
 
@@ -315,9 +339,8 @@ object CommonMethod {
     }
 
 
-
     @SuppressLint("HardwareIds")
-    fun deviceId(context: Context) : String {
+    fun deviceId(context: Context): String {
         val id: String = Settings.Secure.getString(
             context.contentResolver,
             Settings.Secure.ANDROID_ID
@@ -327,12 +350,12 @@ object CommonMethod {
 
     }
 
-    fun generateMiddleSerial() : MutableList<String> {
+    fun generateMiddleSerial(): MutableList<String> {
         val list = mutableListOf<String>()
-        for (n in 0..100){
-            if(n<10){
+        for (n in 0..100) {
+            if (n < 10) {
                 list.add("0$n")
-            }else{
+            } else {
                 list.add("$n")
             }
         }
@@ -391,7 +414,7 @@ object CommonMethod {
         v.startAnimation(a)
     }
 
-     fun viewGoneAnimator(view: View) {
+    fun viewGoneAnimator(view: View) {
         view.animate()
             .alpha(0f)
             .setDuration(300)
@@ -402,7 +425,7 @@ object CommonMethod {
             })
     }
 
-     fun viewVisibleAnimator(view: View) {
+    fun viewVisibleAnimator(view: View) {
         view.animate()
             .alpha(1f)
             .setDuration(300)
@@ -416,7 +439,8 @@ object CommonMethod {
     @ColorInt
     fun getContrastColor(@ColorInt color: Int): Int {
         // Counting the perceptive luminance - human eye favors green color...
-        val a: Double = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
+        val a: Double =
+            1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
         val d: Int
         d = if (a < 0.5) {
             0 // bright colors - black font

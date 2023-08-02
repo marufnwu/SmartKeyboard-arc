@@ -79,7 +79,6 @@ public class TopView extends RelativeLayout {
             if(ct==ContentType.NONE){
                 setVisibility(GONE);
             }else {
-                setVisibility(VISIBLE);
 
                 if(ct==ContentType.AD){
                     //show ad content
@@ -98,11 +97,14 @@ public class TopView extends RelativeLayout {
     }
 
     private void loadUpdateBanner() {
-        imgUpdate.setVisibility(VISIBLE);
+
         mNativeAdView.setVisibility(GONE);
 
         String updateImgUrl = MyApp.getUpdateInfo().image_url;
         if(updateImgUrl!=null && !updateImgUrl.isEmpty()){
+            imgUpdate.setVisibility(VISIBLE);
+            setVisibility(VISIBLE);
+
             Glide.with(getContext())
                     .load(updateImgUrl)
                     .into(imgUpdate);
@@ -122,12 +124,18 @@ public class TopView extends RelativeLayout {
 
     private void showAd() {
         imgUpdate.setVisibility(GONE);
+        if(!Common.isAdShownAllowed()){
+            Log.d(TAG, "showAd: not allowed");
+            setVisibility(VISIBLE);
+            mNativeAdView.setVisibility(GONE);
+            return;
+
+        }
         mNativeAdView.setVisibility(VISIBLE);
         loadNativeAd();
     }
 
     private ContentType getContentType(){
-
         if(!isToadyAdShown()){
             return ContentType.AD;
         }else if(isUpdateAvailable()){
@@ -170,14 +178,18 @@ public class TopView extends RelativeLayout {
 //                                NativeTemplateStyle.Builder().withMainBackgroundColor(background).build();
 //                        mNativeAdView.setStyles(styles);
                     mNativeAdView.setNativeAd(nativeAd);
+                    setVisibility(VISIBLE);
+
                     mNativeAdView.setVisibility(VISIBLE);
                     requestLayout();
                     setAdAsShown();
+                    Log.d(TAG, "loadNativeAd: showing");
 
                 }).withAdListener(new AdListener() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                         super.onAdFailedToLoad(loadAdError);
+                        Log.d(TAG, "onAdFailedToLoad: "+loadAdError.getMessage());
                         mNativeAdView.setVisibility(GONE);
                         view.setVisibility(GONE);
                         measure(0, 0);

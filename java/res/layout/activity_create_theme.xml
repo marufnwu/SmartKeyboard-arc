@@ -179,10 +179,11 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textSize="14sp"
                 android:id="@+id/tvCancel"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:background="@drawable/btn_keyboard_key_normal_on_lxx_dark"
                 android:gravity="center"
@@ -190,15 +191,16 @@
                 android:textColor="@android:color/white" />
 
             <Button
-                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textSize="14sp"
                 android:textColor="@android:color/white"
                 android:background="@drawable/btn_keyboard_key_normal_on_lxx_dark"
-               android:padding="4dp"
+                android:padding="4dp"
                 android:id="@+id/tvSave"
                 android:layout_margin="4dp"
                 android:text="Save Theme"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"/>
+                android:layout_height="40dp"/>
         </LinearLayout>
 
         <com.android.inputmethod.keyboard.MainKeyboardView

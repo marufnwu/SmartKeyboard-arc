@@ -4,11 +4,11 @@
 
     <item android:drawable="@drawable/btn_keyboard_key_mj_light"/>
     <item
-        android:drawable="@drawable/baseline_arrow_left_black"
+        android:drawable="@drawable/baseline_arrow_left_white"
         android:gravity="start|center_vertical" />
 
     <!-- Add right drawable icon -->
     <item
-        android:drawable="@drawable/baseline_arrow_right_black"
+        android:drawable="@drawable/baseline_arrow_right_white"
         android:gravity="end|center_vertical" />
 </layer-list>

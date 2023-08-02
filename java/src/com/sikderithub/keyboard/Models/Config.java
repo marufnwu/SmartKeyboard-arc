@@ -10,8 +10,13 @@ public class Config {
     @PrimaryKey
     public int id;
     @ColumnInfo(defaultValue = "0")
+
     public int gk_view_ad_status = 0 ;
     @ColumnInfo(defaultValue = "0")
+
+    public int ad_hold_time = 2;
+    @ColumnInfo(defaultValue = "0")
+
     public int emoji_view_ad_status=0;
     @ColumnInfo(defaultValue = "0")
     public int gk_ad_interval=0;

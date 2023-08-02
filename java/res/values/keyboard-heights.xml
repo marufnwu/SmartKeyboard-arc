@@ -23,7 +23,7 @@
     <string-array name="keyboard_heights" translatable="false">
     <!-- Preferable keyboard height in absolute scale: 1.285in -->
         <!-- Droid -->
-        <item>HARDWARE=sholes,227.0167</item>
+        <item>HARDWARE=sholes, 227.0167</item>
         <!-- Nexus One -->
         <item>HARDWARE=mahimahi,217.5932</item>
         <!-- Nexus S -->

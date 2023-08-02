@@ -19,6 +19,7 @@ import com.sikderithub.keyboard.Models.GenericResponse;
 import com.sikderithub.keyboard.Models.Gk;
 import com.sikderithub.keyboard.Models.NotificationData;
 import com.sikderithub.keyboard.Models.Update;
+import com.sikderithub.keyboard.Utils.Common;
 import com.sikderithub.keyboard.internet.MyApi;
 import com.sikderithub.keyboard.local.Dao.QuestionDAO;
 import com.sikderithub.keyboard.local.Dao.QuestionDatabase;
@@ -52,7 +53,7 @@ public class MyApp extends Application {
 
         });
         //getConfigFromServer();
-
+        Common.setInstallTimeIfNotExits();
         registerFcmTopic();
     }
 

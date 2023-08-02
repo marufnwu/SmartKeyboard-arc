@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -29,14 +28,18 @@ import androidx.annotation.NonNull;
 
 import com.android.inputmethod.utils.GkEngine;
 import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.gson.Gson;
 import com.sikderithub.keyboard.Models.Theme;
 import com.sikderithub.keyboard.MyApp;
 import com.sikderithub.keyboard.R;
+import com.sikderithub.keyboard.Utils.Common;
 import com.sikderithub.keyboard.Utils.CustomThemeHelper;
+import com.sikderithub.keyboard.Views.NativeAd.TemplateView;
 
 public class GkView extends RelativeLayout implements View.OnTouchListener{
     private boolean isAdLoaded = false;
@@ -53,6 +56,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
     private final CountDownTimer countDownTimer;
     private int gkShowed = 0;
 
+    private TemplateView mNativeAdView;
     private final LinearLayout mAdView;
     private final RelativeLayout mGkHolder;
     private final LinearLayout mOptionalGkHolder;
@@ -75,6 +79,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
     private int contentReloadCount = 0;
     private int contentReloadThreshold = 3;
+    private NativeAd mNativeAd;
 
     private enum CURR_CONTENT{
         AD,
@@ -180,6 +185,8 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         popupWindow = new PopupWindow(popupView, width, height, true);
 
         mAdView = findViewById(R.id.adView);
+        mNativeAdView = findViewById(R.id.templateView);
+
         bannerAd = findViewById(R.id.bannerAd);
         bannerAd.setAdListener(new AdListener() {
             @Override
@@ -256,6 +263,34 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         showContent();
 
 
+    }
+
+    private void loadNativeAd() {
+        if(mNativeAd!=null && isAdLoaded){
+            return;
+        }
+
+        AdLoader adLoader = new AdLoader.Builder(getContext(), "ca-app-pub-3940256099942544/2247696110")
+                .forNativeAd(nativeAd -> {
+//                        NativeTemplateStyle styles = new
+//                                NativeTemplateStyle.Builder().withMainBackgroundColor(background).build();
+//                        mNativeAdView.setStyles(styles);
+                    isAdLoaded = true;
+                    mNativeAd = nativeAd;
+                    Log.d(TAG, "loadNativeAd: ad loaded");
+
+                }).withAdListener(new AdListener() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        super.onAdFailedToLoad(loadAdError);
+                        Log.d(TAG, "onAdFailedToLoad: "+loadAdError.getMessage());
+                        isAdLoaded = false;
+                        mNativeAd = null;
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
     }
 
     private void loadBannerAd(){
@@ -361,7 +396,8 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
                 if(gkShowed==MyApp.getConfig().gk_ad_interval-1){
                     Log.d(TAG, "showContent: banner ad load called");
-                    loadBannerAd();
+                    //loadBannerAd();
+                    loadNativeAd();
                 }
 
                 if(gkShowed==MyApp.getConfig().gk_ad_interval){
@@ -399,15 +435,18 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
             //gk view is hidden from server
             return false;
         }
+        gkShowed = 0;
 
-        if(MyApp.getConfig().gk_view_ad_status==0 || MyApp.getConfig().gk_view_ad_type!=1){
-            Log.d(TAG, "showAd: admob ad status is off");
+        if(MyApp.getConfig().gk_view_ad_status==0 || MyApp.getConfig().gk_view_ad_type!=1 || !Common.isAdShownAllowed()){
+            Log.d(TAG, "showContent: admob ad status is off");
 
-            if(contentReloadCount <= contentReloadThreshold){
-                delayAndShowContent(3000);
-                contentReloadCount +=1;
-                return false;
-            }
+//            if(contentReloadCount <= contentReloadThreshold){
+//                delayAndShowContent(3000);
+//                contentReloadCount +=1;
+//                return false;
+//            }
+
+            delayAndShowContent(3000);
 
             this.setVisibility(GONE);
             invalidate();
@@ -418,16 +457,20 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
 
 
 
-        if(!isAdLoaded){
+        if(!isAdLoaded || mNativeAd==null){
             Log.d(TAG, "showContent: ad not laoded");
-            loadBannerAd();
+            //loadBannerAd();
+            loadNativeAd();
             delayAndShowContent(2000);
+            return false;
         }
 
-        gkShowed = 0;
+
         mAdView.setVisibility(VISIBLE);
         mGkHolder.setVisibility(GONE);
         currContent = CURR_CONTENT.AD;
+
+        mNativeAdView.setNativeAd(mNativeAd);
 
 
 
@@ -447,6 +490,7 @@ public class GkView extends RelativeLayout implements View.OnTouchListener{
         Log.d(TAG, "showContent: gk is showing");
 
         gkShowed++;
+        this.setVisibility(VISIBLE);
         mAdView.setVisibility(GONE);
         mGkHolder.setVisibility(VISIBLE);
 

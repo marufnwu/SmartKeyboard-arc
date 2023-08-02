@@ -24,8 +24,6 @@
          We just need to ignore the system's audio and haptic feedback settings. -->
     <LinearLayout
         android:gravity="center_horizontal"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
         android:visibility="gone"
         android:id="@+id/adView"
         android:orientation="horizontal"
@@ -33,7 +31,10 @@
         android:layout_height="match_parent"
         android:hapticFeedbackEnabled="false"
         android:soundEffectsEnabled="false" >
+
+
         <com.google.android.gms.ads.AdView
+            android:visibility="gone"
             android:id="@+id/bannerAd"
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:layout_width="wrap_content"
@@ -43,6 +44,14 @@
             ads:adSize="BANNER"
             ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
         </com.google.android.gms.ads.AdView>
+
+        <com.sikderithub.keyboard.Views.NativeAd.TemplateView
+            android:id="@+id/templateView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/native_ad_gk_view_size"
+            />
+
+
     </LinearLayout>
     <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
          We just need to ignore the system's audio and haptic feedback settings. -->

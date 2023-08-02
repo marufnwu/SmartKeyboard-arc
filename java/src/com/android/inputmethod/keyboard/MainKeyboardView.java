@@ -556,7 +556,6 @@ public class MainKeyboardView extends KeyboardView implements DrawingProxy,
 
     private void showKeyPreview(@Nonnull final Key key) {
 
-        Log.d(TAG, "showKeyPreview: "+key.toString());
 
         final Keyboard keyboard = getKeyboard();
         if (keyboard == null) {
