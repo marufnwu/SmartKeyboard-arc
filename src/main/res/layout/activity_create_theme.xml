@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.CreateThemeActivity">
+
+    <ScrollView
+        android:layout_above="@id/keyboardContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvChangeImgae"
+                android:layout_margin="8dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/select_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:textSize="16sp"
+                        android:text="Change Background Image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_margin="8dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/layers"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginBottom="8dp"
+                            android:textSize="16sp"
+                            android:text="Image Overlay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:dropDownSelector="@drawable/layers"
+                            android:id="@+id/spOverlay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_margin="8dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/opacity"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginBottom="8dp"
+                            android:textSize="16sp"
+                            android:text="Background Opacity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <SeekBar
+                            android:max="255"
+                            android:min="0"
+                            android:id="@+id/sbBackgroundOpacity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_margin="8dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/backspace_bg"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginBottom="8dp"
+                            android:textSize="16sp"
+                            android:text="Show Key Border"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:checked="true"
+                            android:id="@+id/sbShowKeyBorder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/keyboardContainer"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llAction"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:theme="@style/SuggestionStripView.MJ_Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:id="@+id/tvCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/btn_keyboard_key_normal_on_lxx_dark"
+                android:gravity="center"
+                android:text="Cancel"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/btn_keyboard_key_normal_on_lxx_dark"
+                android:padding="4dp"
+                android:id="@+id/tvSave"
+                android:layout_margin="4dp"
+                android:text="Save Theme"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"/>
+        </LinearLayout>
+
+        <com.android.inputmethod.keyboard.MainKeyboardView
+            android:theme="@style/KeyboardTheme.CUSTOM"
+            android:id="@+id/keyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

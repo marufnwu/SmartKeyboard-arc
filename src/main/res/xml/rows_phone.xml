@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2011, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <include
+        keybaord:keyboardLayout="@xml/key_styles_common" />
+    <include
+        keybaord:keyboardLayout="@xml/key_styles_number" />
+    <Row>
+        <Key
+            keybaord:keyStyle="num1KeyStyle" />
+        <Key
+            keybaord:keyStyle="num2KeyStyle" />
+        <Key
+            keybaord:keyStyle="num3KeyStyle" />
+        <Key
+            keybaord:keySpec="-"
+            keybaord:moreKeys="+"
+            keybaord:keyLabelFlags="hasPopupHint"
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:backgroundType="functional"
+            keybaord:keyWidth="fillRight" />
+    </Row>
+    <Row>
+        <Key
+            keybaord:keyStyle="num4KeyStyle" />
+        <Key
+            keybaord:keyStyle="num5KeyStyle" />
+        <Key
+            keybaord:keyStyle="num6KeyStyle" />
+        <Key
+            keybaord:keySpec="."
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:backgroundType="functional"
+            keybaord:keyWidth="fillRight" />
+    </Row>
+    <Row>
+        <Key
+            keybaord:keyStyle="num7KeyStyle" />
+        <Key
+            keybaord:keyStyle="num8KeyStyle" />
+        <Key
+            keybaord:keyStyle="num9KeyStyle" />
+        <Key
+            keybaord:keyStyle="deleteKeyStyle"
+            keybaord:keyWidth="fillRight" />
+    </Row>
+    <Row>
+        <Key
+            keybaord:keyStyle="numPhoneToSymbolKeyStyle" />
+        <!-- U+0030: "0" DIGIT ZERO -->
+        <Key
+            keybaord:keyStyle="num0KeyStyle"
+            keybaord:keySpec="0 +|0"
+            keybaord:moreKeys="!noPanelAutoMoreKey!,+" />
+        <Key
+            keybaord:keyStyle="numSpaceKeyStyle" />
+        <Key
+            keybaord:keyStyle="enterKeyStyle"
+            keybaord:keyWidth="fillRight" />
+    </Row>
+</merge>

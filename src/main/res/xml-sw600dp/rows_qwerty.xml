@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2011, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <include
+        keybaord:keyboardLayout="@xml/key_styles_common" />
+    <!-- TODO: Consolidate the layout specification between protrait and landscape.
+         Ideally just the keyWidth should be different and the spacer should adjust to fill
+         the available space. -->
+    <!-- First row -->
+    <Row>
+        <switch>
+            <!-- Split keyboard layout for the first row -->
+            <case
+                keybaord:isSplitLayout="true"
+            >
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty1_left5"
+                    keybaord:keyWidth="8.0%p" />
+                <Spacer
+                    keybaord:keyWidth="10.0%p" />
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty1_right5"
+                    keybaord:keyWidth="8.0%p" />
+                <Key
+                    keybaord:keyStyle="deleteKeyStyle"
+                    keybaord:keyWidth="10.0%p" />
+            </case>
+            <!-- Regular layout for the first row -->
+            <default>
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty1"
+                    keybaord:keyWidth="9.0%p" />
+                <Key
+                    keybaord:keyStyle="deleteKeyStyle"
+                    keybaord:keyWidth="fillRight" />
+            </default>
+        </switch>
+    </Row>
+    <!-- Second row -->
+    <Row>
+        <switch>
+            <!-- Split keyboard layout for the second row -->
+            <case
+                keybaord:isSplitLayout="true"
+            >
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty2_left5"
+                    keybaord:keyXPos="4.0%p"
+                    keybaord:keyWidth="8.0%p" />
+                <Spacer
+                    keybaord:keyWidth="14.0%p" />
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty2_right4"
+                    keybaord:keyWidth="8.0%p" />
+                <Key
+                    keybaord:keyStyle="enterKeyStyle"
+                    keybaord:keyWidth="10.0%p" />
+            </case>
+            <!-- Regular layout for the second row -->
+            <default>
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty2"
+                    keybaord:keyXPos="4.5%p"
+                    keybaord:keyWidth="9.0%p" />
+                <Key
+                    keybaord:keyStyle="enterKeyStyle"
+                    keybaord:keyWidth="fillRight" />
+            </default>
+        </switch>
+    </Row>
+    <!-- Third row -->
+    <Row>
+        <switch>
+            <!-- Split keyboard layout for the third row -->
+            <case
+                keybaord:isSplitLayout="true"
+            >
+                <Key
+                    keybaord:keyStyle="shiftKeyStyle"
+                    keybaord:keyWidth="10.0%p" />
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty3_left4"
+                    keybaord:keyWidth="8.0%p" />
+                <Spacer
+                    keybaord:keyWidth="8.0%p" />
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty3_right3"
+                    keybaord:keyWidth="8.0%p" />
+                <include
+                    keybaord:keyboardLayout="@xml/keys_exclamation_question"
+                    keybaord:keyWidth="8.0%p" />
+                <Key
+                    keybaord:keyStyle="shiftKeyStyle"
+                    keybaord:keyWidth="10.0%p" />
+            </case>
+            <!-- Regular layout for the third row -->
+            <default>
+                <Key
+                    keybaord:keyStyle="shiftKeyStyle"
+                    keybaord:keyWidth="10.0%p" />
+                <include
+                    keybaord:keyboardLayout="@xml/rowkeys_qwerty3"
+                    keybaord:keyWidth="9.0%p" />
+                <include
+                    keybaord:keyboardLayout="@xml/keys_exclamation_question"
+                    keybaord:keyWidth="9.0%p" />
+                <Key
+                    keybaord:keyStyle="shiftKeyStyle"
+                    keybaord:keyWidth="fillRight" />
+            </default>
+        </switch>
+    </Row>
+    <!-- Fourth row -->
+    <include
+        keybaord:keyboardLayout="@xml/row_qwerty4" />
+</merge>

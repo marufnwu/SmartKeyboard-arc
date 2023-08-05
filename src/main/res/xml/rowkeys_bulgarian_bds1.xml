@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2012, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <!-- U+0443: "у" CYRILLIC SMALL LETTER U -->
+    <Key
+        keybaord:keySpec="&#x0443;"
+        keybaord:keyHintLabel="1"
+        keybaord:additionalMoreKeys="1" />
+    <!-- U+0435: "е" CYRILLIC SMALL LETTER IE -->
+    <Key
+        keybaord:keySpec="&#x0435;"
+        keybaord:keyHintLabel="2"
+        keybaord:additionalMoreKeys="2" />
+    <!-- U+0438: "и" CYRILLIC SMALL LETTER I
+         U+045D: "ѝ" CYRILLIC SMALL LETTER I WITH GRAVE -->
+    <Key
+        keybaord:keySpec="&#x0438;"
+        keybaord:keyHintLabel="3"
+        keybaord:additionalMoreKeys="3"
+        keybaord:moreKeys="&#x045D;" />
+    <!-- U+0448: "ш" CYRILLIC SMALL LETTER SHA -->
+    <Key
+        keybaord:keySpec="&#x0448;"
+        keybaord:keyHintLabel="4"
+        keybaord:additionalMoreKeys="4" />
+    <!-- U+0449: "щ" CYRILLIC SMALL LETTER SHCHA -->
+    <Key
+        keybaord:keySpec="&#x0449;"
+        keybaord:keyHintLabel="5"
+        keybaord:additionalMoreKeys="5" />
+    <!-- U+043A: "к" CYRILLIC SMALL LETTER KA -->
+    <Key
+        keybaord:keySpec="&#x043A;"
+        keybaord:keyHintLabel="6"
+        keybaord:additionalMoreKeys="6" />
+    <!-- U+0441: "с" CYRILLIC SMALL LETTER ES -->
+    <Key
+        keybaord:keySpec="&#x0441;"
+        keybaord:keyHintLabel="7"
+        keybaord:additionalMoreKeys="7" />
+    <!-- U+0434: "д" CYRILLIC SMALL LETTER DE -->
+    <Key
+        keybaord:keySpec="&#x0434;"
+        keybaord:keyHintLabel="8"
+        keybaord:additionalMoreKeys="8" />
+    <!-- U+0437: "з" CYRILLIC SMALL LETTER ZE -->
+    <Key
+        keybaord:keySpec="&#x0437;"
+        keybaord:keyHintLabel="9"
+        keybaord:additionalMoreKeys="9" />
+    <!-- U+0446: "ц" CYRILLIC SMALL LETTER TSE -->
+    <Key
+        keybaord:keySpec="&#x0446;"
+        keybaord:keyHintLabel="0"
+        keybaord:additionalMoreKeys="0" />
+    <!-- U+0431: "б" CYRILLIC SMALL LETTER BE -->
+    <Key
+        keybaord:keySpec="&#x0431;" />
+</merge>

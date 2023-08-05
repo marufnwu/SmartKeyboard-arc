@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2012, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <switch>
+        <case
+            keybaord:keyboardLayoutSetElement="alphabet|alphabetAutomaticShifted|alphabetShiftLocked"
+        >
+            <Key
+                keybaord:keySpec=","
+                keybaord:additionalMoreKeys="&lt;" />
+            <Key
+                keybaord:keySpec="."
+                keybaord:additionalMoreKeys="&gt;" />
+            <Key
+                keybaord:keySpec="/"
+                keybaord:additionalMoreKeys="\?"
+                keybaord:moreKeys="!text/morekeys_question" />
+        </case>
+        <!-- keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted" -->
+        <default>
+            <!-- U+2039: "‹" SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+                 U+203A: "›" SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+                 U+2264: "≤" LESS-THAN OR EQUAL TO
+                 U+2265: "≥" GREATER-THAN EQUAL TO
+                 U+00AB: "«" LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+                 U+00BB: "»" RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK -->
+            <Key
+                keybaord:keySpec="&lt;"
+                keybaord:moreKeys="!fixedColumnOrder!3,&#x2039;,&#x2264;,&#x00AB;" />
+            <Key
+                keybaord:keySpec="&gt;"
+                keybaord:moreKeys="!fixedColumnOrder!3,&#x203A;,&#x2265;,&#x00BB;" />
+            <Key
+                keybaord:keySpec="\?"
+                keybaord:moreKeys="!text/morekeys_question" />
+        </default>
+    </switch>
+</merge>

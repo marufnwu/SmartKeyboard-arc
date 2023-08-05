@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2014, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <!-- Because the font rendering system prior to API version 16 can't automatically
+         render dotted circle for incomplete combining letter of some scripts, different
+         set of Key definitions are needed based on the API version. -->
+    <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_candra_o" />
+    <Key keybaord:keyStyle="baseKeyDevanagariVowelSignCandraO" />
+    <!-- Because the font rendering system prior to API version 16 can't automatically
+         render dotted circle for incomplete combining letter of some scripts, different
+         set of Key definitions are needed based on the API version. -->
+    <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_candra_e" />
+    <Key keybaord:keyStyle="baseKeyDevanagariVowelSignCandraE" />
+    <!-- Because the font rendering system prior to API version 16 can't automatically
+         render dotted circle for incomplete combining letter of some scripts, different
+         set of Key definitions are needed based on the API version. -->
+    <include keybaord:keyboardLayout="@xml/keystyle_devanagari_sign_anusvara" />
+    <Key keybaord:keyStyle="baseKeyDevanagariSignAnusvara" />
+    <!-- U+092E: "म" DEVANAGARI LETTER MA -->
+    <Key keybaord:keySpec="&#x092E;" />
+    <!-- U+0928: "न" DEVANAGARI LETTER NA
+         U+0923: "ण" DEVANAGARI LETTER NNA
+         U+091E: "ञ" DEVANAGARI LETTER NYA
+         U+0919: "ङ" DEVANAGARI LETTER NGA -->
+    <Key
+        keybaord:keySpec="&#x0928;"
+        keybaord:moreKeys="&#x0923;,&#x091E;,&#x0919;" />
+    <!-- U+0935: "व" DEVANAGARI LETTER VA -->
+    <Key keybaord:keySpec="&#x0935;" />
+    <!-- U+0932: "ल" DEVANAGARI LETTER LA
+         U+0933: "ळ" DEVANAGARI LETTER LLA -->
+    <Key
+        keybaord:keySpec="&#x0932;"
+        keybaord:moreKeys="&#x0933;" />
+    <!-- U+0938: "स" DEVANAGARI LETTER SA
+         U+0936: "श" DEVANAGARI LETTER SHA
+         U+0937: "ष" DEVANAGARI LETTER SSA
+         U+0936/U+094D/U+0930: "श्र" DEVANAGARI LETTER SHA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER RA -->
+    <Key
+        keybaord:keySpec="&#x0938;"
+        keybaord:moreKeys="&#x0936;,&#x0937;,&#x0936;&#x094D;&#x0930;" />
+    <!-- U+092F: "य" DEVANAGARI LETTER YA -->
+    <Key keybaord:keySpec="&#x092F;" />
+    <!-- U+0915/U+094D/U+0937: "क्ष" DEVANAGARI LETTER KA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER SSA -->
+    <Key
+        keybaord:keySpec="&#x0915;&#x094D;&#x0937;"
+        keybaord:keyLabelFlags="followKeyLetterRatio" />
+</merge>

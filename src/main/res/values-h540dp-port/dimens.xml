@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Native Ad size-->
+    <dimen name="native_ad_gk_view_size">68dp</dimen>
+</resources>

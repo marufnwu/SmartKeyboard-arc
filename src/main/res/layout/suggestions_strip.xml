@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2011, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
+         We just need to ignore the system's audio and haptic feedback settings. -->
+    <LinearLayout
+        android:id="@+id/suggestions_strip"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/config_suggestions_strip_horizontal_margin"
+        android:layout_marginRight="@dimen/config_suggestions_strip_horizontal_margin"
+        android:hapticFeedbackEnabled="false"
+        android:soundEffectsEnabled="false" >
+
+    </LinearLayout>
+    <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
+         We just need to ignore the system's audio and haptic feedback settings. -->
+    <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
+         We just need to ignore the system's audio and haptic feedback settings. -->
+
+
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:id="@+id/important_notice_strip"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/config_suggestions_strip_horizontal_margin"
+        android:layout_marginRight="@dimen/config_suggestions_strip_horizontal_margin"
+        android:hapticFeedbackEnabled="false"
+        android:soundEffectsEnabled="false" >
+
+        <ScrollView
+            android:scrollbars="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/action_icon_margin"
+                    android:layout_marginStart="@dimen/action_icon_margin"
+                    android:id="@+id/emoji_icon"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/saved_gk_icon"
+                    android:layout_marginEnd="@dimen/action_icon_margin"
+                    android:layout_marginStart="@dimen/action_icon_margin"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/message_icon"
+                    android:layout_marginEnd="@dimen/action_icon_margin"
+                    android:layout_marginStart="@dimen/action_icon_margin"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/update_icon"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/theme_icon"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/theme"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="@dimen/action_icon_size"/>
+
+                <com.github.angads25.toggle.widget.LabeledSwitch
+                    android:visibility="gone"
+                    android:id="@+id/langSwitch"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/action_icon_size"
+                    android:textSize="10sp"
+                    app:on="false"
+                    app:textOn="বাংলা"
+                    app:textOff="বাংলা"
+                    app:colorBorder="@color/colorAccent"/>
+
+
+                <RelativeLayout
+                    android:id="@+id/tutorial_layout"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:layout_margin="@dimen/action_icon_margin"
+                    android:background="@drawable/curve_border_bg"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/action_icon_size">
+                    <ImageView
+                        android:visibility="gone"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:id="@+id/tutorial_icon"
+                        android:src="@drawable/video"
+                        android:layout_width="@dimen/action_icon_size"
+                        android:layout_height="@dimen/action_icon_size"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/tutorial_icon"
+                        android:text="বাংলা লেখা শিখুন"
+                        android:textColor="@android:color/white"
+                        android:textSize="8sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/suggestions_strip_settings_key"
+                    android:layout_width="@dimen/action_icon_size"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/setting" />
+
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:id="@+id/voice_strip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/config_suggestions_strip_horizontal_margin"
+        android:layout_marginRight="@dimen/config_suggestions_strip_horizontal_margin"
+        android:hapticFeedbackEnabled="false"
+        android:soundEffectsEnabled="false" >
+
+
+        <TextView
+            style="@style/SuggestionStripView"
+            android:id="@+id/txtVoiceRecordingStatus"
+            android:text="Listening....."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/action_back"
+        android:layout_width="@dimen/config_suggestions_strip_edge_key_width"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/spoken_description_mic"
+        style="?attr/suggestionWordStyle" />
+
+    <ImageButton
+        android:id="@+id/suggestions_strip_voice_key"
+        android:layout_width="@dimen/config_suggestions_strip_edge_key_width"
+        android:layout_height="fill_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/spoken_description_mic"
+        style="?attr/suggestionWordStyle" />
+
+</merge>

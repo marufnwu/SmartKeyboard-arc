@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2014, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <!-- U+0C4C: "ౌ" TELUGU VOWEL SIGN AU
+         U+0C14: "ఔ" TELUGU LETTER AU -->
+    <Key
+        keybaord:keySpec="&#x0C4C;"
+        keybaord:moreKeys="&#x0C14;,%"
+        keybaord:keyHintLabel="1"
+        keybaord:additionalMoreKeys="1" />
+    <!-- U+0C48: "ై" TELUGU VOWEL SIGN AI
+         U+0C10: "ఐ" TELUGU LETTER AI -->
+    <Key
+        keybaord:keySpec="&#x0C48;"
+        keybaord:moreKeys="&#x0C10;,%"
+        keybaord:keyHintLabel="2"
+        keybaord:additionalMoreKeys="2" />
+    <!-- U+0C3E: "ా" TELUGU VOWEL SIGN AA
+         U+0C06: "ఆ" TELUGU LETTER AA -->
+    <Key
+        keybaord:keySpec="&#x0C3E;"
+        keybaord:moreKeys="&#x0C06;,%"
+        keybaord:keyHintLabel="3"
+        keybaord:additionalMoreKeys="3" />
+    <!-- U+0C40: "ీ" TELUGU VOWEL SIGN II
+         U+0C08: "ఈ" TELUGU LETTER II -->
+    <Key
+        keybaord:keySpec="&#x0C40;"
+        keybaord:moreKeys="&#x0C08;,%"
+        keybaord:keyHintLabel="4"
+        keybaord:additionalMoreKeys="4" />
+    <!-- U+0C42: "ూ" TELUGU VOWEL SIGN UU
+         U+0C0A: "ఊ" TELUGU LETTER UU -->
+    <Key
+        keybaord:keySpec="&#x0C42;"
+        keybaord:moreKeys="&#x0C0A;,%"
+        keybaord:keyHintLabel="5"
+        keybaord:additionalMoreKeys="5" />
+    <!-- U+0C2C: "బ" TELUGU LETTER BA
+         U+0C2D: "భ" TELUGU LETTER BHA -->
+    <Key
+        keybaord:keySpec="&#x0C2C;"
+        keybaord:moreKeys="&#x0C2D;,%"
+        keybaord:keyHintLabel="6"
+        keybaord:additionalMoreKeys="6" />
+    <!-- U+0C39: "హ" TELUGU LETTER HA
+         U+0C03: "ః" TELUGU SIGN VISARGA -->
+    <Key
+        keybaord:keySpec="&#x0C39;"
+        keybaord:moreKeys="&#x0C03;,%"
+        keybaord:keyHintLabel="7"
+        keybaord:additionalMoreKeys="7" />
+    <!-- U+0C17: "గ" TELUGU LETTER GA
+         U+0C18: "ఘ" TELUGU LETTER GHA -->
+    <Key
+        keybaord:keySpec="&#x0C17;"
+        keybaord:moreKeys="&#x0C18;,%"
+        keybaord:keyHintLabel="8"
+        keybaord:additionalMoreKeys="8" />
+    <!-- U+0C26: "ద" TELUGU LETTER DA
+         U+0C27: "ధ" TELUGU LETTER DHA -->
+    <Key
+        keybaord:keySpec="&#x0C26;"
+        keybaord:moreKeys="&#x0C27;,%"
+        keybaord:keyHintLabel="9"
+        keybaord:additionalMoreKeys="9" />
+    <!-- U+0C1C: "జ" TELUGU LETTER JA
+         U+0C1D: "ఝ" TELUGU LETTER JHA -->
+    <Key
+        keybaord:keySpec="&#x0C1C;"
+        keybaord:moreKeys="&#x0C1D;,%"
+        keybaord:keyHintLabel="0"
+        keybaord:additionalMoreKeys="0" />
+    <!-- U+0C21: "డ" TELUGU LETTER DDA
+         U+0C22: "ఢ" TELUGU LETTER DDHA -->
+    <Key
+        keybaord:keySpec="&#x0C21;"
+        keybaord:moreKeys="&#x0C22;" />
+</merge>

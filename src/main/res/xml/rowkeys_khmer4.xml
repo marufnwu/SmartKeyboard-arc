@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2013, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <switch>
+        <case keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
+            <!-- U+178D: "ឍ" KHMER LETTER TTHO -->
+            <Key keybaord:keySpec="&#x178D;" />
+            <!-- U+1783: "ឃ" KHMER LETTER KHO -->
+            <Key keybaord:keySpec="&#x1783;" />
+            <!-- U+1787: "ជ" KHMER LETTER CO -->
+            <Key keybaord:keySpec="&#x1787;" />
+            <!-- U+17C1/U+17C7: "េះ" KHMER VOWEL SIGN E/KHMER SIGN REAHMUK -->
+            <Key
+                keybaord:keySpec="&#x17C1;&#x17C7;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+1796: "ព" KHMER LETTER PO
+                 U+179E: "ឞ" KHMER LETTER SSO -->
+            <Key
+                keybaord:keySpec="&#x1796;"
+                keybaord:keyHintLabel="&#x179E;"
+                keybaord:moreKeys="&#x179E;" />
+            <!-- U+178E: "ណ" KHMER LETTER NNO -->
+            <Key keybaord:keySpec="&#x178E;" />
+            <!-- U+17C6: "ំ" KHMER SIGN NIKAHIT -->
+            <Key keybaord:keySpec="&#x17C6;" />
+            <!-- U+17BB/U+17C7: "ុះ" KHMER VOWEL SIGN U/KHMER SIGN REAHMUK -->
+            <Key
+                keybaord:keySpec="&#x17BB;&#x17C7;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+17D5: "៕" KHMER SIGN BARIYOOSAN -->
+            <Key keybaord:keySpec="&#x17D5;" />
+            <Key
+                keybaord:keySpec="\?"
+                keybaord:keyLabelFlags="fontDefault" />
+        </case>
+        <default>
+            <!-- U+178B: "ឋ" KHMER LETTER TTHA -->
+            <Key keybaord:keySpec="&#x178B;" />
+            <!-- U+1781: "ខ" KHMER LETTER KHA -->
+            <Key keybaord:keySpec="&#x1781;" />
+            <!-- U+1785: "ច" KHMER LETTER CA -->
+            <Key keybaord:keySpec="&#x1785;" />
+            <!-- U+179C: "វ" KHMER LETTER VO -->
+            <Key keybaord:keySpec="&#x179C;" />
+            <!-- U+1794: "ប" KHMER LETTER BA -->
+            <Key keybaord:keySpec="&#x1794;" />
+            <!-- U+1793: "ន" KHMER LETTER NO -->
+            <Key keybaord:keySpec="&#x1793;" />
+            <!-- U+1798: "ម" KHMER LETTER MO -->
+            <Key keybaord:keySpec="&#x1798;" />
+            <!-- U+17BB/U+17C6: "ុំ" KHMER VOWEL SIGN U/KHMER SIGN NIKAHIT -->
+            <Key
+                keybaord:keySpec="&#x17BB;&#x17C6;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+17D4: "។" KHMER SIGN KHAN -->
+            <Key keybaord:keySpec="&#x17D4;" />
+            <!-- U+17CA: "៊" KHMER SIGN TRIISAP -->
+            <Key keybaord:keySpec="&#x17CA;" />
+        </default>
+    </switch>
+</merge>

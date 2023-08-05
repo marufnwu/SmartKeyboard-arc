@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2013, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <switch>
+        <case keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
+            <!-- U+0906: "आ" DEVANAGARI LETTER AA -->
+            <Key keybaord:keySpec="&#x0906;" />
+            <!-- U+0919/U+094D: "ङ्" DEVANAGARI LETTER NGA/DEVANAGARI SIGN VIRAMA -->
+            <Key
+                keybaord:keySpec="&#x0919;&#x094D;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0921/U+094D/U+0921: "ड्ड" DEVANAGARI LETTER DDA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER DDA -->
+            <Key
+                keybaord:keySpec="&#x0921;&#x094D;&#x0921;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_sign_candrabindu" />
+            <Key keybaord:keyStyle="baseKeyDevanagariSignCandrabindu" />
+            <!-- U+0926/U+094D/U+0926: "द्द" DEVANAGARI LETTER DA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER DA -->
+            <Key
+                keybaord:keySpec="&#x0926;&#x094D;&#x0926;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+091D: "झ" DEVANAGARI LETTER JHA -->
+            <Key keybaord:keySpec="&#x091D;" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_o" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignO" />
+            <!-- U+092B: "फ" DEVANAGARI LETTER PHA -->
+            <Key keybaord:keySpec="&#x092B;" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_ii" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignIi" />
+            <!-- U+091F/U+094D/U+0920: "ट्ठ" DEVANAGARI LETTER TTA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER TTHA -->
+            <Key
+                keybaord:keySpec="&#x091F;&#x094D;&#x0920;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_uu" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignUu" />
+        </case>
+        <default>
+            <!-- U+092C: "ब" DEVANAGARI LETTER BA -->
+            <Key keybaord:keySpec="&#x092C;" />
+            <!-- U+0915: "क" DEVANAGARI LETTER KA -->
+            <Key keybaord:keySpec="&#x0915;" />
+            <!-- U+092E: "म" DEVANAGARI LETTER MA -->
+            <Key keybaord:keySpec="&#x092E;" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_aa" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignAa" />
+            <!-- U+0928: "न" DEVANAGARI LETTER NA -->
+            <Key keybaord:keySpec="&#x0928;" />
+            <!-- U+091C: "ज" DEVANAGARI LETTER JA -->
+            <Key keybaord:keySpec="&#x091C;" />
+            <!-- U+0935: "व" DEVANAGARI LETTER VA -->
+            <Key keybaord:keySpec="&#x0935;" />
+            <!-- U+092A: "प" DEVANAGARI LETTER PA -->
+            <Key keybaord:keySpec="&#x092A;" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_i" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignI" />
+            <!-- U+0938: "स" DEVANAGARI LETTER SA -->
+            <Key keybaord:keySpec="&#x0938;" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_u" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignU" />
+        </default>
+    </switch>
+</merge>

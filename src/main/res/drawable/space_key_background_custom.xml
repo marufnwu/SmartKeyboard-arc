@@ -1,0 +1,13 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Add left drawable icon -->
+    <item
+        android:drawable="@drawable/baseline_arrow_left_white"
+        android:gravity="start|center_vertical" />
+
+    <!-- Add right drawable icon -->
+    <item
+        android:drawable="@drawable/baseline_arrow_right_white"
+        android:gravity="end|center_vertical" />
+
+    <item android:drawable="@drawable/btn_keyboard_key_custom"/>
+</layer-list>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2013, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <switch>
+        <case keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
+            <!-- U+0924/U+094D/U+0924: "त्त" DEVANAGARI LETTER TA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER TA
+                 U+091E: "ञ" DEVANAGARI LETTER NYA
+                 U+091C/U+094D/U+091E: "ज्ञ" DEVANAGARI LETTER JA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER NYA
+                 U+0965: "॥" DEVANAGARI DOUBLE DANDA -->
+            <Key
+                keybaord:keySpec="&#x0924;&#x094D;&#x0924;"
+                keybaord:moreKeys="&#x091E;,&#x091C;&#x094D;&#x091E;,&#x0965;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0921/U+094D/U+0922: "ड्ढ" DEVANAGARI LETTER DDA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER DDHA
+                 U+0908: "ई" DEVANAGARI LETTER II -->
+            <Key
+                keybaord:keySpec="&#x0921;&#x094D;&#x0922;"
+                keybaord:moreKeys="&#x0908;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0910: "ऐ" DEVANAGARI LETTER AI
+                 U+0918: "घ" DEVANAGARI LETTER GHA -->
+            <Key
+                keybaord:keySpec="&#x0910;"
+                keybaord:moreKeys="&#x0918;" />
+            <!-- U+0926/U+094D/U+0935: "द्व" DEVANAGARI LETTER DA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER VA
+                 U+0926/U+094D/U+0927: "द्ध" DEVANAGARI LETTER DA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER DHA -->
+            <Key
+                keybaord:keySpec="&#x0926;&#x094D;&#x0935;"
+                keybaord:moreKeys="&#x0926;&#x094D;&#x0927;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+091F/U+094D/U+091F: "ट्ट" DEVANAGARI LETTER TTA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER TTA
+                 U+091B: "छ" DEVANAGARI LETTER CHA -->
+            <Key
+                keybaord:keySpec="&#x091F;&#x094D;&#x091F;"
+                keybaord:moreKeys="&#x091B;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0920/U+094D/U+0920: "ठ्ठ" DEVANAGARI LETTER TTHA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER TTHA
+                 U+091F: "ट" DEVANAGARI LETTER TTA -->
+            <Key
+                keybaord:keySpec="&#x0920;&#x094D;&#x0920;"
+                keybaord:moreKeys="&#x091F;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+090A: "ऊ" DEVANAGARI LETTER UU
+                 U+0920: "ठ" DEVANAGARI LETTER TTHA -->
+            <Key
+                keybaord:keySpec="&#x090A;"
+                keybaord:moreKeys="&#x0920;" />
+            <!-- U+0915/U+094D/U+0937: "क्ष" DEVANAGARI LETTER KA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER SSA
+                 U+0921: "ड" DEVANAGARI LETTER DDA -->
+            <Key
+                keybaord:keySpec="&#x0915;&#x094D;&#x0937;"
+                keybaord:moreKeys="&#x0921;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0907: "इ" DEVANAGARI LETTER I
+                 U+0922: "ढ" DEVANAGARI LETTER DDHA -->
+            <Key
+                keybaord:keySpec="&#x0907;"
+                keybaord:moreKeys="&#x0922;" />
+            <!-- U+090F: "ए" DEVANAGARI LETTER E
+                 U+0923: "ण" DEVANAGARI LETTER NNA -->
+            <Key
+                keybaord:keySpec="&#x090F;"
+                keybaord:moreKeys="&#x0923;" />
+            <!-- Because the font rendering system prior to API version 16 can't automatically
+                 render dotted circle for incomplete combining letter of some scripts, different
+                 set of Key definitions are needed based on the API version. -->
+            <include keybaord:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_vocalic_r" />
+            <Key keybaord:keyStyle="baseKeyDevanagariVowelSignVocalicR" />
+        </case>
+        <default>
+            <!-- U+091F: "ट" DEVANAGARI LETTER TTA
+                 U+0967: "१" DEVANAGARI DIGIT ONE -->
+            <Key
+                keybaord:keySpec="&#x091F;"
+                keybaord:keyHintLabel="1"
+                keybaord:additionalMoreKeys="&#x0967;,1" />
+            <!-- U+0927: "ध" DEVANAGARI LETTER DHA
+                 U+0968: "२" DEVANAGARI DIGIT TWO -->
+            <Key
+                keybaord:keySpec="&#x0927;"
+                keybaord:keyHintLabel="2"
+                keybaord:additionalMoreKeys="&#x0968;,2" />
+            <!-- U+092D: "भ" DEVANAGARI LETTER BHA
+                 U+0969: "३" DEVANAGARI DIGIT THREE -->
+            <Key
+                keybaord:keySpec="&#x092D;"
+                keybaord:keyHintLabel="3"
+                keybaord:additionalMoreKeys="&#x0969;,3" />
+            <!-- U+091A: "च" DEVANAGARI LETTER CA
+                 U+096A: "४" DEVANAGARI DIGIT FOUR -->
+            <Key
+                keybaord:keySpec="&#x091A;"
+                keybaord:keyHintLabel="4"
+                keybaord:additionalMoreKeys="&#x096A;,4" />
+            <!-- U+0924: "त" DEVANAGARI LETTER TA
+                 U+096B: "५" DEVANAGARI DIGIT FIVE -->
+            <Key
+                keybaord:keySpec="&#x0924;"
+                keybaord:keyHintLabel="5"
+                keybaord:additionalMoreKeys="&#x096B;,5" />
+            <!-- U+0925: "थ" DEVANAGARI LETTER THA
+                 U+096C: "६" DEVANAGARI DIGIT SIX -->
+            <Key
+                keybaord:keySpec="&#x0925;"
+                keybaord:keyHintLabel="6"
+                keybaord:additionalMoreKeys="&#x096C;,6" />
+            <!-- U+0917: "ग" DEVANAGARI LETTER G
+                 U+096D: "७" DEVANAGARI DIGIT SEVEN -->
+            <Key
+                keybaord:keySpec="&#x0917;"
+                keybaord:keyHintLabel="7"
+                keybaord:additionalMoreKeys="&#x096D;,7" />
+            <!-- U+0937: "ष" DEVANAGARI LETTER SSA
+                 U+096E: "८" DEVANAGARI DIGIT EIGHT -->
+            <Key
+                keybaord:keySpec="&#x0937;"
+                keybaord:keyHintLabel="8"
+                keybaord:additionalMoreKeys="&#x096E;,8" />
+            <!-- U+092F: "य" DEVANAGARI LETTER YA
+                 U+096F: "९" DEVANAGARI DIGIT NINE -->
+            <Key
+                keybaord:keySpec="&#x092F;"
+                keybaord:keyHintLabel="9"
+                keybaord:additionalMoreKeys="&#x096F;,9" />
+            <!-- U+0909: "उ" DEVANAGARI LETTER U
+                 U+0966: "०" DEVANAGARI DIGIT ZERO -->
+            <Key
+                keybaord:keySpec="&#x0909;"
+                keybaord:keyHintLabel="0"
+                keybaord:additionalMoreKeys="&#x0966;,0" />
+            <!-- U+0907: "इ" DEVANAGARI LETTER I
+                 U+0914: "औ" DEVANAGARI LETTER AU -->
+            <Key
+                keybaord:keySpec="&#x0907;"
+                keybaord:moreKeys="&#x0914;" />
+        </default>
+    </switch>
+</merge>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2014, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <!-- U+0981: "ঁ" BENGALI SIGN CANDRABINDU
+         U+0983: "ঃ" BENGALI SIGN VISARGA
+         U+0982: "ং" BENGALI SIGN ANUSVARA -->
+    <Key
+        keybaord:keySpec="&#x0981;"
+        keybaord:moreKeys="&#x0983;,&#x0982;" />
+    <!-- U+09A2: "ঢ" BENGALI LETTER DDHA
+         U+09A2/U+09BC: "ঢ়" BENGALI LETTER DDHA/BENGALI SIGN NUKTA -->
+    <Key
+        keybaord:keySpec="&#x09A2;"
+        keybaord:moreKeys="&#x09A2;&#x09BC;" />
+    <!-- U+09AE: "ম" BENGALI LETTER MA -->
+    <Key keybaord:keySpec="&#x09AE;" />
+    <!-- U+09A8: "ন" BENGALI LETTER NA
+         U+09A3: "ণ" BENGALI LETTER NNA -->
+    <Key
+        keybaord:keySpec="&#x09A8;"
+        keybaord:moreKeys="&#x09A3;" />
+    <!-- U+099E: "ঞ" BENGALI LETTER NYA
+         U+0999: "ঙ" BENGALI LETTER NGA
+         U+099E/U+09CD/U+099C: "ঞ্জ" BENGALI LETTER NYA/BENGALI SIGN VIRAMA/BENGALI LETTER JA -->
+    <Key
+        keybaord:keySpec="&#x099E;"
+        keybaord:moreKeys="&#x0999;,&#x099E;&#x09CD;&#x099C;" />
+    <!-- U+09B2: "ল" BENGALI LETTER LA -->
+    <Key keybaord:keySpec="&#x09B2;" />
+    <!-- U+09B7: "ষ" BENGALI LETTER SSA
+         U+0995/U+09CD/U+09B7: "ক্ষ" BENGALI LETTER KA/BENGALI SIGN VIRAMA/BENGALI LETTER SSA -->
+    <Key
+        keybaord:keySpec="&#x09B7;"
+        keybaord:moreKeys="&#x0995;&#x09CD;&#x09B7;" />
+    <!-- U+09B8: "স" BENGALI LETTER SA
+         U+09B6: "শ" BENGALI LETTER SHA -->
+    <Key
+        keybaord:keySpec="&#x09B8;"
+        keybaord:moreKeys="&#x09B6;" />
+    <!-- U+09DF: "য়" BENGALI LETTER YYA
+         U+09AF: "য" BENGALI LETTER YA -->
+    <Key
+        keybaord:keySpec="&#x09DF;"
+        keybaord:moreKeys="&#x09AF;" />
+    <!-- U+0964: "।" DEVANAGARI DANDA
+         U+0965: "॥" DEVANAGARI DOUBLE DANDA -->
+    <Key
+        keybaord:keySpec="&#x0964;"
+        keybaord:moreKeys="&#x0965;" />
+</merge>

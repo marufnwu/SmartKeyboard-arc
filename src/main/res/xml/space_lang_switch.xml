@@ -1,0 +1,14 @@
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard" >
+    <Key
+        keybaord:keySpec="!text/keyspec_comma" />
+    <Key
+        keybaord:keySpec="_" />
+    <include
+        keybaord:keyboardLayout="@xml/key_space_symbols" />
+    <Key
+        keybaord:keySpec="/" />
+    <!-- U+2026: "…" HORIZONTAL ELLIPSIS -->
+    <Key
+        keybaord:keySpec="."
+        keybaord:moreKeys="&#x2026;" />
+</merge>

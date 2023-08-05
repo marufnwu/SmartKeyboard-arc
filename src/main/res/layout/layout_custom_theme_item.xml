@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="4dp"
+    android:layout_width="match_parent"
+    android:padding="3dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/ivAdd"
+            android:layout_centerInParent="true"
+            android:src="@drawable/picture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+        <ImageView
+            android:padding="3dp"
+            android:foreground="@drawable/theme_showcase_round_border_bg"
+            android:scaleType="fitXY"
+            android:id="@+id/ivThemeBg"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"/>
+
+
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_margin="8dp"
+                android:visibility="gone"
+                android:id="@+id/ivSelected"
+                android:src="@drawable/check_mark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+            <ImageView
+                android:layout_margin="8dp"
+                android:visibility="gone"
+                android:id="@+id/ivDelete"
+                android:src="@drawable/trash"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2012, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <Row>
+        <Key
+            keybaord:keySpec="-"
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyWidth="10%p"
+            keybaord:backgroundType="functional" />
+        <Key
+            keybaord:keySpec="+"
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyWidth="10%p"
+            keybaord:backgroundType="functional" />
+        <Key
+            keybaord:keySpec="."
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyWidth="10%p"
+            keybaord:backgroundType="functional" />
+        <Key
+            keybaord:keySpec="1"
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:keyXPos="31%p" />
+        <Key
+            keybaord:keySpec="2"
+            keybaord:keyStyle="numKeyStyle" />
+        <Key
+            keybaord:keySpec="3"
+            keybaord:keyStyle="numKeyStyle" />
+        <Key
+            keybaord:keyStyle="deleteKeyStyle"
+            keybaord:keyXPos="-14%p"
+            keybaord:keyWidth="fillRight" />
+    </Row>
+    <Row>
+        <!-- U+FF0A: "＊" FULLWIDTH ASTERISK -->
+        <Key
+            keybaord:keySpec="&#xFF0A;|*"
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyWidth="10%p"
+            keybaord:backgroundType="functional" />
+        <Key
+            keybaord:keySpec="/"
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyWidth="10%p"
+            keybaord:backgroundType="functional" />
+        <switch>
+            <case
+                keybaord:mode="time|datetime"
+            >
+                <Key
+                    keybaord:keySpec=","
+                    keybaord:keyLabelFlags="hasPopupHint"
+                    keybaord:moreKeys="!text/morekeys_am_pm"
+                    keybaord:keyStyle="numSymbolKeyStyle"
+                    keybaord:keyWidth="10%p"
+                    keybaord:backgroundType="functional" />
+            </case>
+            <default>
+                <Key
+                    keybaord:keySpec=","
+                    keybaord:keyStyle="numSymbolKeyStyle"
+                    keybaord:keyWidth="10%p"
+                    keybaord:backgroundType="functional" />
+            </default>
+        </switch>
+        <Key
+            keybaord:keySpec="4"
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:keyXPos="31%p" />
+        <Key
+            keybaord:keySpec="5"
+            keybaord:keyStyle="numKeyStyle" />
+        <Key
+            keybaord:keySpec="6"
+            keybaord:keyStyle="numKeyStyle" />
+        <Key
+            keybaord:keyStyle="enterKeyStyle"
+            keybaord:keyXPos="-14%p"
+            keybaord:keyWidth="fillRight" />
+    </Row>
+    <Row>
+        <Key
+            keybaord:keySpec="("
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyWidth="10%p"
+            keybaord:backgroundType="functional" />
+        <Key
+            keybaord:keySpec=")"
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyWidth="10%p"
+            keybaord:backgroundType="functional" />
+        <switch>
+            <case
+                keybaord:mode="time|datetime"
+            >
+                <Key
+                    keybaord:keySpec=":"
+                    keybaord:keyStyle="numSymbolKeyStyle"
+                    keybaord:keyWidth="10%p"
+                    keybaord:backgroundType="functional" />
+            </case>
+            <default>
+                <Key
+                    keybaord:keySpec="="
+                    keybaord:keyStyle="numSymbolKeyStyle"
+                    keybaord:keyWidth="10%p"
+                    keybaord:backgroundType="functional" />
+            </default>
+        </switch>
+        <Key
+            keybaord:keySpec="7"
+            keybaord:keyStyle="numKeyStyle"
+            keybaord:keyXPos="31%p" />
+        <Key
+            keybaord:keySpec="8"
+            keybaord:keyStyle="numKeyStyle" />
+        <Key
+            keybaord:keySpec="9"
+            keybaord:keyStyle="numKeyStyle" />
+        <!-- Note: This Spacer prevents the above key from being marked as a right edge key. -->
+        <Spacer />
+    </Row>
+    <Row>
+        <Key
+            keybaord:keyStyle="tabletNumSpaceKeyStyle"
+            keybaord:keyWidth="30%p" />
+        <!-- U+FF0A: "＊" FULLWIDTH ASTERISK -->
+        <Key
+            keybaord:keySpec="&#xFF0A;|*"
+            keybaord:keyStyle="numSymbolKeyStyle"
+            keybaord:keyXPos="31%p" />
+        <Key
+            keybaord:keySpec="0"
+            keybaord:keyStyle="numKeyStyle" />
+        <Key
+            keybaord:keySpec="\#"
+            keybaord:keyStyle="numKeyStyle" />
+        <!-- Note: This Spacer prevents the above key from being marked as a right edge key. -->
+        <Spacer
+            keybaord:keyWidth="fillRight" />
+    </Row>
+</merge>

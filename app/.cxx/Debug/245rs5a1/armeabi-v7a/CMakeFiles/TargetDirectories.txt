@@ -1,0 +1,3 @@
+D:/Android_Projects/SmartKeyboard/app/.cxx/Debug/245rs5a1/armeabi-v7a/CMakeFiles/jni_latinime.dir
+D:/Android_Projects/SmartKeyboard/app/.cxx/Debug/245rs5a1/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Android_Projects/SmartKeyboard/app/.cxx/Debug/245rs5a1/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,29 @@
+{
+  "buildFiles": [
+    "D:\\Android_Projects\\SmartKeyboard\\app\\native\\jni\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\User\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "D:\\Android_Projects\\SmartKeyboard\\app\\.cxx\\Debug\\245rs5a1\\x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\User\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "D:\\Android_Projects\\SmartKeyboard\\app\\.cxx\\Debug\\245rs5a1\\x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "jni_latinime::@6890427a1f51a3e7e1df": {
+      "artifactName": "jni_latinime",
+      "abi": "x86",
+      "output": "D:\\Android_Projects\\SmartKeyboard\\app\\build\\intermediates\\cxx\\Debug\\245rs5a1\\obj\\x86\\libjni_latinime.so",
+      "runtimeFiles": [
+        "C:\\Users\\User\\AppData\\Local\\Android\\Sdk\\ndk\\25.1.8937393\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\21\\liblog.so"
+      ]
+    }
+  }
+}

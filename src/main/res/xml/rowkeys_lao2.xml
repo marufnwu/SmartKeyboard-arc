@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2013, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <switch>
+        <case keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
+            <!-- U+0EBB/U+0EC9: "" LAO VOWEL SIGN MAI KON/LAO TONE MAI THO -->
+            <Key
+                keybaord:keySpec="&#x0EBB;&#x0EC9;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0ED0: "໐" LAO DIGIT ZERO -->
+            <Key keybaord:keySpec="&#x0ED0;" />
+            <!-- U+0EB3/U+0EC9: "ຳ້" LAO VOWEL SIGN AM/LAO TONE MAI THO -->
+            <Key
+                keybaord:keySpec="&#x0EB3;&#x0EC9;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <Key
+                keybaord:keySpec="_"
+                keybaord:keyLabelFlags="fontDefault" />
+            <Key
+                keybaord:keySpec="+"
+                keybaord:keyLabelFlags="fontDefault" />
+            <!-- U+0EB4/U+0EC9: "ິ້" LAO VOWEL SIGN I/LAO TONE MAI THO -->
+            <Key
+                keybaord:keySpec="&#x0EB4;&#x0EC9;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0EB5/U+0EC9: "ີ້" LAO VOWEL SIGN II/LAO TONE MAI THO -->
+            <Key
+                keybaord:keySpec="&#x0EB5;&#x0EC9;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0EA3: "ຣ" LAO LETTER LO LING -->
+            <Key keybaord:keySpec="&#x0EA3;" />
+            <!-- U+0EDC: "ໜ" LAO HO NO -->
+            <Key keybaord:keySpec="&#x0EDC;" />
+            <!-- U+0EBD: "ຽ" LAO SEMIVOWEL SIGN NYO -->
+            <Key keybaord:keySpec="&#x0EBD;" />
+            <!-- U+0EAB/U+0EBC: "" LAO LETTER HO SUNG/LAO SEMIVOWEL SIGN LO -->
+            <Key
+                keybaord:keySpec="&#x0EAB;&#x0EBC;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+201D: "”" RIGHT DOUBLE QUOTATION MARK -->
+            <Key
+                keybaord:keySpec="&#x201D;"
+                keybaord:keyLabelFlags="fontDefault" />
+        </case>
+        <default>
+            <!-- U+0EBB: "ົ" LAO VOWEL SIGN MAI KON -->
+            <Key keybaord:keySpec="&#x0EBB;" />
+            <!-- U+0EC4: "ໄ" LAO VOWEL SIGN AI
+                 U+0ED0: "໐" LAO DIGIT ZERO -->
+            <Key
+                keybaord:keySpec="&#x0EC4;"
+                keybaord:keyHintLabel="0"
+                keybaord:additionalMoreKeys="0"
+                keybaord:moreKeys="&#x0ED0;" />
+            <!-- U+0EB3: "ຳ" LAO VOWEL SIGN AM -->
+            <Key keybaord:keySpec="&#x0EB3;" />
+            <!-- U+0E9E: "ພ" LAO LETTER PHO TAM -->
+            <Key keybaord:keySpec="&#x0E9E;" />
+            <!-- U+0EB0: "ະ" LAO VOWEL SIGN A -->
+            <Key keybaord:keySpec="&#x0EB0;" />
+            <!-- U+0EB4: "ິ" LAO VOWEL SIGN I -->
+            <Key keybaord:keySpec="&#x0EB4;" />
+            <!-- U+0EB5: "ີ" LAO VOWEL SIGN II -->
+            <Key keybaord:keySpec="&#x0EB5;" />
+            <!-- U+0EAE: "ຮ" LAO LETTER HO TAM -->
+            <Key keybaord:keySpec="&#x0EAE;" />
+            <!-- U+0E99: "ນ" LAO LETTER NO -->
+            <Key keybaord:keySpec="&#x0E99;" />
+            <!-- U+0E8D: "ຍ" LAO LETTER NYO -->
+            <Key keybaord:keySpec="&#x0E8D;" />
+            <!-- U+0E9A: "ບ" LAO LETTER BO -->
+            <Key keybaord:keySpec="&#x0E9A;" />
+            <!-- U+0EA5: "ລ" LAO LETTER LO LOOT -->
+            <Key keybaord:keySpec="&#x0EA5;" />
+        </default>
+    </switch>
+</merge>

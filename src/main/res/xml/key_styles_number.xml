@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2010, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <key-style
+        keybaord:styleName="numKeyBaseStyle"
+        keybaord:keyActionFlags="noKeyPreview" />
+    <key-style
+        keybaord:styleName="numKeyStyle"
+        keybaord:keyLabelFlags="followKeyLargeLetterRatio"
+        keybaord:parentStyle="numKeyBaseStyle" />
+    <key-style
+        keybaord:styleName="numModeKeyStyle"
+        keybaord:keyLabelFlags="fontNormal|followKeyLetterRatio|followFunctionalTextColor"
+        keybaord:parentStyle="numKeyBaseStyle" />
+    <key-style
+        keybaord:styleName="numSymbolKeyStyle"
+        keybaord:parentStyle="numKeyBaseStyle" />
+    <key-style
+        keybaord:styleName="numberKeyStyle"
+        keybaord:keyLabelFlags="alignLabelOffCenter|hasHintLabel"
+        keybaord:parentStyle="numKeyStyle" />
+    <key-style
+        keybaord:styleName="num0KeyStyle"
+        keybaord:keySpec="0"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num1KeyStyle"
+        keybaord:keySpec="1"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num2KeyStyle"
+        keybaord:keySpec="2"
+        keybaord:keyHintLabel="ABC"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num3KeyStyle"
+        keybaord:keySpec="3"
+        keybaord:keyHintLabel="DEF"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num4KeyStyle"
+        keybaord:keySpec="4"
+        keybaord:keyHintLabel="GHI"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num5KeyStyle"
+        keybaord:keySpec="5"
+        keybaord:keyHintLabel="JKL"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num6KeyStyle"
+        keybaord:keySpec="6"
+        keybaord:keyHintLabel="MNO"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num7KeyStyle"
+        keybaord:keySpec="7"
+        keybaord:keyHintLabel="PQRS"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num8KeyStyle"
+        keybaord:keySpec="8"
+        keybaord:keyHintLabel="TUV"
+        keybaord:parentStyle="numberKeyStyle" />
+    <key-style
+        keybaord:styleName="num9KeyStyle"
+        keybaord:keySpec="9"
+        keybaord:keyHintLabel="WXYZ"
+        keybaord:parentStyle="numberKeyStyle" />
+    <!-- Only for non-tablet device -->
+    <key-style
+        keybaord:styleName="numPhoneToSymbolKeyStyle"
+        keybaord:keySpec="!text/keylabel_to_phone_symbols|!code/key_switch_alpha_symbol"
+        keybaord:parentStyle="numModeKeyStyle" />
+    <key-style
+        keybaord:styleName="numPhoneToNumericKeyStyle"
+        keybaord:keySpec="!text/keylabel_to_phone_numeric|!code/key_switch_alpha_symbol"
+        keybaord:parentStyle="numModeKeyStyle" />
+    <key-style
+        keybaord:styleName="numTabKeyStyle"
+        keybaord:keyActionFlags="noKeyPreview"
+        keybaord:parentStyle="tabKeyStyle" />
+    <key-style
+        keybaord:styleName="numSpaceKeyStyle"
+        keybaord:keySpec="!icon/space_key_for_number_layout|!code/key_space"
+        keybaord:keyLabelFlags="alignIconToBottom"
+        keybaord:keyActionFlags="enableLongPress"
+        keybaord:parentStyle="numKeyBaseStyle" />
+    <!-- TODO: Consolidate these space key styles with numSpaceKeyStyle above by introducing <case>
+         predicator that checks device form-factor. -->
+    <switch>
+        <case keybaord:keyboardTheme="ICS|KLP">
+            <key-style
+                keybaord:styleName="tabletNumSpaceKeyStyle"
+                keybaord:keySpec="!icon/space_key|!code/key_space"
+                keybaord:backgroundType="functional"
+                keybaord:keyActionFlags="enableLongPress"
+                keybaord:parentStyle="numKeyBaseStyle" />
+        </case>
+        <case keybaord:keyboardTheme="LXXLight|LXXDark">
+            <key-style
+                keybaord:styleName="tabletNumSpaceKeyStyle"
+                keybaord:keySpec="!icon/space_key|!code/key_space"
+                keybaord:backgroundType="spacebar"
+                keybaord:keyActionFlags="enableLongPress"
+                keybaord:parentStyle="numKeyBaseStyle" />
+        </case>
+    </switch>
+</merge>

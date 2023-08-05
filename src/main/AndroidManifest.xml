@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sikderithub.keyboard">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!--
+ A signature-protected permission to ask AOSP Keyboard to close the software keyboard.
+                 To use this, add the following line into calling application's AndroidManifest.xml
+         <pre>
+                      {@code
+         <uses-permission android:name="com.android.inputmethod.latin.HIDE_SOFT_INPUT"/>
+                      }
+         </pre>
+                      then call {@link android.content.Context#sendBroadcast(Intent)} as follows:
+         <pre>
+                      {@code
+                      sendBroadcast(new Intent("com.android.inputmethod.latin.HIDE_SOFT_INPUT")
+                              .setPackage("com.android.inputmethod.latin"));
+                      }
+         </pre>
+    -->
+    <permission
+        android:name="com.android.inputmethod.latin.HIDE_SOFT_INPUT"
+        android:protectionLevel="signature" />
+
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true"
+        android:icon="@mipmap/ic_launcher_round"
+        android:label="@string/english_ime_name"
+        android:supportsRtl="true">
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity
+            android:name=".Activity.CreateThemeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight" />
+        <activity
+            android:name=".Activity.KeyMapActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight" />
+        <activity
+            android:name=".Activity.UpdateActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight" /> <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
+        <activity
+            android:name=".Activity.ThemeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight" /> <!-- Services -->
+        <service
+            android:name=".Service.NotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".SikderKeyboard"
+            android:exported="true"
+            android:label="@string/english_ime_name_emoji"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+        <service
+            android:name="com.android.inputmethod.latin.spellcheck.AndroidSpellCheckerService"
+            android:exported="true"
+            android:label="@string/spell_checker_service_name"
+            android:permission="android.permission.BIND_TEXT_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.textservice.SpellCheckerService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.view.textservice.scs"
+                android:resource="@xml/spellchecker" />
+        </service>
+        <service
+            android:name="com.android.inputmethod.dictionarypack.DictionaryService"
+            android:label="@string/dictionary_service_name" /> <!-- Activities -->
+        <activity
+            android:name="com.android.inputmethod.latin.setup.SetupActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_round"
+            android:label="@string/english_ime_name"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/platformActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.android.inputmethod.latin.permissions.PermissionsActivity"
+            android:exported="false"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.android.inputmethod.latin.setup.SetupWizardActivity"
+            android:clearTaskOnLaunch="true"
+            android:exported="true"
+            android:label="@string/english_ime_name"
+            android:theme="@style/platformActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.android.inputmethod.latin.settings.SettingsActivity"
+            android:exported="true"
+            android:label="@string/english_ime_settings"
+            android:theme="@style/platformSettingsTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.android.inputmethod.latin.spellcheck.SpellCheckerSettingsActivity"
+            android:exported="true"
+            android:label="@string/android_spell_checker_settings"
+            android:theme="@style/platformSettingsTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.android.inputmethod.dictionarypack.DictionarySettingsActivity"
+            android:exported="true"
+            android:label="@string/dictionary_settings_title"
+            android:theme="@style/platformSettingsTheme"
+            android:uiOptions="splitActionBarWhenNarrow">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.android.inputmethod.dictionarypack.DownloadOverMeteredDialog"
+            android:exported="true"
+            android:label="@string/dictionary_install_over_metered_network_prompt"
+            android:theme="@style/platformActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity> <!-- Unexported activity used for tests. -->
+        <activity
+            android:name="com.android.inputmethod.latin.settings.TestFragmentActivity"
+            android:exported="false" /> <!-- Broadcast receivers -->
+        <receiver
+            android:name="com.android.inputmethod.latin.SystemBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_INITIALIZE" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.android.inputmethod.latin.DictionaryPackInstallBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.android.inputmethod.dictionarypack.aosp.UNKNOWN_CLIENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.android.inputmethod.dictionarypack.EventHandler"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="com.android.inputmethod.dictionarypack.aosp.UPDATE_NOW" />
+                <action android:name="com.android.inputmethod.dictionarypack.aosp.INIT_AND_UPDATE_NOW" />
+            </intent-filter>
+        </receiver> <!-- Broadcast receiver for AccountManager#LOGIN_ACCOUNTS_CHANGED_ACTION. -->
+        <receiver
+            android:name="com.android.inputmethod.latin.accounts.AccountsChangedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
+            </intent-filter>
+        </receiver> <!-- Content providers -->
+        <provider
+            android:name="com.android.inputmethod.dictionarypack.DictionaryProvider"
+            android:authorities="@string/authority"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:label="@string/dictionary_provider_name"
+            android:multiprocess="false" />
+    </application>
+
+</manifest>

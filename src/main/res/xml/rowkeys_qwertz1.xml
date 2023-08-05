@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2012, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <Key
+        keybaord:keySpec="q"
+        keybaord:keyHintLabel="1"
+        keybaord:additionalMoreKeys="1" />
+    <Key
+        keybaord:keySpec="w"
+        keybaord:keyHintLabel="2"
+        keybaord:additionalMoreKeys="2"
+        keybaord:moreKeys="!text/morekeys_w" />
+    <Key
+        keybaord:keySpec="e"
+        keybaord:keyHintLabel="3"
+        keybaord:additionalMoreKeys="3"
+        keybaord:moreKeys="!text/morekeys_e" />
+    <Key
+        keybaord:keySpec="r"
+        keybaord:keyHintLabel="4"
+        keybaord:additionalMoreKeys="4"
+        keybaord:moreKeys="!text/morekeys_r" />
+    <Key
+        keybaord:keySpec="t"
+        keybaord:keyHintLabel="5"
+        keybaord:additionalMoreKeys="5"
+        keybaord:moreKeys="!text/morekeys_t" />
+    <Key
+        keybaord:keySpec="z"
+        keybaord:keyHintLabel="6"
+        keybaord:additionalMoreKeys="6"
+        keybaord:moreKeys="!text/morekeys_z" />
+     <Key
+        keybaord:keySpec="u"
+        keybaord:keyHintLabel="7"
+        keybaord:additionalMoreKeys="7"
+        keybaord:moreKeys="!text/morekeys_u" />
+    <Key
+        keybaord:keySpec="i"
+        keybaord:keyHintLabel="8"
+        keybaord:additionalMoreKeys="8"
+        keybaord:moreKeys="!text/morekeys_i" />
+    <Key
+        keybaord:keySpec="o"
+        keybaord:keyHintLabel="9"
+        keybaord:additionalMoreKeys="9"
+        keybaord:moreKeys="!text/morekeys_o" />
+    <Key
+        keybaord:keySpec="p"
+        keybaord:keyHintLabel="0"
+        keybaord:additionalMoreKeys="0" />
+</merge>

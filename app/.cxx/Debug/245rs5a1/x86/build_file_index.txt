@@ -1,0 +1,1 @@
+D:\Android_Projects\SmartKeyboard\app\native\jni\CMakeLists.txt

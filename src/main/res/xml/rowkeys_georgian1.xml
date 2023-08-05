@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2012, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <switch>
+        <case
+            keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted"
+        >
+            <Key
+                keybaord:keySpec="Q"
+                keybaord:keyHintLabel="1"
+                keybaord:additionalMoreKeys="1" />
+            <!-- U+10ED: "ჭ" GEORGIAN LETTER CHAR -->
+            <Key
+                keybaord:keySpec="&#x10ED;"
+                keybaord:keyHintLabel="2"
+                keybaord:additionalMoreKeys="2" />
+            <Key
+                keybaord:keySpec="E"
+                keybaord:keyHintLabel="3"
+                keybaord:additionalMoreKeys="3" />
+            <!-- U+10E6: "ღ" GEORGIAN LETTER GHAN -->
+            <Key
+                keybaord:keySpec="&#x10E6;"
+                keybaord:keyHintLabel="4"
+                keybaord:additionalMoreKeys="4" />
+            <!-- U+10D7: "თ" GEORGIAN LETTER TAN -->
+            <Key
+                keybaord:keySpec="&#x10D7;"
+                keybaord:keyHintLabel="5"
+                keybaord:additionalMoreKeys="5" />
+            <Key
+                keybaord:keySpec="Y"
+                keybaord:keyHintLabel="6"
+                keybaord:additionalMoreKeys="6" />
+            <Key
+                keybaord:keySpec="U"
+                keybaord:keyHintLabel="7"
+                keybaord:additionalMoreKeys="7" />
+            <Key
+                keybaord:keySpec="I"
+                keybaord:keyHintLabel="8"
+                keybaord:additionalMoreKeys="8" />
+            <Key
+                keybaord:keySpec="O"
+                keybaord:keyHintLabel="9"
+                keybaord:additionalMoreKeys="9" />
+            <Key
+                keybaord:keySpec="P"
+                keybaord:keyHintLabel="0"
+                keybaord:additionalMoreKeys="0" />
+        </case>
+        <default>
+            <!-- U+10E5: "ქ" GEORGIAN LETTER GHAN -->
+            <Key
+                keybaord:keySpec="&#x10E5;"
+                keybaord:keyHintLabel="1"
+                keybaord:additionalMoreKeys="1" />
+            <!-- U+10EC: "წ" GEORGIAN LETTER CIL -->
+            <Key
+                keybaord:keySpec="&#x10EC;"
+                keybaord:keyHintLabel="2"
+                keybaord:additionalMoreKeys="2" />
+            <!-- U+10D4: "ე" GEORGIAN LETTER EN
+                 U+10F1: "ჱ" GEORGIAN LETTER HE -->
+            <Key
+                keybaord:keySpec="&#x10D4;"
+                keybaord:moreKeys="&#x10F1;"
+                keybaord:keyHintLabel="3"
+                keybaord:additionalMoreKeys="3" />
+            <!-- U+10E0: "რ" GEORGIAN LETTER RAE -->
+            <Key
+                keybaord:keySpec="&#x10E0;"
+                keybaord:keyHintLabel="4"
+                keybaord:additionalMoreKeys="4" />
+            <!-- U+10E2: "ტ" GEORGIAN LETTER TAR -->
+            <Key
+                keybaord:keySpec="&#x10E2;"
+                keybaord:keyHintLabel="5"
+                keybaord:additionalMoreKeys="5" />
+            <!-- U+10E7: "ყ" GEORGIAN LETTER QAR
+                 U+10F8: "ჸ" GEORGIAN LETTER ELIFI -->
+            <Key
+                keybaord:keySpec="&#x10E7;"
+                keybaord:moreKeys="&#x10F8;"
+                keybaord:keyHintLabel="6"
+                keybaord:additionalMoreKeys="6" />
+            <!-- U+10E3: "უ" GEORGIAN LETTER UN -->
+            <Key
+                keybaord:keySpec="&#x10E3;"
+                keybaord:keyHintLabel="7"
+                keybaord:additionalMoreKeys="7" />
+            <!-- U+10D8: "ი" GEORGIAN LETTER IN
+                 U+10F2: "ჲ" GEORGIAN LETTER HIE -->
+            <Key
+                keybaord:keySpec="&#x10D8;"
+                keybaord:moreKeys="&#x10F2;"
+                keybaord:keyHintLabel="8"
+                keybaord:additionalMoreKeys="8" />
+            <!-- U+10DD: "ო" GEORGIAN LETTER ON -->
+            <Key
+                keybaord:keySpec="&#x10DD;"
+                keybaord:keyHintLabel="9"
+                keybaord:additionalMoreKeys="9" />
+            <!-- U+10DE: "პ" GEORGIAN LETTER PAR -->
+            <Key
+                keybaord:keySpec="&#x10DE;"
+                keybaord:keyHintLabel="0"
+                keybaord:additionalMoreKeys="0" />
+        </default>
+    </switch>
+</merge>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2012, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <switch>
+        <case keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
+            <!-- U+0E50: "๐" THAI DIGIT ZERO -->
+            <Key keybaord:keySpec="&#x0E50;" />
+            <Key
+                keybaord:keySpec="&quot;"
+                keybaord:keyLabelFlags="fontDefault" />
+            <!-- U+0E0E: "ฎ" THAI CHARACTER DO CHADA -->
+            <Key keybaord:keySpec="&#x0E0E;" />
+            <!-- U+0E11: "ฑ" THAI CHARACTER THO NANGMONTHO -->
+            <Key keybaord:keySpec="&#x0E11;" />
+            <!-- U+0E18: "ธ" THAI CHARACTER THO THONG -->
+            <Key keybaord:keySpec="&#x0E18;" />
+            <!-- U+0020: " " SPACE
+                 U+0E4D: " ํ" THAI CHARACTER THANTHAKHAT -->
+            <!-- Note: The space character is needed as a preceding letter to draw some Thai
+                 composing characters correctly. -->
+            <Key
+                keybaord:keySpec="&#x20;&#x0E4D;|&#x0E4D;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0020: " " SPACE
+                 U+0E4A: " ๊" THAI CHARACTER MAI TRI -->
+            <!-- Note: The space character is needed as a preceding letter to draw some Thai
+                 composing characters correctly. -->
+            <Key
+                keybaord:keySpec="&#x20;&#x0E4A;|&#x0E4A;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0E13: "ณ" THAI CHARACTER NO NEN -->
+            <Key keybaord:keySpec="&#x0E13;" />
+            <!-- U+0E2F: "ฯ" THAI CHARACTER PAIYANNOI -->
+            <Key keybaord:keySpec="&#x0E2F;" />
+            <!-- U+0E0D: "ญ" THAI CHARACTER YO YING -->
+            <Key keybaord:keySpec="&#x0E0D;" />
+            <!-- U+0E10: "ฐ" THAI CHARACTER THO THAN -->
+            <Key keybaord:keySpec="&#x0E10;" />
+            <Key
+                keybaord:keySpec=","
+                keybaord:keyLabelFlags="fontDefault" />
+        </case>
+        <default>
+            <!-- U+0E46: "ๆ" THAI CHARACTER MAIYAMOK
+                 U+0E50: "๐" THAI DIGIT ZERO -->
+            <Key
+                keybaord:keySpec="&#x0E46;"
+                keybaord:keyHintLabel="0"
+                keybaord:additionalMoreKeys="0"
+                keybaord:moreKeys="&#x0E50;" />
+            <!-- U+0E44: "ไ" THAI CHARACTER SARA AI MAIMALAI -->
+            <Key keybaord:keySpec="&#x0E44;" />
+            <!-- U+0E33: "ำ" THAI CHARACTER SARA AM -->
+            <Key keybaord:keySpec="&#x0E33;" />
+            <!-- U+0E1E: "พ" THAI CHARACTER PHO PHAN -->
+            <Key keybaord:keySpec="&#x0E1E;" />
+            <!-- U+0E30: "ะ" THAI CHARACTER SARA A -->
+            <Key keybaord:keySpec="&#x0E30;" />
+            <!-- U+0020: " " SPACE
+                 U+0E31: " ั" THAI CHARACTER MAI HAN-AKAT -->
+            <!-- Note: The space character is needed as a preceding letter to draw some Thai
+                 composing characters correctly. -->
+            <Key
+                keybaord:keySpec="&#x20;&#x0E31;|&#x0E31;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0020: " " SPACE
+                 U+0E35: " ี" HAI CHARACTER SARA II -->
+            <!-- Note: The space character is needed as a preceding letter to draw some Thai
+                 composing characters correctly. -->
+            <Key
+                keybaord:keySpec="&#x20;&#x0E35;|&#x0E35;"
+                keybaord:keyLabelFlags="followKeyLetterRatio" />
+            <!-- U+0E23: "ร" THAI CHARACTER RO RUA -->
+            <Key keybaord:keySpec="&#x0E23;" />
+            <!-- U+0E19: "น" THAI CHARACTER NO NU -->
+            <Key keybaord:keySpec="&#x0E19;" />
+            <!-- U+0E22: "ย" THAI CHARACTER YO YAK -->
+            <Key keybaord:keySpec="&#x0E22;" />
+            <!-- U+0E1A: "บ" THAI CHARACTER BO BAIMAI -->
+            <Key keybaord:keySpec="&#x0E1A;" />
+            <!-- U+0E25: "ล" THAI CHARACTER LO LING -->
+            <Key keybaord:keySpec="&#x0E25;" />
+        </default>
+    </switch>
+</merge>

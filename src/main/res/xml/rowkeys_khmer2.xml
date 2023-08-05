@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2013, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard">
+    <switch>
+        <case keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLocked|alphabetShiftLockShifted">
+            <!-- U+1788: "ឈ" KHMER LETTER CHO
+                 U+17DC: "ៜ" KHMER SIGN AVAKRAHASANYA -->
+            <Key
+                keybaord:keySpec="&#x1788;"
+                keybaord:keyHintLabel="&#x17DC;"
+                keybaord:moreKeys="&#x17DC;" />
+            <!-- U+17BA: "ឺ" KHMER VOWEL SIGN YY
+                 U+17DD: "៝" KHMER SIGN ATTHACAN -->
+            <Key
+                keybaord:keySpec="&#x17BA;"
+                keybaord:keyHintLabel="&#x17DD;"
+                keybaord:keyHintLabelVerticalAdjustment="40%"
+                keybaord:moreKeys="&#x17DD;" />
+            <!-- U+17C2: "ែ" KHMER VOWEL SIGN AE -->
+            <Key keybaord:keySpec="&#x17C2;" />
+            <!-- U+17AC: "ឬ" KHMER INDEPENDENT VOWEL RYY
+                 U+17AB: "ឫ" KHMER INDEPENDENT VOWEL RY -->
+            <Key
+                keybaord:keySpec="&#x17AC;"
+                keybaord:keyHintLabel="&#x17AB;"
+                keybaord:moreKeys="&#x17AB;" />
+            <!-- U+1791: "ទ" KHMER LETTER TO -->
+            <Key keybaord:keySpec="&#x1791;" />
+            <!-- U+17BD: "ួ" KHMER VOWEL SIGN UA -->
+            <Key keybaord:keySpec="&#x17BD;" />
+            <!-- U+17BC: "ូ" KHMER VOWEL SIGN UU -->
+            <Key keybaord:keySpec="&#x17BC;" />
+            <!-- U+17B8: "ី" KHMER VOWEL SIGN II -->
+            <Key keybaord:keySpec="&#x17B8;" />
+            <!-- U+17C5: "ៅ" KHMER VOWEL SIGN AU -->
+            <Key keybaord:keySpec="&#x17C5;" />
+            <!-- U+1797: "ភ" KHMER LETTER PHO -->
+            <Key keybaord:keySpec="&#x1797;" />
+            <!-- U+17BF: "ឿ" KHMER VOWEL SIGN YA -->
+            <Key keybaord:keySpec="&#x17BF;" />
+            <!-- U+17B0: "ឰ" KHMER INDEPENDENT VOWEL QAI -->
+            <Key keybaord:keySpec="&#x17B0;" />
+        </case>
+        <default>
+            <!-- U+1786: "ឆ" KHMER LETTER CHA -->
+            <Key keybaord:keySpec="&#x1786;" />
+            <!-- U+17B9: "ឹ" KHMER VOWEL SIGN Y -->
+            <Key keybaord:keySpec="&#x17B9;" />
+            <!-- U+17C1: "េ" KHMER VOWEL SIGN E -->
+            <Key keybaord:keySpec="&#x17C1;" />
+            <!-- U+179A: "រ" KHMER LETTER RO -->
+            <Key keybaord:keySpec="&#x179A;" />
+            <!-- U+178F: "ត" KHMER LETTER TA -->
+            <Key keybaord:keySpec="&#x178F;" />
+            <!-- U+1799: "យ" KHMER LETTER YO -->
+            <Key keybaord:keySpec="&#x1799;" />
+            <!-- U+17BB: "ុ" KHMER VOWEL SIGN U -->
+            <Key keybaord:keySpec="&#x17BB;" />
+            <!-- U+17B7: "ិ" KHMER VOWEL SIGN I -->
+            <Key keybaord:keySpec="&#x17B7;" />
+            <!-- U+17C4: "ោ" KHMER VOWEL SIGN OO -->
+            <Key keybaord:keySpec="&#x17C4;" />
+            <!-- U+1795: "ផ" KHMER LETTER PHA -->
+            <Key keybaord:keySpec="&#x1795;" />
+            <!-- U+17C0: "ៀ" KHMER VOWEL SIGN IE -->
+            <Key keybaord:keySpec="&#x17C0;" />
+            <!-- U+17AA: "ឪ" KHMER INDEPENDENT VOWEL QUUV
+                 U+17A7: "ឧ" KHMER INDEPENDENT VOWEL QU
+                 U+17B1: "ឱ" KHMER INDEPENDENT VOWEL QOO TYPE ONE
+                 U+17B3: "ឳ" KHMER INDEPENDENT VOWEL QAU
+                 U+17A9: "ឩ" KHMER INDEPENDENT VOWEL QUU
+                 U+17A8: "ឨ" KHMER INDEPENDENT VOWEL QUK -->
+            <Key
+                keybaord:keySpec="&#x17AA;"
+                keybaord:keyHintLabel="&#x17A7;"
+                keybaord:moreKeys="&#x17A7;,&#x17B1;,&#x17B3;,&#x17A9;,&#x17A8;" />
+        </default>
+    </switch>
+</merge>

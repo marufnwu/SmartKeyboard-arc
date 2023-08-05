@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2013, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<merge
+    xmlns:keybaord="http://schemas.android.com/apk/res/com.sikderithub.keyboard"
+>
+    <!-- Navigate more keys style -->
+    <include keybaord:keyboardLayout="@xml/key_styles_navigate_more_keys" />
+    <switch>
+        <case
+            keybaord:imeAction="actionNext"
+            keybaord:navigatePrevious="true"
+        >
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle"
+                keybaord:parentStyle="navigatePreviousMoreKeysStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionNext"
+        >
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionPrevious"
+            keybaord:navigateNext="true"
+        >
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle"
+                keybaord:parentStyle="navigateNextMoreKeysStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionPrevious"
+        >
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle" />
+        </case>
+        <case
+            keybaord:navigateNext="true"
+            keybaord:navigatePrevious="true"
+        >
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle"
+                keybaord:parentStyle="navigatePreviousNextMoreKeysStyle" />
+        </case>
+        <case
+            keybaord:navigateNext="true"
+        >
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle"
+                keybaord:parentStyle="navigateNextMoreKeysStyle" />
+        </case>
+        <case
+            keybaord:navigatePrevious="true"
+        >
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle"
+                keybaord:parentStyle="navigatePreviousMoreKeysStyle" />
+        </case>
+        <default>
+            <key-style
+                keybaord:styleName="navigateMoreKeysStyle" />
+        </default>
+    </switch>
+    <!-- Enter key style -->
+    <switch>
+        <case keybaord:keyboardTheme="ICS|KLP">
+            <key-style
+                keybaord:styleName="defaultEnterKeyStyle"
+                keybaord:keySpec="!icon/enter_key|!code/key_enter"
+                keybaord:keyLabelFlags="preserveCase|autoXScale|followKeyLabelRatio|followFunctionalTextColor"
+                keybaord:keyActionFlags="noKeyPreview"
+                keybaord:backgroundType="action"
+                keybaord:parentStyle="navigateMoreKeysStyle" />
+        </case>
+        <!-- keyboardTheme="LXXLight|LXXDark" -->
+        <default>
+            <key-style
+                keybaord:styleName="defaultEnterKeyStyle"
+                keybaord:keySpec="!icon/enter_key|!code/key_enter"
+                keybaord:keyLabelFlags="preserveCase|autoXScale|followKeyLabelRatio|followFunctionalTextColor|keepBackgroundAspectRatio"
+                keybaord:keyActionFlags="noKeyPreview"
+                keybaord:backgroundType="action"
+                keybaord:parentStyle="navigateMoreKeysStyle" />
+        </default>
+    </switch>
+    <include keybaord:keyboardLayout="@xml/key_styles_actions" />
+    <switch>
+        <!-- Shift + Enter in textMultiLine field. -->
+        <case
+            keybaord:isMultiLine="true"
+            keybaord:keyboardLayoutSetElement="alphabetManualShifted|alphabetShiftLockShifted"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:keySpec="!icon/enter_key|!code/key_shift_enter"
+                keybaord:parentStyle="defaultEnterKeyStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionGo"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="goActionKeyStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionNext"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="nextActionKeyStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionPrevious"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="previousActionKeyStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionDone"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="doneActionKeyStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionSend"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="sendActionKeyStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionSearch"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="searchActionKeyStyle" />
+        </case>
+        <case
+            keybaord:imeAction="actionCustomLabel"
+        >
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="customLabelActionKeyStyle" />
+        </case>
+        <!-- imeAction is either actionNone or actionUnspecified. -->
+        <default>
+            <key-style
+                keybaord:styleName="enterKeyStyle"
+                keybaord:parentStyle="defaultEnterKeyStyle" />
+        </default>
+    </switch>
+</merge>
